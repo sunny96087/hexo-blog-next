@@ -14,10 +14,12 @@
 
 
 <link rel="stylesheet" href="/hexo-blog-next/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/hexo-blog-next/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/hexo-blog-next/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"sunny96087.github.io","root":"/hexo-blog-next/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"sunny96087.github.io","root":"/hexo-blog-next/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="這是一個不存在的頁面很抱歉，你目前存取的頁面並不存在。 預計將在約 5 秒後返回首頁。 如果你很急著想看文章，你可以 點這裡 返回首頁。  let countTime &#x3D; 5;  function count() {      document.getElementById(&#39;timeout&#39;).textContent &#x3D; countTime;   countTime -&#x3D; 1;   if(c">
@@ -133,6 +135,11 @@
         <li class="menu-item menu-item-about">
 
     <a href="/hexo-blog-next/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/hexo-blog-next/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -317,8 +324,10 @@ count();
         </a>
       </div>
       <div class="site-state-item site-state-tags">
+            <a href="/hexo-blog-next/tags/">
+          
         <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">標籤</span>
+        <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
 </div>
@@ -352,6 +361,26 @@ count();
 </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -409,7 +438,7 @@ count();
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
-    s.src = 'https://yishanhexo.disqus.com/count.js';
+    s.src = 'https://2fish.disqus.com/count.js';
     s.id = 'dsq-count-scr';
     (d.head || d.body).appendChild(s);
   }
