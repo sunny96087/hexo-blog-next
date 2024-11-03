@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -17,15 +17,27 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"sunny96087.github.io","root":"/hexo-blog-next/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"sunny96087.github.io","root":"/hexo-blog-next/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+  <meta name="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2fish 的部落格">
 <meta property="og:url" content="https://sunny96087.github.io/hexo-blog-next/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="這是一個由 2fish 記錄開發旅程的部落格">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="部落格">
+<meta property="article:tag" content="開發">
+<meta property="article:tag" content="技術">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="後端">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="development">
+<meta property="article:tag" content="technology">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="backend">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://sunny96087.github.io/hexo-blog-next/">
@@ -37,11 +49,11 @@
     sidebar: "",
     isHome : true,
     isPost : false,
-    lang   : 'en'
+    lang   : 'zh-TW'
   };
 </script>
 
-  <title>Hexo</title>
+  <title>2fish 的部落格</title>
   
 
 
@@ -81,7 +93,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切換導航欄">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -92,13 +104,15 @@
 
     <a href="/hexo-blog-next/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">2fish 的部落格</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -110,24 +124,51 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/hexo-blog-next/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/hexo-blog-next/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/hexo-blog-next/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+    <a href="/hexo-blog-next/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/hexo-blog-next/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/hexo-blog-next/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -137,6 +178,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -149,22 +191,22 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/11/03/hello-world/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo-blog-next/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="2fish 的部落格">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/hexo-blog-next/2024/11/03/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/" class="post-title-link" itemprop="url">六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記</a>
         </h2>
 
         <div class="post-meta">
@@ -172,10 +214,17 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">發表於</span>
 
-              <time title="Created: 2024-11-03 12:41:20" itemprop="dateCreated datePublished" datetime="2024-11-03T12:41:20+08:00">2024-11-03</time>
+              <time title="創建時間：2024-10-25 16:00:00" itemprop="dateCreated datePublished" datetime="2024-10-25T16:00:00+08:00">2024-10-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
 
           
   
@@ -184,10 +233,10 @@
       <span class="post-meta-item-icon">
         <i class="far fa-comment"></i>
       </span>
-      <span class="post-meta-item-text">Disqus: </span>
+      <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/hexo-blog-next/2024/11/03/hello-world/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/11/03/hello-world/" itemprop="commentCount"></span>
+    <a title="disqus" href="/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/25/hexschool-sql2024-section-homework-1/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -202,20 +251,360 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <!-- 簡介 -->
+<p>在這篇文章中，我們將探索六角學院 2024 後端工程師資料庫體驗營的精彩瞬間！跟隨小美的第一天工作，看看她如何在系統當機的危機中，運用 SQL 技能解決客戶需求。最後，我們還會提供實作內容的大綱，幫助你輕鬆掌握 SQL 查詢的基礎與進階技巧。準備好一起來學習了嗎？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/">
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+    </span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/" class="post-title-link" itemprop="url">在 Nuxt.js 導入 phosphor-icons</a>
+        </h2>
 
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-06-07 19:30:36" itemprop="dateCreated datePublished" datetime="2024-06-07T19:30:36+08:00">2024-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/06/07/nuxt-icon-phosphor/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/05/18/github-personal-page/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/hexo-blog-next/2024/05/18/github-personal-page/" class="post-title-link" itemprop="url">github 自定義個人頁面 ✨</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-05-18 20:33:45" itemprop="dateCreated datePublished" datetime="2024-05-18T20:33:45+08:00">2024-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/hexo-blog-next/2024/05/18/github-personal-page/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/05/18/github-personal-page/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>快跟我一起來自訂義獨一無二的個人 github 頁面吧！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo-blog-next/2024/05/18/github-personal-page/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-replenish-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/hexo-blog-next/2024/05/17/hexo-replenish-1/" class="post-title-link" itemprop="url">Hexo 進階 - part 1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-05-17 14:00:00" itemprop="dateCreated datePublished" datetime="2024-05-17T14:00:00+08:00">2024-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/hexo-blog-next/2024/05/17/hexo-replenish-1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/05/17/hexo-replenish-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo-blog-next/2024/05/17/hexo-replenish-1/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-instruction-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/hexo-blog-next/2024/05/17/hexo-instruction-collection/" class="post-title-link" itemprop="url">Hexo 指令合集</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-05-17 13:00:00" itemprop="dateCreated datePublished" datetime="2024-05-17T13:00:00+08:00">2024-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/hexo-blog-next/2024/05/17/hexo-instruction-collection/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/05/17/hexo-instruction-collection/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>這裡集合了 hexo 常用的指令</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo-blog-next/2024/05/17/hexo-instruction-collection/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -274,10 +663,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目錄
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          本站概要
         </li>
       </ul>
 
@@ -288,17 +677,23 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/hexo-blog-next/images/mug_shot.png">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">這是一個由 2fish 記錄開發旅程的部落格</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/hexo-blog-next/archives/">
         
-          <span class="site-state-item-count">1</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">文章</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
 </div>
@@ -326,12 +721,10 @@
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fas fa-book"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
-  </div>
 
         
 
@@ -367,6 +760,10 @@
   
 
 
+
+
+  
+<script src="/hexo-blog-next/js/local-search.js"></script>
 
 
 

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo-blog-next/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo-blog-next/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo-blog-next/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo-blog-next/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo-blog-next/css/main.css">
+
+
+<link rel="stylesheet" href="/hexo-blog-next/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sunny96087.github.io","root":"/hexo-blog-next/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="這裡集合了 hexo 常用的指令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 指令合集">
+<meta property="og:url" content="https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-instruction-collection/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="這裡集合了 hexo 常用的指令">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-05-17T05:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-03T13:47:13.122Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-instruction-collection/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Hexo 指令合集 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo-blog-next/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/hexo-blog-next/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/hexo-blog-next/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/hexo-blog-next/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-instruction-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo 指令合集
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-05-17 13:00:00" itemprop="dateCreated datePublished" datetime="2024-05-17T13:00:00+08:00">2024-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/hexo-blog-next/2024/05/17/hexo-instruction-collection/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/05/17/hexo-instruction-collection/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>這裡集合了 hexo 常用的指令</p>
+<span id="more"></span>
+
+<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo-blog-next/tags/hexo/" rel="tag"># hexo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/hexo-blog-next/2024/05/17/hexo-replenish-1/" rel="next" title="Hexo 進階 - part 1">
+      Hexo 進階 - part 1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-Hexo-%E5%85%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">安裝 Hexo (全域)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E7%89%88%E6%9C%AC-%E8%8B%A5%E6%9C%89%E9%A1%AF%E7%A4%BA%E7%89%88%E6%9C%AC%E8%99%9F%E4%BB%A3%E8%A1%A8%E5%AE%89%E8%A3%9D%E6%88%90%E5%8A%9F"><span class="nav-number">2.</span> <span class="nav-text">檢查版本 (若有顯示版本號代表安裝成功)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%BB%BA%E7%AB%8B%E6%96%B0%E5%B0%88%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">快速建立新專案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%B7%E8%A1%8C%E5%B0%88%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">執行專案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E6%96%87%E7%AB%A0"><span class="nav-number">5.</span> <span class="nav-text">新增文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E9%A0%81%E9%9D%A2"><span class="nav-number">6.</span> <span class="nav-text">新增頁面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E7%94%9F%E6%88%90%E9%9D%9C%E6%85%8B%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">打包生成靜態文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E5%BF%AB%E5%8F%96-%E6%9C%89%E6%99%82%E5%80%99%E4%BF%AE%E6%94%B9%E5%85%A7%E5%AE%B9%E5%BE%8C%E6%B2%92%E6%9C%89%E9%A1%AF%E7%A4%BA%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%8C%87%E4%BB%A4%E6%B8%85%E9%99%A4%E5%BF%AB%E5%8F%96"><span class="nav-number">8.</span> <span class="nav-text">清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">9.</span> <span class="nav-text">部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%B6%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%98%E8%A8%98%E6%8C%87%E4%BB%A4-%F0%9F%A4%A6%F0%9F%8F%BB%E2%80%8D%E2%99%80%EF%B8%8F"><span class="nav-number"></span> <span class="nav-text">當你今天忘記指令 🤦🏻‍♀️</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/hexo-blog-next/images/mug_shot.png">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">這是一個由 2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo-blog-next/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/hexo-blog-next/lib/anime.min.js"></script>
+  <script src="/hexo-blog-next/lib/velocity/velocity.min.js"></script>
+  <script src="/hexo-blog-next/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/hexo-blog-next/js/utils.js"></script>
+
+<script src="/hexo-blog-next/js/motion.js"></script>
+
+
+<script src="/hexo-blog-next/js/schemes/pisces.js"></script>
+
+
+<script src="/hexo-blog-next/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/hexo-blog-next/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yishanhexo.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-instruction-collection/";
+    this.page.identifier = "2024/05/17/hexo-instruction-collection/";
+    this.page.title = "Hexo 指令合集";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://yishanhexo.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

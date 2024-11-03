@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hexo 指令合集</title>
+    <url>/hexo-blog-next/2024/05/17/hexo-instruction-collection/</url>
+    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
+<span id="more"></span>
+
+<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 Nuxt.js 導入 phosphor-icons</title>
+    <url>/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/</url>
+    <content><![CDATA[<p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
+<span id="more"></span>
+
+<h4 id="1-連結"><a href="#1-連結" class="headerlink" title="1. 連結"></a>1. 連結</h4><ul>
+<li><a href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a></li>
+<li><a href="https://github.com/phosphor-icons/vue">phosphor-icons&#x2F;vue: A flexible icon family for Vue (github.com)</a></li>
+</ul>
+<h4 id="2-安裝"><a href="#2-安裝" class="headerlink" title="2. 安裝"></a>2. 安裝</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install @phosphor-icons/vue</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-找喜歡的-Icon"><a href="#3-找喜歡的-Icon" class="headerlink" title="3. 找喜歡的 Icon"></a>3. 找喜歡的 Icon</h4><ul>
+<li><a href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a><br>也可以在網頁的測試欄進行調整，可以馬上看到效果哦<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/nuxt-icon-phosphor%2F1.png?alt=media&token=a8c519d7-f75d-457f-8e6e-c6df2b2207b2" alt="找 icon 示意圖"></li>
+</ul>
+<h4 id="4-在專案內使用"><a href="#4-在專案內使用" class="headerlink" title="4. 在專案內使用"></a>4. 在專案內使用</h4><p>導入和使用 Phosphor Icons</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 需要的 icon 再引入即可</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhUserCircle</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhHouse</span></span></span><br><span class="line"><span class="language-javascript">&#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 引入後就可以在頁面上直接使用囉 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhUserCircle</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhHouse</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="可調整的屬性"><a href="#可調整的屬性" class="headerlink" title="可調整的屬性"></a>可調整的屬性</h5><ul>
+<li><p><code>color(string) 圖標顏色</code><br>  可以接受任何 CSS 顏色字符串，包括hex、rgb、rgba、hsl、hsla、命名顏色，或者特殊的 currentColor 變量；<br>  若無設定則使用預設值 currentColor。<br>  使用 currentColor，則圖標的填充顏色將與其父元素的文字顏色相同。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;#FF0000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;hotpink&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>size(string) 圖標高度和寬度</code><br>  可以是一個數字或者一個帶有單位的字符串，單位可以是 px、%、em、rem、pt、cm、mm、in 等；<br>  若無設定則使用預設值 1em。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;2em&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>weight(string) 圖標的粗細/風格</code><br>  這個屬性可以是 thin、light、regular、bold、fill 或 duotone 。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;regular&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  在上述代碼中，第一行將 PhStar 圖標的風格設定為 regular，這將產生一個空心的星形圖標。<br>  第二行將 PhStar 圖標的風格設定為 fill，這將產生一個實心的星形圖標。</p>
+  <br />
+</li>
+<li><p><code>mirrored(boolean) 水平翻轉圖標</code><br>  如果設定為 true，則圖標將被水平翻轉。在正常圖示方向不合適的 RTL 語言中非常有用。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>一次是可以使用多個屬性的哦！</code><br>  我這邊對 <code>PhBooks</code> 設定大小 24px、填滿、水平翻轉、藍色。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<br />
+<hr />
+<br />
+
+<details>
+<summary>等等！ 為什麼有的要 : 有的不用 : 呢 ?</summary>
+
+<h4>基本原理</h4>
+<p>在 Vue.js 中，當你使用 v-bind 指令（縮寫為 :）時，你告訴 Vue 這個屬性值是動態的，並且應該被解析為 JavaScript 表達式。如果屬性值是固定的字符串，則不需要使用 :。</p>
+
+<h4>字符串常量 vs. JavaScript 表達式</h4>
+- 字符串常量：直接使用固定的字符串值，不需要 `:`。
+- JavaScript 表達式：使用變量或計算表達式，需要使用 `:`。
+
+<h4>具體說明</h4>
+<h5>字符串常量</h5>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>weight=&quot;fill&quot;</code> 和 <code>color=&quot;blue&quot;</code> 是固定的字符串常量，不需要 <code>:</code>。</p>
+<h5>JavaScript 表達式</h5>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+`:size="24"` 和 `:mirrored="true"` 是 JavaScript 表達式，需要使用 `:`。
+    
+<h4>結合示例</h4>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;iconSize&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;isMirrored&quot;</span> <span class="attr">:weight</span>=<span class="string">&quot;iconWeight&quot;</span> <span class="attr">:color</span>=<span class="string">&quot;iconColor&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; <span class="title class_">PhBooks</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconSize = <span class="title function_">ref</span>(<span class="number">24</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> isMirrored = <span class="title function_">ref</span>(<span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconWeight = <span class="title function_">ref</span>(<span class="string">&#x27;fill&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconColor = <span class="title function_">ref</span>(<span class="string">&#x27;blue&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4>總結</h4>
+
+<ul>
+<li><p>靜態值 -&gt; 不需要 <code>:</code></p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>動態值 -&gt; 需要 <code>:</code></p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>希望這樣能幫助你更清楚地理解為什麼某些屬性需要使用 <code>:</code> 而其他屬性則不需要！</p>
+</details>
+
+<br />
+<hr />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Nuxt.js</tag>
+        <tag>Icons</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 進階 - part 1</title>
+    <url>/hexo-blog-next/2024/05/17/hexo-replenish-1/</url>
+    <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
+<span id="more"></span>
+
+<h2 id="🔹-更換-Landscape-主題的網站圖示"><a href="#🔹-更換-Landscape-主題的網站圖示" class="headerlink" title="🔹 更換 Landscape 主題的網站圖示"></a>🔹 更換 Landscape 主題的網站圖示</h2><h4 id="1-先找一張圖示"><a href="#1-先找一張圖示" class="headerlink" title="1. 先找一張圖示"></a>1. 先找一張圖示</h4><p>可以到 <a href="https://www.flaticon.com/">flaticon</a> 下載免費圖示</p>
+<h4 id="2-把圖示放進專案裡"><a href="#2-把圖示放進專案裡" class="headerlink" title="2. 把圖示放進專案裡"></a>2. 把圖示放進專案裡</h4><p>我這邊圖示取做 favicon.png，放在以下路徑：<br><code>themes/landscape/source/css/images</code></p>
+<h4 id="3-修改-config-yml"><a href="#3-修改-config-yml" class="headerlink" title="3. 修改 _config.yml"></a>3. 修改 <code>_config.yml</code></h4><p>到 <code>themes/landscape/_config.yml</code> 修改 favicon 路徑：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Favicon path -&gt; 如果照著我上面放的話會跟範例路徑相同</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/css/images/favicon.png</span></span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-好不容易改完的樣式被吃掉"><a href="#🔹-好不容易改完的樣式被吃掉" class="headerlink" title="🔹 好不容易改完的樣式被吃掉"></a>🔹 好不容易改完的樣式被吃掉</h2><h4 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h4><p>若你是使用 <code>style.css</code> 修改樣式，那就把舊的樣式檔案 <code>style.styl</code> 刪掉，路徑如下：<br><code>themes/landscape/source/css</code></p>
+<h4 id="清除快取並重新生成靜態文件"><a href="#清除快取並重新生成靜態文件" class="headerlink" title="清除快取並重新生成靜態文件"></a>清除快取並重新生成靜態文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+<p>我這樣執行後樣式就會吃到我的 <code>style.css</code> 文件了</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-在文章摘要下方顯示-“Read-More”-連結"><a href="#🔹-在文章摘要下方顯示-“Read-More”-連結" class="headerlink" title="🔹 在文章摘要下方顯示 “Read More” 連結"></a>🔹 在文章摘要下方顯示 “Read More” 連結</h2><h4 id="設定-config-yml"><a href="#設定-config-yml" class="headerlink" title="設定 _config.yml"></a>設定 <code>_config.yml</code></h4><p>在主題裡面的 <code>_config.yml</code> 文件中，設定 <code>excerpt_link</code> 的值來控制是否在文章摘要下方顯示 “Read More” 連結。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &quot;Read More&quot; link at the bottom of excerpted articles. `false` to hide the link.</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;Read More&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果您希望將 &quot;Read More&quot; 更改為其他文字，例如 &quot;觀看更多&quot;，可以這樣設置：</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;觀看更多&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="設定完後，在文章內需要這樣使用"><a href="#設定完後，在文章內需要這樣使用" class="headerlink" title="設定完後，在文章內需要這樣使用"></a>設定完後，在文章內需要這樣使用</h4><p>在 Hexo 中，您可以使用 <code>&lt;!-- more --&gt;</code> 分隔符來定義哪些內容要在列表顯示或隱藏。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">title: 我的文章標題</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">這是摘要段落，會顯示在文章列表。</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">這邊開始是我只想在文章內頁顯示的內容，列表不會出現！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="自訂按鈕樣式-修改-CSS"><a href="#自訂按鈕樣式-修改-CSS" class="headerlink" title="自訂按鈕樣式 - 修改 CSS"></a>自訂按鈕樣式 - 修改 CSS</h3><p>在 <code>themes/landscape/source/css/style.css</code> 中自訂樣式：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以開啟 f12 查看按鈕屬於哪個 class 控制 */</span></span><br><span class="line"><span class="comment">/* 按鈕預設樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 按鈕預設 hover 樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#258fb8</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#1e7293</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github 自定義個人頁面 ✨</title>
+    <url>/hexo-blog-next/2024/05/18/github-personal-page/</url>
+    <content><![CDATA[<p>快跟我一起來自訂義獨一無二的個人 github 頁面吧！</p>
+<span id="more"></span>
+
+<h4 id="1-先打開-github-首頁"><a href="#1-先打開-github-首頁" class="headerlink" title="1. 先打開 github 首頁"></a>1. 先打開 github 首頁</h4><h4 id="2-建立一個新專案"><a href="#2-建立一個新專案" class="headerlink" title="2. 建立一個新專案"></a>2. 建立一個新專案</h4><p>專案名稱要跟使用者名稱相同，正確的話會發現跳出特殊提示框！<br>這邊記得 ✅ <code>Add a README file</code>，等等要用來輸入自訂義內容。<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/github-personal-page%2F1.png?alt=media&token=1299f9cc-ba05-4b62-a5d9-e15234e37505" alt="建立專案配置"></p>
+<h4 id="3-專案建立成功畫面"><a href="#3-專案建立成功畫面" class="headerlink" title="3. 專案建立成功畫面"></a>3. 專案建立成功畫面</h4><p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/github-personal-page%2F2.png?alt=media&token=db009008-c82b-4715-9190-09518ad12301" alt="專案建立成功畫面，會包含一個 README.md 檔案"></p>
+<h4 id="4-點擊右上角的-🖊️-編輯-README-md-檔案，自訂義專屬的個人介紹吧！"><a href="#4-點擊右上角的-🖊️-編輯-README-md-檔案，自訂義專屬的個人介紹吧！" class="headerlink" title="4. 點擊右上角的 🖊️ 編輯 README.md 檔案，自訂義專屬的個人介紹吧！"></a>4. 點擊右上角的 🖊️ 編輯 <code>README.md</code> 檔案，自訂義專屬的個人介紹吧！</h4><p>以下提供我的範例，跟我使用的 Markdown 語法說明</p>
+<ul>
+<li><p><code>## h2</code></p>
+<h2 id="👋-Hi-there-I’m-2fish"><a href="#👋-Hi-there-I’m-2fish" class="headerlink" title="👋 Hi there, I’m 2fish"></a>👋 Hi there, I’m 2fish</h2>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 👋 Hi there, I&#x27;m 2fish</span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>#### h4</code></p>
+<h4 id="🌱-Junior-Full-Stack-Web-Developer"><a href="#🌱-Junior-Full-Stack-Web-Developer" class="headerlink" title="🌱 Junior Full-Stack Web Developer"></a>🌱 Junior Full-Stack Web Developer</h4>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#### 🌱 Junior Full-Stack Web Developer</span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>[Email](mailto:yourEmail@gmail.com) [放置顯示文字](幫前面的文字加上連結)</code></p>
+  <p>點擊這個連結將會打開電子郵件客戶端，並將收件人的地址設置為 yourEmail@gmail.com</p>
+  <p>加上 mailto: 是用來打開電子郵件客戶端的，若是一般的超連結則不需要添加哦</p>
+
+<p>  📮 <a href="mailto:yourEmail@gmail.com">Email</a></p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">📮 [Email](mailto:yourEmail@gmail.com)</span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>- ul 無序清單</code></p>
+  <p>可以在每個項目前添加兩個空格來創建嵌套的無序清單</p>
+
+<ul>
+<li>skill<ul>
+<li>CSS, SCSS</li>
+<li>JavaScript</li>
+</ul>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- skill</span><br><span class="line">    - CSS, SCSS</span><br><span class="line">    - JavaScript</span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>table 表格</code></p>
+  <p>使用表格來整齊呈現資料，詳細範例可以參考下方完整程式碼</p>
+
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Description</th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#1</td>
+<td>描述內容</td>
+<td>連結</td>
+</tr>
+</tbody></table>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">| Project | Description | Links |</span><br><span class="line">|---------|-------------|-------|</span><br><span class="line">|   #1    |   描述內容   |  連結  |</span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>![]() 連結嵌入圖片</code></p>
+  <p>使用方法跟上面超連結相似，[] 放置圖片說明文字，() 放置圖片連結，最前面記得加一個 ! 哦</p>
+
+<p>  <img src="https://firebasestorage.googleapis.com/v0/b/simpleportfolio-64b60.appspot.com/o/img%2Fproject-pic-1.png?alt=media&token=388b6fc4-a863-4d12-9e55-f81de4e8c489" alt="軌道漫遊列車之旅"></p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![軌道漫遊列車之旅](https://firebasestorage.googleapis.com/v0/b/simpleportfolio-64b60.appspot.com/o/img%2Fproject-pic-1.png?alt=media&amp;token=388b6fc4-a863-4d12-9e55-f81de4e8c489)</span><br></pre></td></tr></table></figure>
+  <br /></li>
+</ul>
+<h4 id="5-編輯完成後記得點擊右上角的-Commit-changes-按兩次就可以成功更新囉"><a href="#5-編輯完成後記得點擊右上角的-Commit-changes-按兩次就可以成功更新囉" class="headerlink" title="5. 編輯完成後記得點擊右上角的 Commit changes (按兩次就可以成功更新囉)"></a>5. 編輯完成後記得點擊右上角的 Commit changes (按兩次就可以成功更新囉)</h4><p>更新後回首頁就可以直接看到上方多了剛剛新增的內容</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/github-personal-page%2F4.png?alt=media&token=d361e29a-4c15-48a9-a3fd-e4c36cc8d849" alt="首頁示意圖"></p>
+<br />
+<hr />
+<br />
+
+<details>
+<summary>點擊這裡查看完整範例程式碼</summary>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 👋 Hi there, I&#x27;m 2fish</span><br><span class="line"></span><br><span class="line">#### 🌱 Junior Full-Stack Web Developer</span><br><span class="line">#### 📮 You can reach me at [Email](mailto:yourEmail@gmail.com)</span><br><span class="line"></span><br><span class="line">### 💻 Skills</span><br><span class="line"></span><br><span class="line">#### Front-End Development</span><br><span class="line">- HTML</span><br><span class="line">- CSS, SCSS</span><br><span class="line">- JavaScript</span><br><span class="line"></span><br><span class="line">#### Back-End Development</span><br><span class="line">- Node.js</span><br><span class="line">- MySQL</span><br><span class="line"></span><br><span class="line">### 🗂 Portfolio</span><br><span class="line"></span><br><span class="line">| Project | Description | Links |</span><br><span class="line">|---------|-------------|-------|</span><br><span class="line">| ![軌道漫遊列車之旅](https://firebasestorage.googleapis.com/v0/b/simpleportfolio-64b60.appspot.com/o/img%2Fproject-pic-1.png?alt=media&amp;token=388b6fc4-a863-4d12-9e55-f81de4e8c489) | **軌道漫遊列車之旅 (Railway Roaming Train Tour)**&lt;br&gt;這是一個團隊合作開發的網站項目，旨在提供使用者一個互動式的平台，探索和計劃他們的小火車旅行。在這個項目中，我參與了從概念發想到最終產品的全過程。我負責網站的介面設計和前後端開發，使用 Vue.js 和 SCSS 來創建響應式的用戶界面，並透過 JavaScript 增強互動性。後端方面，我使用 PHP 和 MySQL 進行資料庫的規劃和建置，並利用 Ajax 和 Axios 技術實現前後端的資料串接。這個項目不僅鍛鍊了我的全端開發能力，也讓我學習到團隊合作如何溝通及解決問題。 | [GitHub](https://github.com/vicky5645/chd102-g1/tree/dev) \| [Demo](https://tibamef2e.com/chd102/g1/) |</span><br><span class="line">| ![Simple Portfolio](https://firebasestorage.googleapis.com/v0/b/simpleportfolio-64b60.appspot.com/o/img%2F%E4%BD%99%E8%AA%BC%E5%A7%8D%20Sunny%20-%20%E4%BD%9C%E5%93%81%E9%9B%86%20Portfolio.png?alt=media&amp;token=cf0a0add-8f85-4d1d-8c78-cca31301972a) | **個人作品集網站 (Portfolio)**&lt;br&gt;我的個人作品集網站，使用 vue3 + composition API + vite 進行開發，網頁展示了我的經歷、專案和技能。 | [GitHub](https://github.com/sunny96087/simple_portfolio) \| [Demo](https://simpleportfolio-64b60.web.app/portfolio) |</span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>範例 demo</p>
+</blockquote>
+<h2 id="👋-Hi-there-I’m-2fish-1"><a href="#👋-Hi-there-I’m-2fish-1" class="headerlink" title="👋 Hi there, I’m 2fish"></a>👋 Hi there, I’m 2fish</h2><h4 id="🌱-Junior-Full-Stack-Web-Developer-1"><a href="#🌱-Junior-Full-Stack-Web-Developer-1" class="headerlink" title="🌱 Junior Full-Stack Web Developer"></a>🌱 Junior Full-Stack Web Developer</h4><h4 id="📮-You-can-reach-me-at-Email"><a href="#📮-You-can-reach-me-at-Email" class="headerlink" title="📮 You can reach me at Email"></a>📮 You can reach me at <a href="mailto:yourEmail@gmail.com">Email</a></h4><h3 id="💻-Skills"><a href="#💻-Skills" class="headerlink" title="💻 Skills"></a>💻 Skills</h3><h4 id="Front-End-Development"><a href="#Front-End-Development" class="headerlink" title="Front-End Development"></a>Front-End Development</h4><ul>
+<li>HTML</li>
+<li>CSS, SCSS</li>
+<li>JavaScript</li>
+</ul>
+<h4 id="Back-End-Development"><a href="#Back-End-Development" class="headerlink" title="Back-End Development"></a>Back-End Development</h4><ul>
+<li>Node.js</li>
+<li>MySQL</li>
+</ul>
+<h3 id="🗂-Portfolio"><a href="#🗂-Portfolio" class="headerlink" title="🗂 Portfolio"></a>🗂 Portfolio</h3><table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Description</th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://firebasestorage.googleapis.com/v0/b/simpleportfolio-64b60.appspot.com/o/img%2Fproject-pic-1.png?alt=media&token=388b6fc4-a863-4d12-9e55-f81de4e8c489" alt="軌道漫遊列車之旅"></td>
+<td><strong>軌道漫遊列車之旅 (Railway Roaming Train Tour)</strong><br>這是一個團隊合作開發的網站項目，旨在提供使用者一個互動式的平台，探索和計劃他們的小火車旅行。在這個項目中，我參與了從概念發想到最終產品的全過程。我負責網站的介面設計和前後端開發，使用 Vue.js 和 SCSS 來創建響應式的用戶界面，並透過 JavaScript 增強互動性。後端方面，我使用 PHP 和 MySQL 進行資料庫的規劃和建置，並利用 Ajax 和 Axios 技術實現前後端的資料串接。這個項目不僅鍛鍊了我的全端開發能力，也讓我學習到團隊合作如何溝通及解決問題。</td>
+<td><a href="https://github.com/vicky5645/chd102-g1/tree/dev">GitHub</a> | <a href="https://tibamef2e.com/chd102/g1/">Demo</a></td>
+</tr>
+<tr>
+<td><img src="https://firebasestorage.googleapis.com/v0/b/simpleportfolio-64b60.appspot.com/o/img%2F%E4%BD%99%E8%AA%BC%E5%A7%8D%20Sunny%20-%20%E4%BD%9C%E5%93%81%E9%9B%86%20Portfolio.png?alt=media&token=cf0a0add-8f85-4d1d-8c78-cca31301972a" alt="Simple Portfolio"></td>
+<td><strong>個人作品集網站 (Portfolio)</strong><br>我的個人作品集網站，使用 vue3 + composition API + vite 進行開發，網頁展示了我的經歷、專案和技能。</td>
+<td><a href="https://github.com/sunny96087/simple_portfolio">GitHub</a> | <a href="https://simpleportfolio-64b60.web.app/portfolio">Demo</a></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>也可以直接到我 <a href="https://github.com/sunny96087">github</a> 看效果哦</p>
+</blockquote>
+</details>
+
+<br />
+<hr />
+<br />
+
+<p>參考文章 &gt; <a href="https://medium.com/starbugs/%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B%E7%8D%A8%E4%B8%80%E7%84%A1%E4%BA%8C%E7%9A%84-github-profile-%E8%88%87%E4%B8%89%E5%80%8B%E5%BE%88%E9%85%B7%E7%9A%84%E8%A8%AD%E8%A8%88%E5%8F%8A%E6%87%89%E7%94%A8-ef1cbb4b42c1">如何建立獨一無二的 GitHub Profile！</a></p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記</title>
+    <url>/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/</url>
+    <content><![CDATA[<!-- 簡介 -->
+<p>在這篇文章中，我們將探索六角學院 2024 後端工程師資料庫體驗營的精彩瞬間！跟隨小美的第一天工作，看看她如何在系統當機的危機中，運用 SQL 技能解決客戶需求。最後，我們還會提供實作內容的大綱，幫助你輕鬆掌握 SQL 查詢的基礎與進階技巧。準備好一起來學習了嗎？</p>
+<span id="more"></span>
+
+
+<h2 id="🛠️-環境準備"><a href="#🛠️-環境準備" class="headerlink" title="🛠️ 環境準備"></a>🛠️ 環境準備</h2><h3 id="練習資料庫"><a href="#練習資料庫" class="headerlink" title="練習資料庫"></a>練習資料庫</h3><p>我們將使用 <a href="https://pg-sql.com/">pg-sql</a> 作為線上練習環境。</p>
+<h3 id="資料表建立"><a href="#資料表建立" class="headerlink" title="資料表建立"></a>資料表建立</h3><p>首先，讓我們建立一個模擬家具店的商品資料表：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products (</span><br><span class="line">   name <span class="type">VARCHAR</span>(<span class="number">100</span>),         <span class="comment">-- 商品名稱</span></span><br><span class="line">   price <span class="type">INTEGER</span>,            <span class="comment">-- 原價</span></span><br><span class="line">   discount_price <span class="type">INTEGER</span>,    <span class="comment">-- 優惠價</span></span><br><span class="line">   stock <span class="type">INTEGER</span>,            <span class="comment">-- 庫存數量</span></span><br><span class="line">   category <span class="type">VARCHAR</span>(<span class="number">50</span>),      <span class="comment">-- 商品分類</span></span><br><span class="line">   status <span class="type">VARCHAR</span>(<span class="number">20</span>)         <span class="comment">-- 商品狀態</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> products (name, price, discount_price, stock, category, status) <span class="keyword">VALUES</span></span><br><span class="line">   (<span class="string">&#x27;北歐風雙人沙發&#x27;</span>, <span class="number">39900</span>, <span class="number">35900</span>, <span class="number">3</span>, <span class="string">&#x27;沙發&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;貓抓皮L型沙發&#x27;</span>, <span class="number">58900</span>, <span class="number">52900</span>, <span class="number">1</span>, <span class="string">&#x27;沙發&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;典雅三人座沙發&#x27;</span>, <span class="number">42800</span>, <span class="number">42800</span>, <span class="number">5</span>, <span class="string">&#x27;沙發&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;工業風電視櫃&#x27;</span>, <span class="number">5900</span>, <span class="number">4900</span>, <span class="number">12</span>, <span class="string">&#x27;櫃子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;簡約書櫃&#x27;</span>, <span class="number">3500</span>, <span class="number">3500</span>, <span class="number">8</span>, <span class="string">&#x27;櫃子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;玄關鞋櫃&#x27;</span>, <span class="number">2900</span>, <span class="number">2900</span>, <span class="number">15</span>, <span class="string">&#x27;櫃子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;日式雙人床架&#x27;</span>, <span class="number">12000</span>, <span class="number">11200</span>, <span class="number">6</span>, <span class="string">&#x27;床架&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;掀床五尺雙人床&#x27;</span>, <span class="number">19900</span>, <span class="number">18900</span>, <span class="number">2</span>, <span class="string">&#x27;床架&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;兒童床架&#x27;</span>, <span class="number">8900</span>, <span class="number">8900</span>, <span class="number">0</span>, <span class="string">&#x27;床架&#x27;</span>, <span class="string">&#x27;inactive&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;電腦辦公椅&#x27;</span>, <span class="number">4500</span>, <span class="number">3900</span>, <span class="number">20</span>, <span class="string">&#x27;椅子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;餐椅四入組&#x27;</span>, <span class="number">6000</span>, <span class="number">5200</span>, <span class="number">8</span>, <span class="string">&#x27;椅子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;北歐風餐桌&#x27;</span>, <span class="number">15800</span>, <span class="number">14800</span>, <span class="number">4</span>, <span class="string">&#x27;桌子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;實木咖啡桌&#x27;</span>, <span class="number">3200</span>, <span class="number">2900</span>, <span class="number">10</span>, <span class="string">&#x27;桌子&#x27;</span>, <span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">   (<span class="string">&#x27;電競書桌&#x27;</span>, <span class="number">8900</span>, <span class="number">8900</span>, <span class="number">0</span>, <span class="string">&#x27;桌子&#x27;</span>, <span class="string">&#x27;inactive&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📝-完整資料表參考"><a href="#📝-完整資料表參考" class="headerlink" title="📝 完整資料表參考"></a>📝 完整資料表參考</h2><table>
+<thead>
+<tr>
+<th>商品名稱</th>
+<th>原價</th>
+<th>優惠價</th>
+<th>庫存</th>
+<th>類別</th>
+<th>狀態</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>北歐風雙人沙發</td>
+<td>39900</td>
+<td>35900</td>
+<td>3</td>
+<td>沙發</td>
+<td>active</td>
+</tr>
+<tr>
+<td>貓抓皮L型沙發</td>
+<td>58900</td>
+<td>52900</td>
+<td>1</td>
+<td>沙發</td>
+<td>active</td>
+</tr>
+<tr>
+<td>典雅三人座沙發</td>
+<td>42800</td>
+<td>42800</td>
+<td>5</td>
+<td>沙發</td>
+<td>active</td>
+</tr>
+<tr>
+<td>工業風電視櫃</td>
+<td>5900</td>
+<td>4900</td>
+<td>12</td>
+<td>櫃子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>簡約書櫃</td>
+<td>3500</td>
+<td>3500</td>
+<td>8</td>
+<td>櫃子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>玄關鞋櫃</td>
+<td>2900</td>
+<td>2900</td>
+<td>15</td>
+<td>櫃子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>日式雙人床架</td>
+<td>12000</td>
+<td>11200</td>
+<td>6</td>
+<td>床架</td>
+<td>active</td>
+</tr>
+<tr>
+<td>掀床五尺雙人床</td>
+<td>19900</td>
+<td>18900</td>
+<td>2</td>
+<td>床架</td>
+<td>active</td>
+</tr>
+<tr>
+<td>兒童床架</td>
+<td>8900</td>
+<td>8900</td>
+<td>0</td>
+<td>床架</td>
+<td>inactive</td>
+</tr>
+<tr>
+<td>電腦辦公椅</td>
+<td>4500</td>
+<td>3900</td>
+<td>20</td>
+<td>椅子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>餐椅四入組</td>
+<td>6000</td>
+<td>5200</td>
+<td>8</td>
+<td>椅子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>北歐風餐桌</td>
+<td>15800</td>
+<td>14800</td>
+<td>4</td>
+<td>桌子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>實木咖啡桌</td>
+<td>3200</td>
+<td>2900</td>
+<td>10</td>
+<td>桌子</td>
+<td>active</td>
+</tr>
+<tr>
+<td>電競書桌</td>
+<td>8900</td>
+<td>8900</td>
+<td>0</td>
+<td>桌子</td>
+<td>inactive</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🎬-故事背景"><a href="#🎬-故事背景" class="headerlink" title="🎬 故事背景"></a>🎬 故事背景</h2><h3 id="築夢家居的危機時刻"><a href="#築夢家居的危機時刻" class="headerlink" title="築夢家居的危機時刻"></a>築夢家居的危機時刻</h3><p>剛入職築夢家居的銷售顧問小美，萬萬沒想到第一天上班就遇上了巨大挑戰。系統突然大當機，而這間老字號家具店僅存的查詢工具只剩下 POS 機和資料庫。更要命的是，今天剛好是週年慶開跑的大日子，主管還在門市坐鎮！</p>
+<p>在一籌莫展之際，小美只好向店裡的工程師小明求救…</p>
+<hr>
+<h2 id="💡-第一課：基礎查詢"><a href="#💡-第一課：基礎查詢" class="headerlink" title="💡 第一課：基礎查詢"></a>💡 第一課：基礎查詢</h2><h3 id="初次接觸-SQL"><a href="#初次接觸-SQL" class="headerlink" title="初次接觸 SQL"></a>初次接觸 SQL</h3><p><strong>👨🏻‍🦳 客人</strong>：「我要看那個貓抓皮沙發，你們還有貨嗎？」</p>
+<p><strong>👩🏻 小美</strong>：（慌張）啊…貓抓皮沙發…</p>
+<p>（急忙用 LINE 詢問小明）</p>
+<p><strong>👩🏻 小美</strong>：學長救命！要怎麼查這個沙發？</p>
+<p><strong>👨🏼‍💻 小明</strong>：用等於就可以了：<br>      <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> name, price, stock</span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;貓抓皮L型沙發&#x27;</span>;</span><br></pre></td></tr></table></figure></p>
+<p><strong>👩🏻 小美</strong>：喔！就是<br>      - 選取 名字、價格、庫存<br>      - 從 商品表<br>      - 找 商品名等於貓抓皮L型沙發<br>      對嗎？</p>
+<p><strong>👨🏼‍💻 小明</strong>：對！很快就上手了嘛！</p>
+<p><strong>👩🏻 小美</strong>：（快速輸入）哇！真的查到了！只剩一張庫存耶…</p>
+<p><strong>👨🏻‍🦳 客人</strong>：（不耐煩）小姐？到底有沒有啊？</p>
+<p><strong>👩🏻 小美</strong>：這款 L 型沙發目前最後一張特價 52900，要幫您預訂嗎？</p>
+<p><strong>👨🏻‍🦳 客人</strong>：哦？最後一張喔…那…就先訂起來好了！</p>
+<p><strong>👨🏼‍💻 小明</strong>：！！！這麼快就會了？根本是資料庫天才 &#x3D;&#x3D; b</p>
+<hr>
+<h2 id="📚-基礎查詢實戰"><a href="#📚-基礎查詢實戰" class="headerlink" title="📚 基礎查詢實戰"></a>📚 基礎查詢實戰</h2><h3 id="情境-1：單品查詢"><a href="#情境-1：單品查詢" class="headerlink" title="情境 1：單品查詢"></a>情境 1：單品查詢</h3><p><strong>客人詢問</strong>：「這張北歐風雙人沙發多少錢？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> price, stock, name     <span class="comment">-- 選取 價格、庫存、名稱</span></span><br><span class="line"><span class="keyword">FROM</span> products                 <span class="comment">-- 從 商品表</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;北歐風雙人沙發&#x27;</span>;  <span class="comment">-- 找 商品名稱等於北歐風雙人沙發</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 WHERE 子句指定條件，篩選出符合條件的資料</p>
+</blockquote>
+<h3 id="情境-2：價格比較"><a href="#情境-2：價格比較" class="headerlink" title="情境 2：價格比較"></a>情境 2：價格比較</h3><p><strong>客人詢問</strong>：「請列出 5000 元以下的櫃子有哪些？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span>                     <span class="comment">-- 選取所有欄位</span></span><br><span class="line"><span class="keyword">FROM</span> products                <span class="comment">-- 從 商品表</span></span><br><span class="line"><span class="keyword">WHERE</span> category <span class="operator">=</span> <span class="string">&#x27;櫃子&#x27;</span>      <span class="comment">-- 找 商品類別等於櫃子</span></span><br><span class="line"><span class="keyword">AND</span> price <span class="operator">&lt;</span> <span class="number">5000</span>;            <span class="comment">-- 且 價格小於 5000</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 AND 組合多個條件，所有條件都必須符合才會回傳結果</p>
+</blockquote>
+<h3 id="情境-3：庫存確認"><a href="#情境-3：庫存確認" class="headerlink" title="情境 3：庫存確認"></a>情境 3：庫存確認</h3><p><strong>客人詢問</strong>：「日式雙人床架還有貨嗎？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span>                     <span class="comment">-- 選取所有欄位</span></span><br><span class="line"><span class="keyword">FROM</span> products                <span class="comment">-- 從 商品表</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;日式雙人床架&#x27;</span>;  <span class="comment">-- 找 商品名稱等於日式雙人床架</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🔄-進階查詢：邏輯運算-AND"><a href="#🔄-進階查詢：邏輯運算-AND" class="headerlink" title="🔄 進階查詢：邏輯運算 AND"></a>🔄 進階查詢：邏輯運算 AND</h2><h3 id="情境-4：預算內的商品"><a href="#情境-4：預算內的商品" class="headerlink" title="情境 4：預算內的商品"></a>情境 4：預算內的商品</h3><p><strong>客人詢問</strong>：「想找 4 萬以下，而且有現貨的沙發」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> category <span class="operator">=</span> <span class="string">&#x27;沙發&#x27;</span>    <span class="comment">-- 找 分類是沙發</span></span><br><span class="line"><span class="keyword">AND</span> price <span class="operator">&lt;</span> <span class="number">40000</span>         <span class="comment">-- 價格小於 4 萬</span></span><br><span class="line"><span class="keyword">AND</span> stock <span class="operator">&gt;</span> <span class="number">0</span>;           <span class="comment">-- 有庫存</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 AND 組合多個條件，所有條件都必須符合才會回傳結果</p>
+</blockquote>
+<h3 id="情境-5：特價且有貨"><a href="#情境-5：特價且有貨" class="headerlink" title="情境 5：特價且有貨"></a>情境 5：特價且有貨</h3><p><strong>客人詢問</strong>：「沙發有哪些特價且現貨的品項？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> category <span class="operator">=</span> <span class="string">&#x27;沙發&#x27;</span>                <span class="comment">-- 找 分類是沙發</span></span><br><span class="line"><span class="keyword">AND</span> price <span class="operator">&gt;</span> discount_price           <span class="comment">-- 有特價（原價大於優惠價）</span></span><br><span class="line"><span class="keyword">AND</span> stock <span class="operator">&gt;</span> <span class="number">0</span>;                      <span class="comment">-- 有庫存</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🔀-進階查詢：邏輯運算-OR"><a href="#🔀-進階查詢：邏輯運算-OR" class="headerlink" title="🔀 進階查詢：邏輯運算 OR"></a>🔀 進階查詢：邏輯運算 OR</h2><h3 id="情境-6：多分類查詢"><a href="#情境-6：多分類查詢" class="headerlink" title="情境 6：多分類查詢"></a>情境 6：多分類查詢</h3><p><strong>客人詢問</strong>：「我要找櫃子或桌子」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> category <span class="operator">=</span> <span class="string">&#x27;櫃子&#x27;</span>       <span class="comment">-- 找 分類是櫃子</span></span><br><span class="line"><span class="keyword">OR</span> category <span class="operator">=</span> <span class="string">&#x27;桌子&#x27;</span>;        <span class="comment">-- 或 分類是桌子</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 OR 時，符合任一條件就會被包含在結果中</p>
+</blockquote>
+<h3 id="情境-7：指定商品"><a href="#情境-7：指定商品" class="headerlink" title="情境 7：指定商品"></a>情境 7：指定商品</h3><p><strong>客人詢問</strong>：「北歐風雙人沙發和貓抓皮L型沙發哪個還有貨？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> name, price, discount_price, stock  <span class="comment">-- 選取 名字、價格、優惠價、庫存</span></span><br><span class="line"><span class="keyword">FROM</span> products                              <span class="comment">-- 從 商品表</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;北歐風雙人沙發&#x27;</span>              <span class="comment">-- 找 商品名稱等於北歐風雙人沙發</span></span><br><span class="line"><span class="keyword">OR</span> name <span class="operator">=</span> <span class="string">&#x27;貓抓皮L型沙發&#x27;</span>;                <span class="comment">-- 或 商品名稱等於貓抓皮L型沙發</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎯-進階查詢：IN-運算"><a href="#🎯-進階查詢：IN-運算" class="headerlink" title="🎯 進階查詢：IN 運算"></a>🎯 進階查詢：IN 運算</h2><h3 id="情境-8：多分類查詢"><a href="#情境-8：多分類查詢" class="headerlink" title="情境 8：多分類查詢"></a>情境 8：多分類查詢</h3><p><strong>客人詢問</strong>：「客廳的家具有哪些？我要看沙發、櫃子跟桌子」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span>                                    </span><br><span class="line"><span class="keyword">FROM</span> products                                </span><br><span class="line"><span class="keyword">WHERE</span> category <span class="keyword">IN</span> (<span class="string">&#x27;沙發&#x27;</span>, <span class="string">&#x27;櫃子&#x27;</span>, <span class="string">&#x27;桌子&#x27;</span>);  <span class="comment">-- 找 分類是 沙發、櫃子、桌子</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 IN 運算子，指定多個可能的值，只要符合其中一個值就會被包含在結果中</p>
+</blockquote>
+<h3 id="情境-9：特定商品"><a href="#情境-9：特定商品" class="headerlink" title="情境 9：特定商品"></a>情境 9：特定商品</h3><p><strong>客人詢問</strong>：「電腦辦公椅和餐椅四入組的價格是多少？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> name, price, discount_price, stock     <span class="comment">-- 選取 名字、價格、優惠價、庫存</span></span><br><span class="line"><span class="keyword">FROM</span> products                                <span class="comment">-- 從 商品表</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="keyword">IN</span> (<span class="string">&#x27;電腦辦公椅&#x27;</span>, <span class="string">&#x27;餐椅四入組&#x27;</span>);     <span class="comment">-- 找 商品名稱是 電腦辦公椅、餐椅四入組</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📊-進階查詢：BETWEEN"><a href="#📊-進階查詢：BETWEEN" class="headerlink" title="📊 進階查詢：BETWEEN"></a>📊 進階查詢：BETWEEN</h2><h3 id="情境-10：價格區間"><a href="#情境-10：價格區間" class="headerlink" title="情境 10：價格區間"></a>情境 10：價格區間</h3><p><strong>客人詢問</strong>：「想找 10000 到 20000 之間的商品有哪些？」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products                               </span><br><span class="line"><span class="keyword">WHERE</span> price <span class="keyword">BETWEEN</span> <span class="number">10000</span> <span class="keyword">AND</span> <span class="number">20000</span>;        <span class="comment">-- 找 價格在 10000 到 20000 之間</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 BETWEEN 運算子，指定價格範圍，範圍內的資料都會被包含在結果中</p>
+</blockquote>
+<h3 id="情境-11：庫存區間"><a href="#情境-11：庫存區間" class="headerlink" title="情境 11：庫存區間"></a>情境 11：庫存區間</h3><p><strong>主管要求</strong>：「請列出庫存在 5 到 15 之間的商品」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products                               </span><br><span class="line"><span class="keyword">WHERE</span> stock <span class="keyword">BETWEEN</span> <span class="number">5</span> <span class="keyword">AND</span> <span class="number">15</span>;              <span class="comment">-- 找 庫存在 5 到 15 之間</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="❌-進階查詢：NOT-IN"><a href="#❌-進階查詢：NOT-IN" class="headerlink" title="❌ 進階查詢：NOT IN"></a>❌ 進階查詢：NOT IN</h2><h3 id="情境-12：排除商品"><a href="#情境-12：排除商品" class="headerlink" title="情境 12：排除商品"></a>情境 12：排除商品</h3><p><strong>主管要求</strong>：「列出除了沙發和床架以外的商品」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products                               </span><br><span class="line"><span class="keyword">WHERE</span> category <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="string">&#x27;沙發&#x27;</span>, <span class="string">&#x27;床架&#x27;</span>);      <span class="comment">-- 找 分類不是 沙發、床架</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 NOT IN 運算子，排除特定值，只會回傳符合條件的資料</p>
+</blockquote>
+<hr>
+<h2 id="🔄-資料維護：更新和刪除"><a href="#🔄-資料維護：更新和刪除" class="headerlink" title="🔄 資料維護：更新和刪除"></a>🔄 資料維護：更新和刪除</h2><h3 id="情境-13：調整價格"><a href="#情境-13：調整價格" class="headerlink" title="情境 13：調整價格"></a>情境 13：調整價格</h3><p><strong>主管指示</strong>：「北歐風雙人沙發要調降 2000 元」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> products                              <span class="comment">-- 更新 products 表</span></span><br><span class="line"><span class="keyword">SET</span> price <span class="operator">=</span> price <span class="operator">-</span> <span class="number">2000</span>                     <span class="comment">-- 調降 2000 元</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;北歐風雙人沙發&#x27;</span>;                  <span class="comment">-- 指定要降價的商品名稱</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 UPDATE 語句，指定要更新的欄位和條件，只會更新符合條件的資料</p>
+</blockquote>
+<h3 id="情境-14：更新庫存"><a href="#情境-14：更新庫存" class="headerlink" title="情境 14：更新庫存"></a>情境 14：更新庫存</h3><p><strong>主管通知</strong>：「電腦辦公椅進了 5 張」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> products                              <span class="comment">-- 更新 products 表</span></span><br><span class="line"><span class="keyword">SET</span> stock <span class="operator">=</span> stock <span class="operator">+</span> <span class="number">5</span>                       <span class="comment">-- 進了 5 張庫存</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;電腦辦公椅&#x27;</span>;                    <span class="comment">-- 指定要增加庫存的商品名稱</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="情境-15：清除資料"><a href="#情境-15：清除資料" class="headerlink" title="情境 15：清除資料"></a>情境 15：清除資料</h3><p><strong>主管指示</strong>：「要清掉兒童床架和電競書桌的資料」</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> products                              <span class="comment">-- 從 products 表刪除資料</span></span><br><span class="line"><span class="keyword">WHERE</span> name <span class="keyword">IN</span> (<span class="string">&#x27;兒童床架&#x27;</span>, <span class="string">&#x27;電競書桌&#x27;</span>);             <span class="comment">-- 指定商品名稱</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>查詢重點</strong>：使用 DELETE 語句，指定要刪除的條件，只會刪除符合條件的資料</p>
+</blockquote>
+<hr>
+<h2 id="🎯-學習重點總結"><a href="#🎯-學習重點總結" class="headerlink" title="🎯 學習重點總結"></a>🎯 學習重點總結</h2><ol>
+<li><p><strong>基礎查詢語法</strong></p>
+<ul>
+<li>SELECT：選擇要顯示的欄位</li>
+<li>FROM：指定查詢的資料表</li>
+<li>WHERE：設定查詢條件</li>
+</ul>
+</li>
+<li><p><strong>條件組合</strong></p>
+<ul>
+<li>AND：多個條件同時成立</li>
+<li>OR：任一條件成立</li>
+<li>IN：符合列表中的任一值</li>
+<li>BETWEEN：範圍查詢</li>
+<li>NOT IN：排除特定值</li>
+</ul>
+</li>
+<li><p><strong>資料維護操作</strong></p>
+<ul>
+<li>UPDATE：更新資料</li>
+<li>DELETE：刪除資料</li>
+</ul>
+</li>
+</ol>
+<h2 id="💪-練習建議"><a href="#💪-練習建議" class="headerlink" title="💪 練習建議"></a>💪 練習建議</h2><ol>
+<li>先從簡單的單一條件查詢開始</li>
+<li>逐步嘗試組合多個條件</li>
+<li>實際動手操作每個範例</li>
+<li>嘗試修改條件創造新的查詢場景</li>
+<li>記得在執行 UPDATE 和 DELETE 前先確認條件是否正確</li>
+</ol>
+<h2 id="🔗-相關資源"><a href="#🔗-相關資源" class="headerlink" title="🔗 相關資源"></a>🔗 相關資源</h2><ul>
+<li><a href="https://pg-sql.com/">pg-sql 線上練習環境</a></li>
+<li><a href="https://www.w3schools.com/sql/">SQL 完整語法參考</a></li>
+<li><a href="https://gamma.app/docs/SQL--23heyix4r93u5u0?mode=doc#card-zbtn6kfn3th4gpr">六角學院講義</a></li>
+</ul>
+<hr>
+<p>希望透過小美的第一天工作經歷，能幫助你更生動地理解 SQL 查詢的基礎概念。</p>
+]]></content>
+      <tags>
+        <tag>SQL</tag>
+        <tag>六角學院 2024 後端工程師資料庫體驗營</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo-blog-next/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo-blog-next/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo-blog-next/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo-blog-next/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo-blog-next/css/main.css">
+
+
+<link rel="stylesheet" href="/hexo-blog-next/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sunny96087.github.io","root":"/hexo-blog-next/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Nuxt.js 導入 phosphor-icons">
+<meta property="og:url" content="https://sunny96087.github.io/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/nuxt-icon-phosphor%2F1.png?alt=media&token=a8c519d7-f75d-457f-8e6e-c6df2b2207b2">
+<meta property="article:published_time" content="2024-06-07T11:30:36.000Z">
+<meta property="article:modified_time" content="2024-11-03T13:47:13.142Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="Nuxt.js">
+<meta property="article:tag" content="Icons">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/nuxt-icon-phosphor%2F1.png?alt=media&token=a8c519d7-f75d-457f-8e6e-c6df2b2207b2">
+
+<link rel="canonical" href="https://sunny96087.github.io/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>在 Nuxt.js 導入 phosphor-icons | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo-blog-next/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/hexo-blog-next/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/hexo-blog-next/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/hexo-blog-next/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://sunny96087.github.io/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo-blog-next/images/mug_shot.png">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="這是一個由 2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 Nuxt.js 導入 phosphor-icons
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-06-07 19:30:36" itemprop="dateCreated datePublished" datetime="2024-06-07T19:30:36+08:00">2024-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-03 21:47:13" itemprop="dateModified" datetime="2024-11-03T21:47:13+08:00">2024-11-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/06/07/nuxt-icon-phosphor/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
+<span id="more"></span>
+
+<h4 id="1-連結"><a href="#1-連結" class="headerlink" title="1. 連結"></a>1. 連結</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/phosphor-icons/vue">phosphor-icons&#x2F;vue: A flexible icon family for Vue (github.com)</a></li>
+</ul>
+<h4 id="2-安裝"><a href="#2-安裝" class="headerlink" title="2. 安裝"></a>2. 安裝</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @phosphor-icons/vue</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-找喜歡的-Icon"><a href="#3-找喜歡的-Icon" class="headerlink" title="3. 找喜歡的 Icon"></a>3. 找喜歡的 Icon</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a><br>也可以在網頁的測試欄進行調整，可以馬上看到效果哦<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/nuxt-icon-phosphor%2F1.png?alt=media&token=a8c519d7-f75d-457f-8e6e-c6df2b2207b2" alt="找 icon 示意圖"></li>
+</ul>
+<h4 id="4-在專案內使用"><a href="#4-在專案內使用" class="headerlink" title="4. 在專案內使用"></a>4. 在專案內使用</h4><p>導入和使用 Phosphor Icons</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 需要的 icon 再引入即可</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhUserCircle</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhHouse</span></span></span><br><span class="line"><span class="language-javascript">&#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 引入後就可以在頁面上直接使用囉 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhUserCircle</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhHouse</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="可調整的屬性"><a href="#可調整的屬性" class="headerlink" title="可調整的屬性"></a>可調整的屬性</h5><ul>
+<li><p><code>color(string) 圖標顏色</code><br>  可以接受任何 CSS 顏色字符串，包括hex、rgb、rgba、hsl、hsla、命名顏色，或者特殊的 currentColor 變量；<br>  若無設定則使用預設值 currentColor。<br>  使用 currentColor，則圖標的填充顏色將與其父元素的文字顏色相同。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;#FF0000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;hotpink&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>size(string) 圖標高度和寬度</code><br>  可以是一個數字或者一個帶有單位的字符串，單位可以是 px、%、em、rem、pt、cm、mm、in 等；<br>  若無設定則使用預設值 1em。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;2em&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>weight(string) 圖標的粗細/風格</code><br>  這個屬性可以是 thin、light、regular、bold、fill 或 duotone 。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;regular&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  在上述代碼中，第一行將 PhStar 圖標的風格設定為 regular，這將產生一個空心的星形圖標。<br>  第二行將 PhStar 圖標的風格設定為 fill，這將產生一個實心的星形圖標。</p>
+  <br />
+</li>
+<li><p><code>mirrored(boolean) 水平翻轉圖標</code><br>  如果設定為 true，則圖標將被水平翻轉。在正常圖示方向不合適的 RTL 語言中非常有用。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>一次是可以使用多個屬性的哦！</code><br>  我這邊對 <code>PhBooks</code> 設定大小 24px、填滿、水平翻轉、藍色。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<br />
+<hr />
+<br />
+
+<details>
+<summary>等等！ 為什麼有的要 : 有的不用 : 呢 ?</summary>
+
+<h4>基本原理</h4>
+<p>在 Vue.js 中，當你使用 v-bind 指令（縮寫為 :）時，你告訴 Vue 這個屬性值是動態的，並且應該被解析為 JavaScript 表達式。如果屬性值是固定的字符串，則不需要使用 :。</p>
+
+<h4>字符串常量 vs. JavaScript 表達式</h4>
+- 字符串常量：直接使用固定的字符串值，不需要 `:`。
+- JavaScript 表達式：使用變量或計算表達式，需要使用 `:`。
+
+<h4>具體說明</h4>
+<h5>字符串常量</h5>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>weight=&quot;fill&quot;</code> 和 <code>color=&quot;blue&quot;</code> 是固定的字符串常量，不需要 <code>:</code>。</p>
+<h5>JavaScript 表達式</h5>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+`:size="24"` 和 `:mirrored="true"` 是 JavaScript 表達式，需要使用 `:`。
+    
+<h4>結合示例</h4>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;iconSize&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;isMirrored&quot;</span> <span class="attr">:weight</span>=<span class="string">&quot;iconWeight&quot;</span> <span class="attr">:color</span>=<span class="string">&quot;iconColor&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; <span class="title class_">PhBooks</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconSize = <span class="title function_">ref</span>(<span class="number">24</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> isMirrored = <span class="title function_">ref</span>(<span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconWeight = <span class="title function_">ref</span>(<span class="string">&#x27;fill&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconColor = <span class="title function_">ref</span>(<span class="string">&#x27;blue&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4>總結</h4>
+
+<ul>
+<li><p>靜態值 -&gt; 不需要 <code>:</code></p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>動態值 -&gt; 需要 <code>:</code></p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>希望這樣能幫助你更清楚地理解為什麼某些屬性需要使用 <code>:</code> 而其他屬性則不需要！</p>
+</details>
+
+<br />
+<hr />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo-blog-next/tags/Nuxt-js/" rel="tag"># Nuxt.js</a>
+              <a href="/hexo-blog-next/tags/Icons/" rel="tag"># Icons</a>
+              <a href="/hexo-blog-next/tags/Vue/" rel="tag"># Vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/hexo-blog-next/2024/05/18/github-personal-page/" rel="prev" title="github 自定義個人頁面 ✨">
+      <i class="fa fa-chevron-left"></i> github 自定義個人頁面 ✨
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/" rel="next" title="六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記">
+      六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%80%A3%E7%B5%90"><span class="nav-number">1.</span> <span class="nav-text">1. 連結</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%9D"><span class="nav-number">2.</span> <span class="nav-text">2. 安裝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%89%BE%E5%96%9C%E6%AD%A1%E7%9A%84-Icon"><span class="nav-number">3.</span> <span class="nav-text">3. 找喜歡的 Icon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%9C%A8%E5%B0%88%E6%A1%88%E5%85%A7%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">4. 在專案內使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E8%AA%BF%E6%95%B4%E7%9A%84%E5%B1%AC%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text">可調整的屬性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">字符串常量 vs. JavaScript 表達式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">具體說明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">字符串常量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">JavaScript 表達式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">結合示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/hexo-blog-next/images/mug_shot.png">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">這是一個由 2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo-blog-next/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/hexo-blog-next/lib/anime.min.js"></script>
+  <script src="/hexo-blog-next/lib/velocity/velocity.min.js"></script>
+  <script src="/hexo-blog-next/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/hexo-blog-next/js/utils.js"></script>
+
+<script src="/hexo-blog-next/js/motion.js"></script>
+
+
+<script src="/hexo-blog-next/js/schemes/pisces.js"></script>
+
+
+<script src="/hexo-blog-next/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/hexo-blog-next/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yishanhexo.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://sunny96087.github.io/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/";
+    this.page.identifier = "2024/06/07/nuxt-icon-phosphor/";
+    this.page.title = "在 Nuxt.js 導入 phosphor-icons";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://yishanhexo.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
