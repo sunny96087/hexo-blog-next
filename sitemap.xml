@@ -115,20 +115,6 @@
   </url>
   
   <url>
-    <loc>https://sunny96087.github.io/hexo-blog-next/tags/SQL/</loc>
-    <lastmod>2024-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sunny96087.github.io/hexo-blog-next/tags/%E5%85%AD%E8%A7%92%E5%AD%B8%E9%99%A2-2024-%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB%E8%B3%87%E6%96%99%E5%BA%AB%E9%AB%94%E9%A9%97%E7%87%9F/</loc>
-    <lastmod>2024-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sunny96087.github.io/hexo-blog-next/tags/Nuxt-js/</loc>
     <lastmod>2024-11-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -144,6 +130,20 @@
   
   <url>
     <loc>https://sunny96087.github.io/hexo-blog-next/tags/Vue/</loc>
+    <lastmod>2024-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sunny96087.github.io/hexo-blog-next/tags/SQL/</loc>
+    <lastmod>2024-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sunny96087.github.io/hexo-blog-next/tags/%E5%85%AD%E8%A7%92%E5%AD%B8%E9%99%A2-2024-%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB%E8%B3%87%E6%96%99%E5%BA%AB%E9%AB%94%E9%A9%97%E7%87%9F/</loc>
     <lastmod>2024-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
