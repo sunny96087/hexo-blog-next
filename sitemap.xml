@@ -83,6 +83,13 @@
 
   
   <url>
+    <loc>https://sunny96087.github.io/hexo-blog-next/tags/github/</loc>
+    <lastmod>2024-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://sunny96087.github.io/hexo-blog-next/tags/hexo/</loc>
     <lastmod>2024-11-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -105,13 +112,6 @@
   
   <url>
     <loc>https://sunny96087.github.io/hexo-blog-next/tags/Vue/</loc>
-    <lastmod>2024-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sunny96087.github.io/hexo-blog-next/tags/github/</loc>
     <lastmod>2024-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
