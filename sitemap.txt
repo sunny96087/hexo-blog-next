@@ -1,3 +1,4 @@
+https://sunny96087.github.io/hexo-blog-next/about/index.html
 https://sunny96087.github.io/hexo-blog-next/categories/index.html
 https://sunny96087.github.io/hexo-blog-next/tags/index.html
 https://sunny96087.github.io/hexo-blog-next/google9d3006f6841d78d1.html
@@ -7,7 +8,6 @@ https://sunny96087.github.io/hexo-blog-next/2024/10/25/hexschool-sql2024-section
 https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-replenish-1/
 https://sunny96087.github.io/hexo-blog-next/2024/05/17/hexo-instruction-collection/
 https://sunny96087.github.io/hexo-blog-next/2024/05/18/github-personal-page/
-https://sunny96087.github.io/hexo-blog-next/about/index.html
 https://sunny96087.github.io/hexo-blog-next
 https://sunny96087.github.io/hexo-blog-next/tags/github/
 https://sunny96087.github.io/hexo-blog-next/tags/hexo/

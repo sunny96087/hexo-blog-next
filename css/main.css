@@ -1326,14 +1326,14 @@ pre .javascript .function {
   margin-left: 10px;
 }
 .sidebar-nav li:hover {
-  color: #fc6423;
+  color: #92caea;
 }
 .sidebar-nav .sidebar-nav-active {
-  border-bottom-color: #fc6423;
-  color: #fc6423;
+  border-bottom-color: #92caea;
+  color: #92caea;
 }
 .sidebar-nav .sidebar-nav-active:hover {
-  color: #fc6423;
+  color: #92caea;
 }
 .sidebar-panel {
   display: none;
