@@ -134,37 +134,37 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 指令合集</title>
-    <url>/2024/05/17/hexo-instruction-collection/</url>
-    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
+    <title>Hexo 進階 - part 1</title>
+    <url>/2024/05/17/hexo-replenish-1/</url>
+    <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
 <span id="more"></span>
 
-<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-
-<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
-
-<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
-
-<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
-
-<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-
-<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<h2 id="🔹-更換-Landscape-主題的網站圖示"><a href="#🔹-更換-Landscape-主題的網站圖示" class="headerlink" title="🔹 更換 Landscape 主題的網站圖示"></a>🔹 更換 Landscape 主題的網站圖示</h2><h4 id="1-先找一張圖示"><a href="#1-先找一張圖示" class="headerlink" title="1. 先找一張圖示"></a>1. 先找一張圖示</h4><p>可以到 <a href="https://www.flaticon.com/">flaticon</a> 下載免費圖示</p>
+<h4 id="2-把圖示放進專案裡"><a href="#2-把圖示放進專案裡" class="headerlink" title="2. 把圖示放進專案裡"></a>2. 把圖示放進專案裡</h4><p>我這邊圖示取做 favicon.png，放在以下路徑：<br><code>themes/landscape/source/css/images</code></p>
+<h4 id="3-修改-config-yml"><a href="#3-修改-config-yml" class="headerlink" title="3. 修改 _config.yml"></a>3. 修改 <code>_config.yml</code></h4><p>到 <code>themes/landscape/_config.yml</code> 修改 favicon 路徑：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Favicon path -&gt; 如果照著我上面放的話會跟範例路徑相同</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/css/images/favicon.png</span></span><br></pre></td></tr></table></figure>
 
 <br />
 <hr />
 <br />
 
-<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
-]]></content>
+<h2 id="🔹-好不容易改完的樣式被吃掉"><a href="#🔹-好不容易改完的樣式被吃掉" class="headerlink" title="🔹 好不容易改完的樣式被吃掉"></a>🔹 好不容易改完的樣式被吃掉</h2><h4 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h4><p>若你是使用 <code>style.css</code> 修改樣式，那就把舊的樣式檔案 <code>style.styl</code> 刪掉，路徑如下：<br><code>themes/landscape/source/css</code></p>
+<h4 id="清除快取並重新生成靜態文件"><a href="#清除快取並重新生成靜態文件" class="headerlink" title="清除快取並重新生成靜態文件"></a>清除快取並重新生成靜態文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+<p>我這樣執行後樣式就會吃到我的 <code>style.css</code> 文件了</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-在文章摘要下方顯示-“Read-More”-連結"><a href="#🔹-在文章摘要下方顯示-“Read-More”-連結" class="headerlink" title="🔹 在文章摘要下方顯示 “Read More” 連結"></a>🔹 在文章摘要下方顯示 “Read More” 連結</h2><h4 id="設定-config-yml"><a href="#設定-config-yml" class="headerlink" title="設定 _config.yml"></a>設定 <code>_config.yml</code></h4><p>在主題裡面的 <code>_config.yml</code> 文件中，設定 <code>excerpt_link</code> 的值來控制是否在文章摘要下方顯示 “Read More” 連結。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &quot;Read More&quot; link at the bottom of excerpted articles. `false` to hide the link.</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;Read More&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果您希望將 &quot;Read More&quot; 更改為其他文字，例如 &quot;觀看更多&quot;，可以這樣設置：</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;觀看更多&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="設定完後，在文章內需要這樣使用"><a href="#設定完後，在文章內需要這樣使用" class="headerlink" title="設定完後，在文章內需要這樣使用"></a>設定完後，在文章內需要這樣使用</h4><p>在 Hexo 中，您可以使用 <code>&lt;!-- more --&gt;</code> 分隔符來定義哪些內容要在列表顯示或隱藏。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">title: 我的文章標題</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">這是摘要段落，會顯示在文章列表。</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">這邊開始是我只想在文章內頁顯示的內容，列表不會出現！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="自訂按鈕樣式-修改-CSS"><a href="#自訂按鈕樣式-修改-CSS" class="headerlink" title="自訂按鈕樣式 - 修改 CSS"></a>自訂按鈕樣式 - 修改 CSS</h3><p>在 <code>themes/landscape/source/css/style.css</code> 中自訂樣式：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以開啟 f12 查看按鈕屬於哪個 class 控制 */</span></span><br><span class="line"><span class="comment">/* 按鈕預設樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 按鈕預設 hover 樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#258fb8</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#1e7293</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>hexo</tag>
       </tags>
@@ -439,6 +439,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo 指令合集</title>
+    <url>/2024/05/17/hexo-instruction-collection/</url>
+    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
+<span id="more"></span>
+
+<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在 Nuxt.js 導入 phosphor-icons</title>
     <url>/2024/06/07/nuxt-icon-phosphor/</url>
     <content><![CDATA[<p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
@@ -526,42 +562,6 @@
         <tag>Nuxt.js</tag>
         <tag>Icons</tag>
         <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 進階 - part 1</title>
-    <url>/2024/05/17/hexo-replenish-1/</url>
-    <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
-<span id="more"></span>
-
-<h2 id="🔹-更換-Landscape-主題的網站圖示"><a href="#🔹-更換-Landscape-主題的網站圖示" class="headerlink" title="🔹 更換 Landscape 主題的網站圖示"></a>🔹 更換 Landscape 主題的網站圖示</h2><h4 id="1-先找一張圖示"><a href="#1-先找一張圖示" class="headerlink" title="1. 先找一張圖示"></a>1. 先找一張圖示</h4><p>可以到 <a href="https://www.flaticon.com/">flaticon</a> 下載免費圖示</p>
-<h4 id="2-把圖示放進專案裡"><a href="#2-把圖示放進專案裡" class="headerlink" title="2. 把圖示放進專案裡"></a>2. 把圖示放進專案裡</h4><p>我這邊圖示取做 favicon.png，放在以下路徑：<br><code>themes/landscape/source/css/images</code></p>
-<h4 id="3-修改-config-yml"><a href="#3-修改-config-yml" class="headerlink" title="3. 修改 _config.yml"></a>3. 修改 <code>_config.yml</code></h4><p>到 <code>themes/landscape/_config.yml</code> 修改 favicon 路徑：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Favicon path -&gt; 如果照著我上面放的話會跟範例路徑相同</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/css/images/favicon.png</span></span><br></pre></td></tr></table></figure>
-
-<br />
-<hr />
-<br />
-
-<h2 id="🔹-好不容易改完的樣式被吃掉"><a href="#🔹-好不容易改完的樣式被吃掉" class="headerlink" title="🔹 好不容易改完的樣式被吃掉"></a>🔹 好不容易改完的樣式被吃掉</h2><h4 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h4><p>若你是使用 <code>style.css</code> 修改樣式，那就把舊的樣式檔案 <code>style.styl</code> 刪掉，路徑如下：<br><code>themes/landscape/source/css</code></p>
-<h4 id="清除快取並重新生成靜態文件"><a href="#清除快取並重新生成靜態文件" class="headerlink" title="清除快取並重新生成靜態文件"></a>清除快取並重新生成靜態文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<p>我這樣執行後樣式就會吃到我的 <code>style.css</code> 文件了</p>
-<br />
-<hr />
-<br />
-
-<h2 id="🔹-在文章摘要下方顯示-“Read-More”-連結"><a href="#🔹-在文章摘要下方顯示-“Read-More”-連結" class="headerlink" title="🔹 在文章摘要下方顯示 “Read More” 連結"></a>🔹 在文章摘要下方顯示 “Read More” 連結</h2><h4 id="設定-config-yml"><a href="#設定-config-yml" class="headerlink" title="設定 _config.yml"></a>設定 <code>_config.yml</code></h4><p>在主題裡面的 <code>_config.yml</code> 文件中，設定 <code>excerpt_link</code> 的值來控制是否在文章摘要下方顯示 “Read More” 連結。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &quot;Read More&quot; link at the bottom of excerpted articles. `false` to hide the link.</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;Read More&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果您希望將 &quot;Read More&quot; 更改為其他文字，例如 &quot;觀看更多&quot;，可以這樣設置：</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;觀看更多&quot;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="設定完後，在文章內需要這樣使用"><a href="#設定完後，在文章內需要這樣使用" class="headerlink" title="設定完後，在文章內需要這樣使用"></a>設定完後，在文章內需要這樣使用</h4><p>在 Hexo 中，您可以使用 <code>&lt;!-- more --&gt;</code> 分隔符來定義哪些內容要在列表顯示或隱藏。</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">title: 我的文章標題</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">這是摘要段落，會顯示在文章列表。</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">這邊開始是我只想在文章內頁顯示的內容，列表不會出現！</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="自訂按鈕樣式-修改-CSS"><a href="#自訂按鈕樣式-修改-CSS" class="headerlink" title="自訂按鈕樣式 - 修改 CSS"></a>自訂按鈕樣式 - 修改 CSS</h3><p>在 <code>themes/landscape/source/css/style.css</code> 中自訂樣式：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以開啟 f12 查看按鈕屬於哪個 class 控制 */</span></span><br><span class="line"><span class="comment">/* 按鈕預設樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 按鈕預設 hover 樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#258fb8</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#1e7293</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
