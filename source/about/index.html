@@ -1,0 +1,217 @@
+---
+title: about
+date: 2024-05-15 12:09:00
+fullPage: true
+---
+
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+</head>
+<main style="letter-spacing: 1.1px;">
+  <div class="top">
+    <div class="pic">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/IMG_5206%202.jpg?alt=media&token=e4e0a560-4031-4df6-a874-c31693a80abd"
+        alt="2魚本魚"
+      />
+    </div>
+    <div>
+      <h2>hey ! 我是 2 魚</h2>
+      <p class="intro">
+        歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡。
+      </p>
+      <p class="intro">
+        我曾是空軍退伍，退伍前就決定轉職成為一名前端工程師，經歷了半年的轉職班培訓，我成功進入了前端開發的領域。
+      </p>
+      <p class="intro">
+        之後，我進一步自學後端技術，並成功轉職成為全端工程師。我熱愛學習和挑戰新技術，立志成為一名出色的工程師，能夠憑藉自己的雙手創造出任何想像中的事物。
+      </p>
+    </div>
+  </div>
+  <div class="quotes">
+    <p>Even if you're moving slowly, just keep going.</p>
+  </div>
+
+  <div class="skills">
+    <div class="t3">技能 Skills</div>
+
+    <div class="skills-grid" style="font-size: 16px">
+      <div>
+        <h4>前端開發</h4>
+        <ul>
+          <li>HTML</li>
+          <li>CSS, SCSS</li>
+          <li>JavaScript</li>
+          <li>TypeScript</li>
+          <li>jQuery</li>
+          <li>Vue 3</li>
+          <li>Nuxt 3</li>
+          <li>GitHub</li>
+          <li>Ajax, Axios</li>
+          <li>Bootstrap 5</li>
+          <li>Tailwind CSS</li>
+          <li>Firebase</li>
+          <li>RWD (響應式網頁設計)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>後端開發</h4>
+        <ul>
+          <li>Node.js</li>
+          <li>PHP</li>
+          <li>MySQL</li>
+          <li>MSSQL</li>
+          <li>MongoDB</li>
+          <li>Mongoose</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>使用者介面設計</h4>
+        <ul>
+          <li>Figma</li>
+          <li>Mockup</li>
+          <li>Photoshop</li>
+          <li>Wireframe</li>
+          <li>Prototype</li>
+          <li>Illustrator</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="contact" style="font-size: 16px">
+    <div class="t3">聯絡我</div>
+    <div class="sub-txt">
+      想更深入了解我的工作或與我交流？你可以在這些地方找到我：
+    </div>
+    <div class="contact-list">
+      <div class="contact-item">
+        <a
+          href="https://simpleportfolio-64b60.web.app/portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fas fa-briefcase"></i>
+          Portfolio
+        </a>
+        - 看看我的作品集，了解我的開發專案和經歷👣
+      </div>
+      <div class="contact-item">
+        <a
+          href="https://github.com/sunny96087"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-github"></i>
+          GitHub
+        </a>
+        - 瀏覽我的程式碼倉庫，看看我最近在研究什麼😎
+      </div>
+      <div class="contact-item">
+        <a href="mailto:yain13142013@gmail.com">
+          <i class="fas fa-envelope"></i>
+          Email
+        </a>
+        - 發送一封信件給我，我很樂意與你交流🤝
+      </div>
+    </div>
+  </div>
+</main>
+
+<style scoped>
+  main {
+    padding: 20px 0;
+  }
+  .top {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .pic {
+    overflow: hidden;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    scale: 1.8;
+  }
+
+  .intro {
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .article-entry p {
+    margin: 12px 0;
+  }
+
+  .quotes {
+    text-align: center;
+    color: #92caea;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    opacity: 0.8;
+    padding: 12px 0;
+  }
+
+  .t3 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .sub-txt {
+    font-size: 16px;
+    margin: 12px 0;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+    }
+    .article-entry h2 {
+      font-size: 32px;
+    }
+    .intro {
+      font-size: 18px;
+      letter-spacing: 4px;
+    }
+    .article-entry p {
+      margin: 20px 0;
+    }
+    .pic {
+      width: 100%;
+    }
+    img {
+      scale: 1;
+    }
+    .quotes {
+      font-size: 20px;
+      padding: 32px 0;
+      font-weight: 800;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+</style>
