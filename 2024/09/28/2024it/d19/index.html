@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.cdnfonts.com/css/lxgw-wenkai" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="大家好～關於鸚鸚食堂會有一些超酷的功能，像是計算鸚鵡每日應攝取的鮮食量，以及一個聯絡表單，讓使用者可以跟我們互動。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/28/2024it/d19/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="大家好～關於鸚鸚食堂會有一些超酷的功能，像是計算鸚鵡每日應攝取的鮮食量，以及一個聯絡表單，讓使用者可以跟我們互動。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240928/20159686HTBmuKNBMm.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240928/20159686Rrzp345s2E.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240928/20159686CXQQwXfNTm.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240928/20159686vTgpRUjuNe.png">
+<meta property="article:published_time" content="2024-09-28T12:33:45.000Z">
+<meta property="article:modified_time" content="2024-11-18T15:05:15.441Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="MongoDB">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="Postman">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240928/20159686HTBmuKNBMm.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/28/2024it/d19/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/28/2024it/d19/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-28 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-28T20:33:45+08:00">2024-09-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-18 23:05:15" itemprop="dateModified" datetime="2024-11-18T23:05:15+08:00">2024-11-18</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/28/2024it/d19/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/28/2024it/d19/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>大家好～<br>關於鸚鸚食堂會有一些超酷的功能，像是計算鸚鵡每日應攝取的鮮食量，以及一個聯絡表單，讓使用者可以跟我們互動。</p>
+<span id="more"></span>
+
+<p>除了之前我們已經完成的 POST Feedback API 之外，我們還需要完成以下幾個部分：</p>
+<ul>
+<li>定義鮮食 Model：就是我們要在 MongoDB 中儲存的鮮食資料的結構。</li>
+<li>取得鮮食 API：讓前端可以從後端取得鮮食的資料。</li>
+<li>計算應攝取量 API：根據使用者輸入的鸚鵡體重，計算出每日應攝取的鮮食量。</li>
+<li>使用 Postman 測試 API：確保我們寫的 API 可以正常運作。<br>聽起來很刺激吧！讓我們打開 VSCode，一起開始這個精彩的旅程吧！</li>
+</ul>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="定義鮮食-Model"><a href="#定義鮮食-Model" class="headerlink" title="定義鮮食 Model"></a>定義鮮食 Model</h2><p>首先，我們要定義鮮食的 Model。<br>Model 就是我們要在 MongoDB 中儲存的資料的結構。我們可以把它想像成一個物件，裡面有各種屬性，每個屬性都有自己的型別和預設值。</p>
+<ol>
+<li><p>在 <code>models</code> 資料夾中，建立一個新的檔案 <code>freshFood.js</code>。</p>
+</li>
+<li><p>在 <code>freshFood.js</code> 中，我們要定義我們的鮮食 Model。每一種鮮食都有以下這些屬性：</p>
+<ul>
+<li><code>name</code>：鮮食的名稱，型別是字串，必填。</li>
+<li><code>calories</code>：每 100 克鮮食所含的卡路里，型別是數字，必填。</li>
+<li><code>protein</code>：每 100 克鮮食所含的蛋白質，型別是數字，必填。</li>
+<li><code>fat</code>：每 100 克鮮食所含的脂肪，型別是數字，必填。</li>
+<li><code>carbs</code>：每 100 克鮮食所含的碳水化合物，型別是數字，必填。</li>
+<li><code>maxIntake</code>：鸚鵡每日最大攝取量，型別是數字，必填。</li>
+<li><code>note</code>：食用時的注意事項，型別是字串，必填。</li>
+<li><code>nutrition</code>：鮮食的營養價值，型別是字串，必填。</li>
+</ul>
+<p> 我們可以用以下的程式碼來定義我們的鮮食 Model：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> freshFoodSchema = <span class="keyword">new</span> mongoose.<span class="title class_">Schema</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 食物名稱</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">calories</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 每100克食物的熱量（卡路里）</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">protein</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 每100克食物中的蛋白質（克）</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">fat</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 每100克食物中的脂肪（克）</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">carbs</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 每100克食物中的碳水化合物（克）</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">maxIntake</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 每日最大攝取量（克）</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">note</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 食用備註</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">nutrition</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="comment">// 營養價值</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;, &#123; <span class="attr">timestamps</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">FreshFood</span> = mongoose.<span class="title function_">model</span>(<span class="string">&#x27;FreshFood&#x27;</span>, freshFoodSchema);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">FreshFood</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先，我們引入了 <code>mongoose</code>，這是一個 Node.js 的 ODM 庫，可以讓我們方便地操作 MongoDB。</li>
+<li>接著，我們建立了一個新的 Schema，也就是我們的鮮食 Model 的結構。Schema 中定義了各個欄位的名稱、型別、是否必填等屬性。</li>
+<li>我們還在 Schema 的第二個參數中傳入了 <code>&#123; timestamps: true &#125;</code>，這樣 Mongoose 就會自動為我們加上 <code>createdAt</code> 和 <code>updatedAt</code> 這兩個時間戳欄位。</li>
+<li>最後，我們用 <code>mongoose.model()</code> 方法，把 Schema 轉換成一個 Model，並將其命名為 <code>FreshFood</code>。這樣，我們就可以在其他地方使用這個 Model 了。<br> 相信大家對 Model 已經有了一個基本的了解了。接下來，讓我們看看如何取得鮮食的資料吧！</li>
+</ul>
+</li>
+</ol>
+<h2 id="取得鮮食-API"><a href="#取得鮮食-API" class="headerlink" title="取得鮮食 API"></a>取得鮮食 API</h2><p>現在，我們要建立一個 API，讓前端可以從後端取得鮮食的資料。</p>
+<ol>
+<li><p>在 <code>routes</code> 資料夾中，建立一個新的檔案 <code>freshFood.js</code>。</p>
+</li>
+<li><p>在 <code>freshFood.js</code> 中，我們要定義我們的 API。我們先從取得所有鮮食的 API 開始：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&quot;express&quot;);</span><br><span class="line">const router = express.Router();</span><br><span class="line">const FreshFood = require(&quot;../models/freshFood&quot;);</span><br><span class="line">const handleSuccess = require(&quot;../utils/handleSuccess&quot;);</span><br><span class="line">const handleErrorAsync = require(&quot;../utils/handleErrorAsync&quot;);</span><br><span class="line">const appError = require(&quot;../utils/appError&quot;);</span><br><span class="line"></span><br><span class="line">// 取得所有 freshFood</span><br><span class="line">router.get(</span><br><span class="line">  &quot;/&quot;,</span><br><span class="line">  handleErrorAsync(async (req, res, next) =&gt; &#123;</span><br><span class="line">    // 使用 find() 方法從資料庫中取得所有 freshFoods</span><br><span class="line">    const freshFoods = await FreshFood.find();</span><br><span class="line"></span><br><span class="line">    handleSuccess(res, freshFoods, &quot;取得所有 freshFoods 成功&quot;, 200);</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">module.exports = router;</span><br></pre></td></tr></table></figure>
+<p> 這段程式碼的意思是：</p>
+<ul>
+<li>我們引入了 <code>express</code>、<code>router</code>、<code>FreshFood</code> 等模組和工具函數。</li>
+<li>我們定義了一個 GET 請求的路由，路徑是 <code>/</code>，表示這個 API 的路徑是 <code>/freshFoods</code>。</li>
+<li>在路由處理函數中，我們用 <code>FreshFood.find()</code> 方法，從資料庫中取得所有的鮮食資料。</li>
+<li>最後，我們用 <code>handleSuccess()</code> 方法，回傳一個成功的 response，包含了取得的鮮食資料、成功訊息和狀態碼。</li>
+</ul>
+</li>
+<li><p>接下來，我們要在 <code>app.js</code> 中掛載這個路由。打開 <code>app.js</code>，加入以下程式碼：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> freshFoodRoute = <span class="built_in">require</span>(<span class="string">&quot;./routes/freshFood&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/freshfoods&quot;</span>, freshfoodRoute);</span><br></pre></td></tr></table></figure>
+<p> 這樣，我們就完成了取得鮮食 API 的定義和掛載。</p>
+</li>
+<li><p>現在，讓我們啟動伺服器，測試一下我們的 API 吧！在終端機中，輸入 <code>npm start</code>，啟動伺服器。</p>
+</li>
+</ol>
+<h2 id="測試取得鮮食-API"><a href="#測試取得鮮食-API" class="headerlink" title="測試取得鮮食 API"></a>測試取得鮮食 API</h2><ol>
+<li><p>打開 Postman，新建一個 GET 請求，URL 設為 <code>http://127.0.0.1:3000/freshfoods/</code>。</p>
+</li>
+<li><p>點選「Send」按鈕，發送請求。你會看到類似下面這樣的回應：<br> 咦，怎麼 <code>data</code> 是空的呢？這是因為我們的資料庫中還沒有任何鮮食資料啊！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240928/20159686HTBmuKNBMm.png" alt="https://ithelp.ithome.com.tw/upload/images/20240928/20159686HTBmuKNBMm.png"></p>
+</li>
+<li><p>別擔心，我這裡有一些預先準備好的鮮食資料，我們可以把它們匯入到資料庫中。這裡有六種鮮食的資料：</p>
+</li>
+<li><p>如果你想要更多的資料，也可以自己搜集和整理。</p>
+ <details>
+ <summary>範例資料 (可以自己存成 JSON 檔案，前幾天有教過)</summary>
+     <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;向日葵籽&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">584</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">20.78</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">51.46</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">20</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;向日葵籽富含健康脂肪、蛋白質及纖維，有助於心血管健康和提供長時間的能量。&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;南瓜籽&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">559</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">30.23</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">49.05</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">10.71</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;南瓜籽含有豐富的鋅、鐵和抗氧化劑，有助於增強免疫系統和促進骨骼健康。&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;蘋果&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">52</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">0.26</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">0.17</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">13.81</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">20</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食，去核&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;蘋果含有豐富的維他命C、纖維和抗氧化劑，有助於提高免疫力和促進消化健康。&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;胡蘿蔔&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">41</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">0.93</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">0.24</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">9.58</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食或煮熟食用&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;胡蘿蔔富含β-胡蘿蔔素和維他命A，有助於改善視力和促進皮膚健康。&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;杏仁&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">579</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">21.15</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">49.93</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">21.55</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食或輕微烘烤後食用&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;杏仁富含維他命E、健康脂肪和蛋白質，有助於降低膽固醇和增強大腦功能。&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;花生&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">567</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">25.8</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">49.24</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">16.13</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食或輕微烘烤後食用&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;花生含有豐富的蛋白質、健康脂肪和纖維，有助於促進心臟健康和提供持久能量。&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ </details></li>
+</ol>
+<h2 id="匯入鮮食資料"><a href="#匯入鮮食資料" class="headerlink" title="匯入鮮食資料"></a>匯入鮮食資料</h2><ol>
+<li><p>打開 MongoDB Compass，選擇要匯入資料的資料庫和 Collection。</p>
+</li>
+<li><p>點選「Add Data」按鈕，選擇「Import File」，然後選擇剛剛的 JSON 檔案匯入。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240928/20159686Rrzp345s2E.png" alt="https://ithelp.ithome.com.tw/upload/images/20240928/20159686Rrzp345s2E.png"><br> <img src="https://ithelp.ithome.com.tw/upload/images/20240928/20159686CXQQwXfNTm.png" alt="https://ithelp.ithome.com.tw/upload/images/20240928/20159686CXQQwXfNTm.png"></p>
+</li>
+<li><p>回到 Postman，再次發送 GET 請求到 <code>http://127.0.0.1:3000/freshfoods/</code>。<br> 這次，你應該能看到剛剛匯入的鮮食資料了：<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240928/20159686vTgpRUjuNe.png" alt="https://ithelp.ithome.com.tw/upload/images/20240928/20159686vTgpRUjuNe.png"></p>
+<blockquote>
+<p>看到了嗎？我們的 API 已經可以正常工作了！</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>哇，我們今天完成了好多事情啊！我們定義了鮮食 Model，建立了取得鮮食的 API，還學會了如何匯入資料到 MongoDB，以及如何用 Postman 測試 API。<br>我相信，通過今天的學習，大家對如何在 Express 專案中建立 API，以及如何與 MongoDB 互動，已經有了一個基本的了解。這些都是作為一個後端工程師必備的技能哦！<br>當然，我們今天只是完成了一小部分。在下一篇文章中，我們會繼續探索如何建立計算每日應攝取量的 API，以及如何讓前端和後端協同工作。<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+              <a href="/tags/Express/" rel="tag"># Express</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+              <a href="/tags/Postman/" rel="tag"># Postman</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/27/2024it/d18/" rel="prev" title="[ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/29/2024it/d20/" rel="next" title="[ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄">
+      [ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9%E9%AE%AE%E9%A3%9F-Model"><span class="nav-number">2.</span> <span class="nav-text">定義鮮食 Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E5%BE%97%E9%AE%AE%E9%A3%9F-API"><span class="nav-number">3.</span> <span class="nav-text">取得鮮食 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6%E5%8F%96%E5%BE%97%E9%AE%AE%E9%A3%9F-API"><span class="nav-number">4.</span> <span class="nav-text">測試取得鮮食 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E9%AE%AE%E9%A3%9F%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">匯入鮮食資料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">5.1.</span> <span class="nav-text">結語</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/28/2024it/d19/";
+    this.page.identifier = "2024/09/28/2024it/d19/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDCQB8EPC3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HDCQB8EPC3');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

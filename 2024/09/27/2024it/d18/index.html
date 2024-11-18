@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.cdnfonts.com/css/lxgw-wenkai" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="大家好，今天想和大家分享一個在 API 開發中非常有幫助的工具 —— Swagger。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/27/2024it/d18/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="大家好，今天想和大家分享一個在 API 開發中非常有幫助的工具 —— Swagger。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/201596862h2WNkC14k.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/20159686ItkVvOEZ3v.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/20159686Q2Va73ZJR8.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/201596864V0DucflvX.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/20159686vnvgENDEDU.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/20159686h2KElU0Wmk.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/20159686lBZOHQHsDA.png">
+<meta property="article:published_time" content="2024-09-27T12:33:45.000Z">
+<meta property="article:modified_time" content="2024-11-18T15:00:59.582Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="Swagger">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240927/201596862h2WNkC14k.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/27/2024it/d18/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/27/2024it/d18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-27 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-27T20:33:45+08:00">2024-09-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-18 23:00:59" itemprop="dateModified" datetime="2024-11-18T23:00:59+08:00">2024-11-18</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/27/2024it/d18/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/27/2024it/d18/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>大家好，今天想和大家分享一個在 API 開發中非常有幫助的工具 —— Swagger。</p>
+<span id="more"></span>
+
+<p>首先，讓我們談談 API 文件。對於剛接觸後端開發的朋友來說，API 文件可能是個新概念。簡單來說，API 文件就像是使用說明書，它告訴其他開發者（尤其是前端工程師）如何使用你開發的功能。<br>然而，撰寫和維護 API 文件往往是一項挑戰。在開發過程中，API 可能會經常變動，這意味著文件也需要不斷更新。如果文件更新不及時或不完整，可能會導致團隊合作時的誤解和效率低下。<br>這就是 Swagger 派上用場的地方。Swagger 是一個能夠幫助我們自動生成 API 文件的工具。它的工作原理是這樣的：我們在寫程式碼的時候，只需要加入一些特定的註解，Swagger 就能根據這些註解自動生成詳細的 API 文件。<br>Swagger 不僅能生成文件，還提供了一個互動式的介面，讓其他開發者可以直接在上面測試 API。這大大提高了溝通效率，減少了可能的誤解。</p>
+<p>我們就來看看如何在 Express 專案中使用 Swagger，讓 API 文件的撰寫變得更加輕鬆和有效率吧。</p>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="step1-安裝所需套件"><a href="#step1-安裝所需套件" class="headerlink" title="step1. 安裝所需套件"></a>step1. 安裝所需套件</h2><p>首先，我們要先安裝兩個超級重要的套件：</p>
+<ul>
+<li><code>swagger-autogen</code>：這個就是我們的文件小精靈，負責自動生成 Swagger 文件。</li>
+<li><code>swagger-ui-express</code>：這個則是負責在我們的 Express 應用程式中提供一個漂亮的 Swagger UI 介面。<br>來，跟著我一起打開 VSCode 專案，再打開終端機，然後輸入以下指令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install swagger-autogen swagger-ui-express</span><br></pre></td></tr></table></figure>
+
+<h2 id="step2-建立-Swagger-配置文件"><a href="#step2-建立-Swagger-配置文件" class="headerlink" title="step2. 建立 Swagger 配置文件"></a>step2. 建立 Swagger 配置文件</h2><p>接下來，我們要在專案的根目錄下建立一個名叫 <code>swagger.js</code> 的文件。這個文件就像是 Swagger 的設定檔，告訴它要怎麼生成我們的 API 文件。<br>新增 <code>swagger.js</code> 檔案，然後把下面這些內容貼進去：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> swaggerAutogen = <span class="built_in">require</span>(<span class="string">&quot;swagger-autogen&quot;</span>)();</span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> doc = &#123;</span><br><span class="line">  <span class="attr">info</span>: &#123;</span><br><span class="line">    <span class="attr">version</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;parrot api&quot;</span>,</span><br><span class="line">    <span class="attr">description</span>: <span class="string">&quot;鸚鸚食堂 api&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// * 開發</span></span><br><span class="line">  <span class="attr">host</span>: <span class="string">&quot;localhost:3000&quot;</span>,</span><br><span class="line">  <span class="attr">schemes</span>: [<span class="string">&quot;http&quot;</span>, <span class="string">&quot;https&quot;</span>],</span><br><span class="line">  <span class="comment">// * 部署</span></span><br><span class="line">  <span class="comment">// host: &quot;parrot-api.2fishs.com&quot;,</span></span><br><span class="line">  <span class="comment">// schemes: [&quot;https&quot;],</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">basePath</span>: <span class="string">&quot;/&quot;</span>,</span><br><span class="line">  <span class="attr">tags</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;Parrot&quot;</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">&quot;鸚鸚&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;Info&quot;</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">&quot;資訊&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;Food&quot;</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">&quot;食物&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;Parrot&quot;</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">&quot;鸚鸚&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;Feedback&quot;</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">&quot;回饋&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> outputFile = <span class="string">&quot;./swagger_output.json&quot;</span>; <span class="comment">// 輸出的文件名稱</span></span><br><span class="line"><span class="keyword">const</span> endpointsFiles = [<span class="string">&quot;./app.js&quot;</span>]; <span class="comment">// 要指向的 API，通常使用 Express 直接指向到 app.js 就可以</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">swaggerAutogen</span>(outputFile, endpointsFiles, doc); <span class="comment">// swaggerAutogen 的方法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這個檔案看起來有點複雜，但別怕，讓我來解釋一下：</p>
+<ul>
+<li><code>info</code> 部分：這就是你的 API 的基本資料，像是版本號、標題和描述。</li>
+<li><code>host</code> 和 <code>schemes</code>：這是告訴 Swagger 你的 API 住在哪裡，用什麼協議（http 或 https）。</li>
+<li><code>basePath</code>：如果你的所有 API 都有共同的前綴，就可以寫在這裡。</li>
+<li><code>tags</code>：這個超好用！你可以用它來幫你的 API 分類，讓文件看起來更有條理。</li>
+</ul>
+<blockquote>
+<p>小技巧：如果你的專案有開發環境和正式環境，記得要切換 host 和 schemes 喔！我在這裡用註解的方式標記出來了，你可以根據需要自己調整。</p>
+</blockquote>
+<h2 id="step3-在-Express-應用程式中使用-Swagger"><a href="#step3-在-Express-應用程式中使用-Swagger" class="headerlink" title="step3. 在 Express 應用程式中使用 Swagger"></a>step3. 在 Express 應用程式中使用 Swagger</h2><p>現在，我們要讓 Express 知道我們要用 Swagger 了。打開你的 <code>app.js</code> 檔案，然後加入以下程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> swaggerUi = <span class="built_in">require</span>(<span class="string">&quot;swagger-ui-express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> swaggerFile = <span class="built_in">require</span>(<span class="string">&quot;./swagger_output.json&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ... (其他的 Express 設定)</span></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/api-docs&quot;</span>, swaggerUi.<span class="property">serve</span>, swaggerUi.<span class="title function_">setup</span>(swaggerFile));</span><br></pre></td></tr></table></figure>
+
+<p>這幾行程式碼的意思是：我們要把 Swagger UI 掛在 <code>/api-docs</code> 這個路徑上。等一下當你的 Express 伺服器跑起來後，只要在瀏覽器輸入 <code>http://localhost:3000/api-docs</code>，就可以看到超酷的 API 文件了！</p>
+<h2 id="step4-為-API-端點添加-Swagger-註解"><a href="#step4-為-API-端點添加-Swagger-註解" class="headerlink" title="step4. 為 API 端點添加 Swagger 註解"></a>step4. 為 API 端點添加 Swagger 註解</h2><p>接下來是最重要的一步！我們要教 Swagger 怎麼認識我們的 API。這就需要我們在每個 API 端點上加一些特殊的註解。<br>舉個例子，我們來看看 <code>routes/feedback.js</code> 裡面的新增回饋功能。我們可以這樣加註解：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新增 feedback</span></span><br><span class="line">router.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;/&quot;</span>,</span><br><span class="line">  <span class="title function_">handleErrorAsync</span>(<span class="title function_">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; contactPerson, phone, email, feedback &#125; = req.<span class="property">body</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必填欄位驗證</span></span><br><span class="line">    <span class="keyword">if</span> (!contactPerson || !email || !feedback) &#123;</span><br><span class="line">      <span class="comment">// 使用 appError 函式創建錯誤物件</span></span><br><span class="line">      <span class="comment">// 狀態碼為 400，錯誤訊息為 &quot;姓名、信箱、內容為必填欄位&quot;</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">next</span>(<span class="title function_">appError</span>(<span class="number">400</span>, <span class="string">&quot;姓名、信箱、內容為必填欄位&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> newFeedback = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">      contactPerson,</span><br><span class="line">      phone,</span><br><span class="line">      email,</span><br><span class="line">      feedback,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 handleSuccess 函式處理成功回應</span></span><br><span class="line">    <span class="comment">// 狀態碼為 201，回應中包含新創建的 feedback 資料和成功訊息</span></span><br><span class="line">    <span class="title function_">handleSuccess</span>(res, newFeedback, <span class="string">&quot;新增成功&quot;</span>, <span class="number">201</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">/*  #swagger.tags = [&#x27;Feedback&#x27;]</span></span><br><span class="line"><span class="comment">	    #swagger.summary = &#x27;新增回饋&#x27;</span></span><br><span class="line"><span class="comment">	    #swagger.description = &#x27;新增回饋&#x27;</span></span><br><span class="line"><span class="comment">	    #swagger.parameters[&#x27;body&#x27;] = &#123;</span></span><br><span class="line"><span class="comment">	        in: &#x27;body&#x27;,</span></span><br><span class="line"><span class="comment">	        required: true,</span></span><br><span class="line"><span class="comment">	        schema:&#123;</span></span><br><span class="line"><span class="comment">	            $contactPerson:&#x27;姓名&#x27;,</span></span><br><span class="line"><span class="comment">	            $phone:&#x27;電話&#x27;,</span></span><br><span class="line"><span class="comment">	            $email: &#x27;信箱&#x27;,</span></span><br><span class="line"><span class="comment">	            $feedback: &#x27;內容&#x27;,</span></span><br><span class="line"><span class="comment">	            $source: &#x27;從哪裡得知此網站&#x27;,</span></span><br><span class="line"><span class="comment">	        &#125;</span></span><br><span class="line"><span class="comment">	    &#125;</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>這些註解看起來有點像魔法咒語，但其實很容易理解：</p>
+<ul>
+<li><code>tags</code>：告訴 Swagger 這個 API 屬於哪個分類。</li>
+<li><code>summary</code> 和 <code>description</code>：簡單描述一下這個 API 是做什麼的。</li>
+<li><code>parameters</code>：這裡列出了這個 API 需要的所有參數，包括它們的名稱、類型、是否必填等資訊。</li>
+</ul>
+<blockquote>
+<p>小提醒：這些註解可以放在函式內的任何地方，只要確保它們被正確解析就可以了。多試幾次，你就會找到最適合的位置！</p>
+</blockquote>
+<h2 id="step5-生成-Swagger-文件"><a href="#step5-生成-Swagger-文件" class="headerlink" title="step5. 生成 Swagger 文件"></a>step5. 生成 Swagger 文件</h2><p>好了，現在我們已經準備好所有東西了，是時候讓 Swagger 發揮魔力了！打開終端機，輸入以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./swagger.js</span><br></pre></td></tr></table></figure>
+
+<p>噹噹！這個指令會執行我們剛剛寫的 <code>swagger.js</code>，然後根據我們的設定和 API 註解，生成一個叫 <code>swagger_output.json</code> 的檔案。<br><img src="https://ithelp.ithome.com.tw/upload/images/20240927/201596862h2WNkC14k.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/201596862h2WNkC14k.png"></p>
+<blockquote>
+<p>💡 小技巧：如果你覺得每次都要輸入 <code>node ./swagger.js</code> 很麻煩，我有一個好主意！我們可以在 <code>package.json</code> 裡加一個自訂指令：</p>
+</blockquote>
+<ul>
+<li><p>打開 package.json，添加以下程式碼</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;swagger&quot;: &quot;node ./swagger.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>這樣以後你只要輸入 <code>npm run swagger</code> 就可以了，超方便的！<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240927/20159686ItkVvOEZ3v.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/20159686ItkVvOEZ3v.png"></p>
+</li>
+</ul>
+<h2 id="step6-訪問-Swagger-UI"><a href="#step6-訪問-Swagger-UI" class="headerlink" title="step6. 訪問 Swagger UI"></a>step6. 訪問 Swagger UI</h2><p>最後一步啦！啟動你的 Express 應用程式，然後在瀏覽器中輸入 <code>http://localhost:3000/api-docs</code>。哇！是不是看到一個超級炫炮的頁面了？沒錯，這就是 Swagger UI，你的 API 文件已經誕生了！<br><img src="https://ithelp.ithome.com.tw/upload/images/20240927/20159686Q2Va73ZJR8.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/20159686Q2Va73ZJR8.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240927/201596864V0DucflvX.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/201596864V0DucflvX.png"></p>
+<p>在這個頁面上，你可以瀏覽所有的 API 資訊，甚至可以直接在上面測試 API！超酷的吧？</p>
+<h3 id="來試試看用-Swagger-測試-API"><a href="#來試試看用-Swagger-測試-API" class="headerlink" title="來試試看用 Swagger 測試 API"></a>來試試看用 Swagger 測試 API</h3><ul>
+<li><p>點擊 “Try it out” 按鈕：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240927/20159686vnvgENDEDU.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/20159686vnvgENDEDU.png"></p>
+</li>
+<li><p>調整要測試的 body 內容，然後點擊 “Execute” 送出測試請求：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240927/20159686h2KElU0Wmk.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/20159686h2KElU0Wmk.png"></p>
+</li>
+<li><p>查看回應內容：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240927/20159686lBZOHQHsDA.png" alt="https://ithelp.ithome.com.tw/upload/images/20240927/20159686lBZOHQHsDA.png"></p>
+</li>
+</ul>
+<blockquote>
+<p>是不是超級方便？有了這個工具，前端工程師們再也不用跑來問你 API 怎麼用了！</p>
+</blockquote>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>哇，我們終於完成了！回顧一下我們做了什麼：</p>
+<ol>
+<li>安裝了 Swagger 相關套件</li>
+<li>設定了 Swagger 的配置檔</li>
+<li>在 Express 中加入了 Swagger</li>
+<li>為 API 加上了 Swagger 註解</li>
+<li>生成了 API 文件</li>
+<li>用 Swagger UI 測試了我們的 API<br>使用 Swagger 自動生成 API 文件真的超級方便！它不只省下了我們寫文件的時間，還提供了一個統一的格式，讓文件更容易維護。最棒的是，它還有互動式的介面，讓測試 API 變得超級容易！<br>希望這篇文章對你有幫助！如果你有任何問題，或是想分享你使用 Swagger 的心得，歡迎留言討論喔！讓我們一起讓 API 開發變得更簡單、更有趣吧！<br>記住，工程師不只會寫程式，還要會善用工具來提高效率。Swagger 就是這樣一個讓你事半功倍的好幫手！<br>讓我們一起成為會寫 API 文件的一極棒小菜鳥後端，讓前端夥伴不要每天都畫圈圈詛咒我們 🥹<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</li>
+</ol>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Express/" rel="tag"># Express</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+              <a href="/tags/Swagger/" rel="tag"># Swagger</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/26/2024it/d17/" rel="prev" title="[ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/28/2024it/d19/" rel="next" title="[ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試">
+      [ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step1-%E5%AE%89%E8%A3%9D%E6%89%80%E9%9C%80%E5%A5%97%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">step1. 安裝所需套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step2-%E5%BB%BA%E7%AB%8B-Swagger-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">step2. 建立 Swagger 配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step3-%E5%9C%A8-Express-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-Swagger"><span class="nav-number">4.</span> <span class="nav-text">step3. 在 Express 應用程式中使用 Swagger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step4-%E7%82%BA-API-%E7%AB%AF%E9%BB%9E%E6%B7%BB%E5%8A%A0-Swagger-%E8%A8%BB%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">step4. 為 API 端點添加 Swagger 註解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step5-%E7%94%9F%E6%88%90-Swagger-%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">step5. 生成 Swagger 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step6-%E8%A8%AA%E5%95%8F-Swagger-UI"><span class="nav-number">7.</span> <span class="nav-text">step6. 訪問 Swagger UI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%86%E8%A9%A6%E8%A9%A6%E7%9C%8B%E7%94%A8-Swagger-%E6%B8%AC%E8%A9%A6-API"><span class="nav-number">7.1.</span> <span class="nav-text">來試試看用 Swagger 測試 API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">8.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/27/2024it/d18/";
+    this.page.identifier = "2024/09/27/2024it/d18/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDCQB8EPC3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HDCQB8EPC3');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

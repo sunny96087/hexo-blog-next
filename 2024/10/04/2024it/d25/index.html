@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.cdnfonts.com/css/lxgw-wenkai" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈囉大家好！今天我們要來玩點有趣的東西了 —— 我們要開始打造我們的網頁骨架啦！想像一下，我們今天要給我們的 Nuxt3 專案穿上漂亮的衣服，讓它不再只是一個空蕩蕩的框架。準備好了嗎？讓我們開始吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY25 ] Nuxt 3 開發之旅：顏色、圖示、導航欄到動畫效果">
+<meta property="og:url" content="https://blog.2fishs.com/2024/10/04/2024it/d25/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哈囉大家好！今天我們要來玩點有趣的東西了 —— 我們要開始打造我們的網頁骨架啦！想像一下，我們今天要給我們的 Nuxt3 專案穿上漂亮的衣服，讓它不再只是一個空蕩蕩的框架。準備好了嗎？讓我們開始吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686rwAHn5G0v1.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/201596866yJAOVpWxa.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686xYndNzmg8V.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686JZuLvNIisZ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686FifMXEgU2X.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686xI1BDvJT4b.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686d4uvYZPdFR.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/201596861xBSMcLCUf.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/201596860YI7cnLsxd.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686HxVuW3xe6F.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686eNQ7XI4uib.png">
+<meta property="og:image" content="https://img.youtube.com/vi/4LQ1bhICoYA/0.jpg">
+<meta property="article:published_time" content="2024-10-04T01:33:45.000Z">
+<meta property="article:modified_time" content="2024-11-18T15:27:51.966Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Nuxt3">
+<meta property="article:tag" content="Vue3">
+<meta property="article:tag" content="Transition">
+<meta property="article:tag" content="animate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20241004/20159686rwAHn5G0v1.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/10/04/2024it/d25/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY25 ] Nuxt 3 開發之旅：顏色、圖示、導航欄到動畫效果 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/10/04/2024it/d25/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY25 ] Nuxt 3 開發之旅：顏色、圖示、導航欄到動畫效果
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-04 09:33:45" itemprop="dateCreated datePublished" datetime="2024-10-04T09:33:45+08:00">2024-10-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-18 23:27:51" itemprop="dateModified" datetime="2024-11-18T23:27:51+08:00">2024-11-18</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/04/2024it/d25/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/04/2024it/d25/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哈囉大家好！今天我們要來玩點有趣的東西了 —— 我們要開始打造我們的網頁骨架啦！想像一下，我們今天要給我們的 Nuxt3 專案穿上漂亮的衣服，讓它不再只是一個空蕩蕩的框架。準備好了嗎？讓我們開始吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="先來看看我們的目標"><a href="#先來看看我們的目標" class="headerlink" title="先來看看我們的目標"></a>先來看看我們的目標</h2><p>首先，讓我們來看看我們要做出來的頁面吧：</p>
+<ol>
+<li><p>聯繫我們頁面：<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686rwAHn5G0v1.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686rwAHn5G0v1.png"></p>
+</li>
+<li><p>食物計算機頁面：<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241004/201596866yJAOVpWxa.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/201596866yJAOVpWxa.png"><img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686xYndNzmg8V.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686xYndNzmg8V.png"></p>
+</li>
+</ol>
+<p>是不是看起來很酷？接下來我們會一步一步把這些頁面實現出來 (但不是今天)！</p>
+<h2 id="開始動手做吧！"><a href="#開始動手做吧！" class="headerlink" title="開始動手做吧！"></a>開始動手做吧！</h2><h3 id="1-整理-app-vue"><a href="#1-整理-app-vue" class="headerlink" title="1. 整理 app.vue"></a>1. 整理 app.vue</h3><p>首先，我們要整理一下 <code>app.vue</code>。這個檔案就像是我們網站的大骨架，所有的頁面都會包在這裡面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"></span><br><span class="line">// 建立一個 Axios 實例，就像是給我們的 API 請求一個專屬的小幫手</span><br><span class="line">const api = axios.create(&#123;</span><br><span class="line">  baseURL: &#x27;https://two024it-test-app.onrender.com&#x27;// 設定基礎 URL</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const list = ref([])</span><br><span class="line"></span><br><span class="line">// 取得資料的函式</span><br><span class="line">async function fetchData() &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    const response = await api.get(&#x27;/freshfoods/&#x27;)// 取得食物列表</span><br><span class="line">    console.log(response.data)// 在控制台印出回應資料</span><br><span class="line">    list.value = response.data</span><br><span class="line">  &#125; catch (error) &#123;</span><br><span class="line">    console.error(&#x27;哎呀，出錯了：&#x27;, error)// 錯誤處理</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  fetchData()</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;relative flex min-h-screen w-full flex-col&quot;&gt;</span><br><span class="line">&lt;!-- 導航欄 --&gt;</span><br><span class="line">    &lt;header class=&quot;z-20&quot;&gt;</span><br><span class="line">&lt;!-- &lt;Header /&gt; --&gt;</span><br><span class="line">    &lt;/header&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 頁面內容 --&gt;</span><br><span class="line">    &lt;main class=&quot;page-wrapper&quot;&gt;</span><br><span class="line">      &lt;NuxtPage /&gt;</span><br><span class="line">    &lt;/main&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.page-wrapper &#123;</span><br><span class="line">  @apply mx-auto flex w-full max-w-[1200px] grow px-3 pb-5 pt-[52px] lg:px-5 lg:pt-[64px];</span><br><span class="line">  align-items: start;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這裡我們用了 <code>&lt;NuxtPage /&gt;</code> 組件，它就像是一個神奇的佔位符，Nuxt 會自動把我們的頁面內容放在這裡。</p>
+<h3 id="2-建立首頁"><a href="#2-建立首頁" class="headerlink" title="2. 建立首頁"></a>2. 建立首頁</h3><p>接下來，我們要在 <code>pages</code> 資料夾裡新增一個 <code>index.vue</code> 檔案。這就是我們的首頁啦！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;index&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>當你執行專案並進入首頁時，你會看到 “index” 這個字。這是因為 <code>&lt;NuxtPage /&gt;</code> 幫我們把 <code>pages/index.vue</code> 的內容放到那裡了。是不是很神奇？<br><img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686JZuLvNIisZ.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686JZuLvNIisZ.png"></p>
+<h3 id="3-新增其他頁面"><a href="#3-新增其他頁面" class="headerlink" title="3. 新增其他頁面"></a>3. 新增其他頁面</h3><p>接著，我們要在 <code>pages</code> 資料夾裡新增所有需要的頁面。我會新增以下頁面：</p>
+<ul>
+<li><code>index.vue</code>（首頁，已存在）</li>
+<li><code>calculator.vue</code>（食物計算機）</li>
+<li><code>food.vue</code>（營養指南）</li>
+<li><code>bird.vue</code>（百科全書）</li>
+<li><code>hospital.vue</code>（醫護站）</li>
+<li><code>connect.vue</code>（聯繫我們）</li>
+</ul>
+<p>每個檔案可以使用以下基本結構：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;頁面標題&lt;/h1&gt;</span><br><span class="line">    &lt;!-- 在這裡添加頁面內容 --&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">// 這裡可以添加需要的 JavaScript 邏輯</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">/* 這裡可以添加頁面專屬的樣式 */</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-設定網站基礎配色"><a href="#4-設定網站基礎配色" class="headerlink" title="4. 設定網站基礎配色"></a>4. 設定網站基礎配色</h3><p>為了讓我們的網站看起來更漂亮，我們要設定一些基礎的顏色。打開 <code>tailwind.config.ts</code>，加入以下程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">extend</span>: &#123;</span><br><span class="line">  <span class="attr">colors</span>: &#123;</span><br><span class="line">    <span class="attr">blue1</span>: <span class="string">&#x27;#e9f1fe&#x27;</span>,</span><br><span class="line">    <span class="attr">blue2</span>: <span class="string">&#x27;#c4d7ed&#x27;</span>,</span><br><span class="line">    <span class="attr">blue3</span>: <span class="string">&#x27;#abc8e2&#x27;</span>,</span><br><span class="line">    <span class="attr">blue4</span>: <span class="string">&#x27;#375d81&#x27;</span>,</span><br><span class="line">    <span class="attr">blue5</span>: <span class="string">&#x27;#183152&#x27;</span>,</span><br><span class="line">    <span class="attr">red1</span>: <span class="string">&#x27;#ffaeaa&#x27;</span>,</span><br><span class="line">    <span class="attr">red2</span>: <span class="string">&#x27;#ed6f69&#x27;</span>,</span><br><span class="line">    <span class="attr">bg</span>: <span class="string">&#x27;#fff6ea&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣我們就可以用像 <code>text-blue3</code> 這樣的 class 來使用我們自定義的顏色了！超方便的吧？<br><img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686FifMXEgU2X.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686FifMXEgU2X.png"></p>
+<h3 id="5-安裝和使用-Nuxt-Icon"><a href="#5-安裝和使用-Nuxt-Icon" class="headerlink" title="5. 安裝和使用 Nuxt Icon"></a>5. 安裝和使用 Nuxt Icon</h3><ol>
+<li><p>安裝圖示套件：</p>
+<ul>
+<li><p>開啟終端機，在專案根目錄執行以下指令安裝 Nuxt Icon 模組：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D @nuxt/icon</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>設定 Nuxt：</p>
+<ul>
+<li><p>打開 <code>nuxt.config.ts</code> 檔案。</p>
+</li>
+<li><p>在 <code>modules</code> 陣列中添加 <code>nuxt-icon</code>：</p>
+  <figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="attr">devtools</span>: &#123; <span class="attr">enabled</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;@nuxtjs/tailwindcss&#x27;</span>, <span class="string">&#x27;@nuxt-icon&#x27;</span>]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>使用圖示：</p>
+<ul>
+<li><p>前往 <a target="_blank" rel="noopener" href="https://icones.js.org/">Icones</a> 網站尋找需要的圖示。</p>
+</li>
+<li><p>複製您選擇的圖示名稱。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686xI1BDvJT4b.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686xI1BDvJT4b.png"></p>
+</li>
+<li><p>在頁面中使用以下格式插入圖示：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Icon name=&quot;ph:hand-tap&quot; size=&quot;20&quot;&gt;&lt;/Icon&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>name</code> 屬性中填入您剛剛複製的圖示名稱。</p>
+</li>
+<li><p><code>size</code> 屬性用來控制圖示大小。</p>
+</li>
+</ul>
+<blockquote>
+<p>注意：這邊如果貼在 <code>Header.vue</code> 測試會看不到哦，因為我們 <code>app.vue</code> 的 <code>Header</code> 元件是註解的狀態 &gt;&lt;</p>
+</blockquote>
+</li>
+<li><p>實用提示：</p>
+<ul>
+<li><p>推薦安裝 VS Code 擴充套件：<strong>Iconify IntelliSense</strong><br>  <img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686d4uvYZPdFR.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686d4uvYZPdFR.png"></p>
+</li>
+<li><p>這個擴充套件可以將程式碼中的圖示名稱轉換為可視化的圖示，方便預覽和選擇。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20241004/201596861xBSMcLCUf.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/201596861xBSMcLCUf.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>完成以上步驟後，您就可以在專案中使用漂亮的圖示了！</p>
+<h3 id="6-建立元件-components-資料夾"><a href="#6-建立元件-components-資料夾" class="headerlink" title="6. 建立元件 components 資料夾"></a>6. 建立元件 <code>components</code> 資料夾</h3><ol>
+<li><p>在專案根目錄新增一個 <code>components</code> 資料夾。<br> 這個資料夾將用來存放所有的 Vue 元件。</p>
+</li>
+<li><p>在 <code>components</code> 資料夾內新增一個 <code>Header.vue</code> 檔案。<br> 這個檔案將包含我們的導航欄元件程式碼。</p>
+</li>
+</ol>
+<h3 id="7-建立資源-assets-資料夾"><a href="#7-建立資源-assets-資料夾" class="headerlink" title="7. 建立資源 assets 資料夾"></a>7. 建立資源 <code>assets</code> 資料夾</h3><ol>
+<li>在專案根目錄新增一個 <code>assets</code> 資料夾。<br>這個資料夾用於存放靜態資源，如圖片、樣式表等。</li>
+<li>在 <code>assets</code> 資料夾內新增一個 <code>images</code> 資料夾。<br>這個資料夾將專門用來存放圖片檔案。</li>
+<li>將 LOGO 圖片放入 <code>assets/images</code> 資料夾中。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241004/201596860YI7cnLsxd.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/201596860YI7cnLsxd.png"></li>
+</ol>
+<h3 id="8-建立-建立全局樣式文件"><a href="#8-建立-建立全局樣式文件" class="headerlink" title="8. 建立 建立全局樣式文件"></a>8. 建立 建立全局樣式文件</h3><p>在這個步驟中，我們將創建一個全局的 CSS 文件，用於定義整個應用程序的基本樣式和一些通用的 CSS 類。</p>
+<ol>
+<li><p>在專案根目錄下創建 <code>assets/css/main.css</code> 文件。</p>
+</li>
+<li><p>將以下內容複製到 <code>main.css</code> 文件中：</p>
+ <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> url(<span class="string">&#x27;https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&amp;display=swap&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attr">--color-blue1</span>: <span class="number">#e9f1fe</span>;</span><br><span class="line">  <span class="attr">--color-blue2</span>: <span class="number">#c4d7ed</span>;</span><br><span class="line">  <span class="attr">--color-blue3</span>: <span class="number">#abc8e2</span>;</span><br><span class="line">  <span class="attr">--color-blue4</span>: <span class="number">#375d81</span>;</span><br><span class="line">  <span class="attr">--color-blue5</span>: <span class="number">#183152</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attr">--color-red1</span>: <span class="number">#ffaeaa</span>;</span><br><span class="line">  <span class="attr">--color-red2</span>: <span class="number">#ed6f69</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attr">--color-bg</span>: <span class="number">#fff6ea</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;Noto Sans TC&#x27;</span>, sans-serif;</span><br><span class="line">  <span class="attribute">letter-spacing</span>: <span class="number">1.25px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">var</span>(--color-bg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 消樣式 */</span></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-pseudo">:focus-visible</span> &#123;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">textarea</span><span class="selector-pseudo">:focus-visible</span> &#123;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">select</span><span class="selector-pseudo">:focus-visible</span> &#123;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 圖片通用 */</span></span><br><span class="line"><span class="selector-class">.pic-auto</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">object-fit</span>: cover;</span><br><span class="line">  <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 限制最大寬度 !&gt; 1200px, 搭配 px-5 使用 */</span></span><br><span class="line"><span class="selector-class">.page-max-w</span> &#123;</span><br><span class="line">  <span class="keyword">@apply</span> mx-auto w-full max-w-[<span class="number">1200px</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* hover 效果 */</span></span><br><span class="line"><span class="selector-class">.hover-auto</span> &#123;</span><br><span class="line">  <span class="keyword">@apply</span> transform duration-<span class="number">200</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 讓我們來解析這個 CSS 文件的各個部分：</p>
+<ol>
+<li>字體導入：<ul>
+<li>使用 Google Fonts 導入 Noto Sans TC 字體，這是一種適合中文顯示的sans-serif字體。</li>
+</ul>
+</li>
+<li>CSS 變數定義：<ul>
+<li>在 <code>:root</code> 選擇器中定義了一系列顏色變數，包括不同深淺的藍色、紅色和背景色。</li>
+<li>使用 CSS 變數可以讓我們在整個應用中方便地管理和修改顏色。</li>
+</ul>
+</li>
+<li>全局樣式：<ul>
+<li>為 <code>body</code> 元素設置了字體、字間距和背景色。</li>
+</ul>
+</li>
+<li>表單元素樣式重置：<ul>
+<li>移除了 <code>input</code>、<code>textarea</code> 和 <code>select</code> 元素在獲得焦點時的默認輪廓。</li>
+</ul>
+</li>
+<li>通用圖片樣式：<ul>
+<li><code>.pic-auto</code> 類提供了一種便捷的方式來設置圖片的寬高和適應方式。</li>
+</ul>
+</li>
+<li>頁面最大寬度限制：<ul>
+<li><code>.page-max-w</code> 類用於限制內容的最大寬度，通常與 padding 一起使用來創建響應式佈局。</li>
+</ul>
+</li>
+<li>Hover 效果：<ul>
+<li><code>.hover-auto</code> 類為元素添加了過渡效果，可用於創建平滑的懸停動畫。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>要在專案中使用這個 CSS 文件，需要在 <code>nuxt.config.ts</code> 中進行配置：</p>
+ <figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="attr">css</span>: [<span class="string">&#x27;~/assets/css/main.css&#x27;</span>],</span><br><span class="line"><span class="comment">// 其他配置...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> 這樣，<code>main.css</code> 中定義的樣式就會被應用到整個專案中。您可以在元件中直接使用這些 CSS 類和變數，例如：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;page-max-w&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;pic-auto hover-auto&quot; /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.custom-element &#123;</span><br><span class="line">  color: var(--color-blue4);</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p> 通過這種方式，我們可以確保整個應用程序有一致的樣式，同時也方便了樣式的管理和修改。</p>
+</li>
+</ol>
+<h3 id="9-查看設計稿"><a href="#9-查看設計稿" class="headerlink" title="9. 查看設計稿"></a>9. 查看設計稿</h3><p>在開始編寫程式碼之前，請仔細查看導航欄的設計稿：</p>
+<ul>
+<li>左側是 LOGO</li>
+<li>右側是導航選項<br><img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686HxVuW3xe6F.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686HxVuW3xe6F.png"><img src="https://ithelp.ithome.com.tw/upload/images/20241004/20159686eNQ7XI4uib.png" alt="https://ithelp.ithome.com.tw/upload/images/20241004/20159686eNQ7XI4uib.png"><br>這個設計將指導我們如何構建 <code>Header.vue</code> 元件的結構和樣式。<br>完成這些步驟後，我們就準備好開始製作導航欄元件了。接下來，我們將開始編寫 <code>Header.vue</code> 的內容，實現設計稿中的導航欄功能。</li>
+</ul>
+<h2 id="導航欄詳細製作步驟"><a href="#導航欄詳細製作步驟" class="headerlink" title="導航欄詳細製作步驟"></a>導航欄詳細製作步驟</h2><h3 id="1-建立基本結構"><a href="#1-建立基本結構" class="headerlink" title="1. 建立基本結構"></a>1. 建立基本結構</h3><p>首先，我們要在 <code>components</code> 資料夾裡新增一個 <code>Header.vue</code> 檔案。這個檔案會包含我們導航欄的所有程式碼。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">// 這裡放 JavaScript 程式碼</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">&lt;!-- 這裡放 HTML 結構 --&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">/* 這裡放 CSS 樣式 */</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這是 Vue 單文件組件的基本結構。<code>&lt;script setup&gt;</code> 區塊用於 JavaScript 邏輯，<code>&lt;template&gt;</code> 用於 HTML 結構，<code>&lt;style scoped&gt;</code> 用於 CSS 樣式。</p>
+<h3 id="2-製作-Logo"><a href="#2-製作-Logo" class="headerlink" title="2. 製作 Logo"></a>2. 製作 Logo</h3><p>我們先來放置網站的 Logo：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;nuxt-link to=&quot;/&quot; class=&quot;logo fixed left-5 top-2 w-[32px] lg:w-[40px]&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;~/assets/images/logo.svg&quot; alt=&quot;logo&quot; class=&quot;pic-auto&quot; /&gt;</span><br><span class="line">  &lt;/nuxt-link&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這段程式碼做了什麼呢？</p>
+<ul>
+<li><code>nuxt-link</code> 是 Nuxt 提供的特殊連結元件，這裡我們用它來連到首頁 <code>&quot;/&quot;</code>。</li>
+<li><code>class</code> 裡的內容是使用 Tailwind CSS 來設定樣式，例如 <code>fixed</code> 表示固定位置，<code>left-5</code> 和 <code>top-2</code> 設定位置，<code>w-[32px]</code> 設定寬度。</li>
+<li><code>img</code> 標籤用來顯示 Logo 圖片：<ul>
+<li><code>src=&quot;~/assets/images/logo.svg&quot;</code> 指定了 Logo 圖片的路徑。<code>~</code> 是 Nuxt.js 中的特殊符號，代表專案的根目錄。這表示圖片位於專案的 <code>assets/images</code> 資料夾中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-製作選單按鈕"><a href="#3-製作選單按鈕" class="headerlink" title="3. 製作選單按鈕"></a>3. 製作選單按鈕</h3><p>接下來，我們來做選單按鈕：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">const route = useRoute()</span><br><span class="line">const menuOpen = ref(false)</span><br><span class="line"></span><br><span class="line">const toggleMenu = () =&gt; &#123;</span><br><span class="line">  menuOpen.value = !menuOpen.value</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;relative&quot;&gt;</span><br><span class="line">    &lt;button v-show=&quot;!menuOpen&quot; @click=&quot;toggleMenu&quot; class=&quot;nav-btn&quot;&gt;</span><br><span class="line">      &lt;Icon name=&quot;ph:hand-tap&quot; size=&quot;20&quot;&gt;&lt;/Icon&gt;</span><br><span class="line"></span><br><span class="line">      &lt;div v-if=&quot;route.path === &#x27;/&#x27;&quot;&gt;首頁&lt;/div&gt;</span><br><span class="line">      &lt;div v-else-if=&quot;route.path === &#x27;/calculator&#x27;&quot;&gt;食物計算機&lt;/div&gt;</span><br><span class="line">      &lt;div v-else-if=&quot;route.path === &#x27;/food&#x27;&quot;&gt;營養指南&lt;/div&gt;</span><br><span class="line">      &lt;div v-else-if=&quot;route.path === &#x27;/bird&#x27;&quot;&gt;百科全書&lt;/div&gt;</span><br><span class="line">      &lt;div v-else-if=&quot;route.path === &#x27;/hospital&#x27;&quot;&gt;醫護站&lt;/div&gt;</span><br><span class="line">      &lt;div v-else=&quot;route.path === &#x27;/connect&#x27;&quot;&gt;聯繫我們&lt;/div&gt;</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.nav-btn &#123;</span><br><span class="line">  @apply bg-bg text-blue4 border-blue4 fixed right-0 top-0 z-20 flex w-[140px] items-center justify-center gap-[6px] rounded-bl-[6px] border-b border-l bg-opacity-20 p-[10px] font-bold backdrop-blur-sm;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>讓我解釋一下這段程式碼：</p>
+<ol>
+<li><code>const route = useRoute()</code> 讓我們可以知道現在在哪個頁面。</li>
+<li><code>menuOpen</code> 是一個變數，用來記錄選單是開啟還是關閉的。</li>
+<li><code>toggleMenu</code> 函式用來切換選單的開關狀態。</li>
+<li>在 <code>template</code> 中，我們用 <code>v-show=&quot;!menuOpen&quot;</code> 來控制按鈕的顯示。</li>
+<li><code>@click=&quot;toggleMenu&quot;</code> 表示當按鈕被點擊時，會呼叫 <code>toggleMenu</code> 函式。</li>
+<li>我們用一系列的 <code>v-if</code> 和 <code>v-else-if</code> 來根據不同的頁面路徑顯示不同的文字。</li>
+<li><code>Icon</code> 元件是用來顯示一個小圖示。</li>
+</ol>
+<h3 id="4-製作選單內容"><a href="#4-製作選單內容" class="headerlink" title="4. 製作選單內容"></a>4. 製作選單內容</h3><p>現在來製作選單的主要內容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;relative&quot;&gt;</span><br><span class="line">    &lt;!-- 前面的按鈕程式碼 --&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div v-show=&quot;menuOpen&quot; class=&quot;nav-menu&quot;&gt;</span><br><span class="line">      &lt;button class=&quot;nav-menu-item&quot; @click=&quot;toggleMenu&quot;&gt;CLOSE&lt;/button&gt;</span><br><span class="line">      &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/&quot;&gt;首頁&lt;/nuxt-link&gt;</span><br><span class="line">      &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/calculator&quot;&gt;食物計算機&lt;/nuxt-link&gt;</span><br><span class="line">      &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/food&quot;&gt;營養指南&lt;/nuxt-link&gt;</span><br><span class="line">      &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/bird&quot;&gt;百科全書&lt;/nuxt-link&gt;</span><br><span class="line">      &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/hospital&quot;&gt;醫護站&lt;/nuxt-link&gt;</span><br><span class="line">      &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/connect&quot;&gt;聯繫我們&lt;/nuxt-link&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.nav-menu &#123;</span><br><span class="line">  @apply text-blue4 border-blue4 fixed right-0 top-0 z-20 flex w-[140px] flex-col items-center justify-center rounded-bl-[6px] border-b border-l bg-opacity-20 font-bold backdrop-blur-sm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav-menu-item &#123;</span><br><span class="line">  @apply flex w-full items-center justify-center p-[10px];</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這段程式碼做了什麼：</p>
+<ol>
+<li>我們用 <code>v-show=&quot;menuOpen&quot;</code> 來控制整個選單的顯示。</li>
+<li>每個選單項目都是一個 <code>nuxt-link</code>，點擊後會跳轉到對應的頁面。</li>
+<li><code>exact-active-class</code> 用來設定當前頁面的選單項目的樣式。</li>
+</ol>
+<h3 id="5-自動關閉選單"><a href="#5-自動關閉選單" class="headerlink" title="5. 自動關閉選單"></a>5. 自動關閉選單</h3><p>最後，我們來加入一個功能，讓選單在頁面切換時自動關閉：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ... 前面的程式碼</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="title function_">watch</span>(</span></span><br><span class="line"><span class="language-javascript">  <span class="function">() =&gt;</span> route.<span class="property">path</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="function">(<span class="params">currentPath, previousPath</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">if</span> (menuOpen.<span class="property">value</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">toggleMenu</span>()</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>這段程式碼的作用是：</p>
+<ol>
+<li>使用 <code>watch</code> 來監視路由的變化。</li>
+<li>當路由改變（也就是頁面切換）時，如果選單是開啟的，就自動關閉它。</li>
+</ol>
+<h2 id="額外補充：Transition-動畫效果"><a href="#額外補充：Transition-動畫效果" class="headerlink" title="額外補充：Transition 動畫效果"></a>額外補充：Transition 動畫效果</h2><p>為了讓我們的導航欄更加吸引人，我們可以加入一些轉場效果。在 Vue 中，我們可以使用 <code>&lt;Transition&gt;</code> 元件來實現這個功能。這個功能不只是讓網頁看起來更酷炫，還能提升使用者體驗，讓介面變化更加流暢自然。</p>
+<h3 id="Vue-的-Transition-元件"><a href="#Vue-的-Transition-元件" class="headerlink" title="Vue 的 Transition 元件"></a>Vue 的 Transition 元件</h3><p>首先，讓我們來看看 Vue 官方文檔中關於 Transition 的說明：<a target="_blank" rel="noopener" href="https://vuejs.org/guide/built-ins/transition.html">Vue Transition 官方文檔</a><br>Vue 提供了一個 <code>&lt;Transition&gt;</code> 元件，它可以讓我們輕鬆地為任何元素或元件添加進入&#x2F;離開的動畫效果。這個元件非常強大，可以處理以下幾種情況：</p>
+<ul>
+<li>條件渲染 (使用 v-if)</li>
+<li>條件展示 (使用 v-show)</li>
+<li>動態元件</li>
+<li>元件根節點</li>
+</ul>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>在我們的導航欄例中，我是這樣使用 Transition 的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;relative&quot;&gt;</span><br><span class="line">    &lt;Transition name=&quot;fade&quot;&gt;</span><br><span class="line">&lt;!-- 選單按鈕 --&gt;</span><br><span class="line">    &lt;/Transition&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Transition name=&quot;fade&quot;&gt;</span><br><span class="line">&lt;!-- 選單內容 --&gt;</span><br><span class="line">    &lt;/Transition&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這裡的 <code>name=&quot;fade&quot;</code> 是很重要的，它定義了我們的動畫效果的名稱。這個名稱會被用來生成 CSS 類別名稱，Vue 會在適當的時機添加或移除這些類別。</p>
+<h3 id="CSS-過渡類別"><a href="#CSS-過渡類別" class="headerlink" title="CSS 過渡類別"></a>CSS 過渡類別</h3><p>當一個元素被 <code>&lt;Transition&gt;</code> 包裹時，Vue 會在元素進入或離開時自動添加&#x2F;移除一些 CSS 類別。這些類別的名稱是基於我們設定的 <code>name</code> 屬性。<br>在我們的例子中，因為我們使用了 <code>name=&quot;fade&quot;</code>，所以 Vue 會使用以下的類別：</p>
+<ol>
+<li><code>fade-enter-from</code>：進入動畫的起始狀態</li>
+<li><code>fade-enter-active</code>：進入動畫的生效狀態</li>
+<li><code>fade-enter-to</code>：進入動畫的結束狀態</li>
+<li><code>fade-leave-from</code>：離開動畫的起始狀態</li>
+<li><code>fade-leave-active</code>：離開動畫的生效狀態</li>
+<li><code>fade-leave-to</code>：離開動畫的結束狀態<br>這些類別會在不同的動畫階段被添加和移除，讓我們能夠精確控制動畫的每個階段。</li>
+</ol>
+<h3 id="CSS-樣式定義"><a href="#CSS-樣式定義" class="headerlink" title="CSS 樣式定義"></a>CSS 樣式定義</h3><p>讓我們來看看我們為導航欄定義的 CSS 樣式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.fade-enter-active</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.fade-leave-active</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">transition</span>: all <span class="number">0.4s</span> ease-in-out;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.fade-enter-from</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.fade-leave-to</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">transform</span>: <span class="built_in">translatey</span>(-<span class="number">264px</span>);</span></span><br><span class="line"><span class="language-css">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡發生了什麼？</p>
+<ol>
+<li><code>.fade-enter-active</code> 和 <code>.fade-leave-active</code>：<ul>
+<li>這兩個類別定義了動畫的持續時間和變化方式。</li>
+<li><code>transition: all 0.4s ease-in-out;</code> 表示所有屬性的變化都會在 0.4 秒內完成，使用 ease-in-out 的變化曲線。</li>
+<li>ease-in-out 曲線讓動畫在開始和結束時較慢，中間較快，創造出更自然的效果。</li>
+</ul>
+</li>
+<li><code>.fade-enter-from</code> 和 <code>.fade-leave-to</code>：<ul>
+<li>這兩個類別定義了動畫的起始狀態和結束狀態。</li>
+<li><code>transform: translatey(-264px);</code> 表示元素會從上方 264px 的位置移動到原位（或從原位移動到上方 264px 的位置）。</li>
+<li><code>opacity: 0;</code> 表示元素會從完全透明變為可見（或從可見變為完全透明）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="動畫效果解析"><a href="#動畫效果解析" class="headerlink" title="動畫效果解析"></a>動畫效果解析</h3><p>結合起來，這些 CSS 樣式創造了這樣的效果：</p>
+<ul>
+<li>當選單出現時（進入動畫）：<ul>
+<li>初始狀態：選單在上方 264px 處且完全透明。</li>
+<li>動畫過程：選單在 0.4 秒內逐漸下移到原位，同時逐漸變得不透明。</li>
+<li>最終狀態：選單在原位且完全不透明。</li>
+</ul>
+</li>
+<li>當選單消失時（離開動畫）：<ul>
+<li>初始狀態：選單在原位且完全不透明。</li>
+<li>動畫過程：選單在 0.4 秒內逐漸上移 264px，同時逐漸變得透明。</li>
+<li>最終狀態：選單在上方 264px 處且完全透明。</li>
+</ul>
+</li>
+</ul>
+<p>整個過程持續 0.4 秒，使用 ease-in-out 的變化曲線，這會讓動畫看起來更加平滑自然。</p>
+<h2 id="今日成果展示"><a href="#今日成果展示" class="headerlink" title="今日成果展示"></a>今日成果展示</h2><p>我們得到了一個可以切換頁面又有動畫的 navbar (點縮圖可以打開 Youtube 影片喔)<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4LQ1bhICoYA"><img src="https://img.youtube.com/vi/4LQ1bhICoYA/0.jpg" alt="Yes"></a></p>
+<h2 id="今日範例完整程式碼"><a href="#今日範例完整程式碼" class="headerlink" title="今日範例完整程式碼"></a>今日範例完整程式碼</h2><details>
+<summary><code>components/Header.vue</code></summary>
+    
+<pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">const route = useRoute()</span><br><span class="line"></span><br><span class="line">// 選單變數</span><br><span class="line">const menuOpen = ref(false)</span><br><span class="line"></span><br><span class="line">// 選單開關</span><br><span class="line">const toggleMenu = () =&gt; &#123;</span><br><span class="line">  menuOpen.value = !menuOpen.value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 監聽路由的 path 變化, 換頁時自動關閉選單</span><br><span class="line">watch(</span><br><span class="line">  () =&gt; route.path,</span><br><span class="line">  (currentPath, previousPath) =&gt; &#123;</span><br><span class="line">    if (menuOpen.value) &#123;</span><br><span class="line">      toggleMenu()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;nuxt-link to=&quot;/&quot; class=&quot;logo fixed left-5 top-2 w-[32px] lg:w-[40px]&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;~/assets/images/logo.svg&quot; alt=&quot;logo&quot; class=&quot;pic-auto&quot; /&gt;</span><br><span class="line">  &lt;/nuxt-link&gt;</span><br><span class="line">  &lt;div class=&quot;relative&quot;&gt;</span><br><span class="line">    &lt;!-- * 選單按鈕 --&gt;</span><br><span class="line">    &lt;Transition name=&quot;fade&quot;&gt;</span><br><span class="line">      &lt;button v-show=&quot;!menuOpen&quot; @click=&quot;toggleMenu&quot; class=&quot;nav-btn&quot;&gt;</span><br><span class="line">        &lt;Icon name=&quot;ph:hand-tap&quot; size=&quot;20&quot;&gt;&lt;/Icon&gt;</span><br><span class="line"></span><br><span class="line">        &lt;div v-if=&quot;route.path === &#x27;/&#x27;&quot;&gt;首頁&lt;/div&gt;</span><br><span class="line">        &lt;div v-else-if=&quot;route.path === &#x27;/calculator&#x27;&quot;&gt;食物計算機&lt;/div&gt;</span><br><span class="line">        &lt;div v-else-if=&quot;route.path === &#x27;/food&#x27;&quot;&gt;營養指南&lt;/div&gt;</span><br><span class="line">        &lt;div v-else-if=&quot;route.path === &#x27;/bird&#x27;&quot;&gt;百科全書&lt;/div&gt;</span><br><span class="line">        &lt;div v-else-if=&quot;route.path === &#x27;/hospital&#x27;&quot;&gt;醫護站&lt;/div&gt;</span><br><span class="line">        &lt;div v-else=&quot;route.path === &#x27;/connect&#x27;&quot;&gt;聯繫我們&lt;/div&gt;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    &lt;/Transition&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- * 選單 --&gt;</span><br><span class="line">    &lt;Transition name=&quot;fade&quot;&gt;</span><br><span class="line">      &lt;div v-show=&quot;menuOpen&quot; class=&quot;nav-menu&quot;&gt;</span><br><span class="line">        &lt;button class=&quot;nav-menu-item&quot; @click=&quot;toggleMenu&quot;&gt;CLOSE&lt;/button&gt;</span><br><span class="line">        &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/&quot;</span><br><span class="line">          &gt;首頁&lt;/nuxt-link</span><br><span class="line">        &gt;</span><br><span class="line">        &lt;nuxt-link</span><br><span class="line">          class=&quot;nav-menu-item&quot;</span><br><span class="line">          exact-active-class=&quot;bg-blue4 bg-opacity-15&quot;</span><br><span class="line">          to=&quot;/calculator&quot;</span><br><span class="line">          &gt;食物計算機&lt;/nuxt-link</span><br><span class="line">        &gt;</span><br><span class="line">        &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/food&quot;</span><br><span class="line">          &gt;營養指南&lt;/nuxt-link</span><br><span class="line">        &gt;</span><br><span class="line">        &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/bird&quot;</span><br><span class="line">          &gt;百科全書&lt;/nuxt-link</span><br><span class="line">        &gt;</span><br><span class="line">        &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/hospital&quot;</span><br><span class="line">          &gt;醫護站&lt;/nuxt-link</span><br><span class="line">        &gt;</span><br><span class="line">        &lt;nuxt-link class=&quot;nav-menu-item&quot; exact-active-class=&quot;bg-blue4 bg-opacity-15&quot; to=&quot;/connect&quot;</span><br><span class="line">          &gt;聯繫我們&lt;/nuxt-link</span><br><span class="line">        &gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/Transition&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.nav-btn &#123;</span><br><span class="line">  @apply bg-bg text-blue4 border-blue4 fixed right-0 top-0 z-20 flex w-[140px] items-center justify-center gap-[6px] rounded-bl-[6px] border-b border-l bg-opacity-20 p-[10px] font-bold backdrop-blur-sm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav-menu &#123;</span><br><span class="line">  @apply text-blue4 border-blue4 fixed right-0 top-0 z-20 flex w-[140px] flex-col items-center justify-center rounded-bl-[6px] border-b border-l bg-opacity-20 font-bold backdrop-blur-sm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav-menu-item &#123;</span><br><span class="line">  @apply flex w-full items-center justify-center p-[10px];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.fade-enter-active,</span><br><span class="line">.fade-leave-active &#123;</span><br><span class="line">  transition: all 0.4s ease-in-out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.fade-enter-from,</span><br><span class="line">.fade-leave-to &#123;</span><br><span class="line">  transform: translatey(-264px);</span><br><span class="line">  opacity: 0;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</details>
+
+<details>
+<summary><code>app.vue</code></summary>
+    
+<pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"></span><br><span class="line">// 創建一個自定義的 Axios 實例</span><br><span class="line">const api = axios.create(&#123;</span><br><span class="line">  baseURL: &#x27;https://two024it-test-app.onrender.com&#x27; // 設置基礎 URL</span><br><span class="line">  // timeout: 5000 // 設置超時時間為 5 秒</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const list = ref([])</span><br><span class="line"></span><br><span class="line">// 測試取資料</span><br><span class="line">async function fetchData() &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    const response = await api.get(&#x27;/freshfoods/&#x27;) // 獲取食物列表</span><br><span class="line">    console.log(response.data) // 處理響應數據</span><br><span class="line">    list.value = response.data</span><br><span class="line">  &#125; catch (error) &#123;</span><br><span class="line">    console.error(&#x27;發生錯誤:&#x27;, error) // 錯誤處理</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  fetchData()</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;app relative flex min-h-screen w-full flex-col&quot;&gt;</span><br><span class="line">    &lt;!-- * navbar --&gt;</span><br><span class="line">    &lt;header class=&quot;z-20&quot;&gt;</span><br><span class="line">      &lt;Header /&gt;</span><br><span class="line">    &lt;/header&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- * pages --&gt;</span><br><span class="line">    &lt;main class=&quot;page-wrapper&quot;&gt;</span><br><span class="line">      &lt;NuxtPage /&gt;</span><br><span class="line">    &lt;/main&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.app &#123;</span><br><span class="line">  font-family: &#x27;Noto Sans TC&#x27;, sans-serif;</span><br><span class="line">&#125;</span><br><span class="line">.page-wrapper &#123;</span><br><span class="line">  @apply mx-auto flex w-full max-w-[1200px] grow px-3 pb-5 pt-[52px] lg:px-5 lg:pt-[64px];</span><br><span class="line">  align-items: start;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</details>
+
+<details>
+<summary><code>nuxt.config.ts</code></summary>
+    
+<pre><code><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://nuxt.com/docs/api/configuration/nuxt-config</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="attr">devtools</span>: &#123; <span class="attr">enabled</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;@nuxtjs/tailwindcss&#x27;</span>, <span class="string">&#x27;@nuxt-icon&#x27;</span>]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</code></pre>
+</details>
+
+<details>
+<summary><code>tailwind.config.ts</code></summary>
+    
+<pre><code><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@type</span> &#123;<span class="type">import(&#x27;tailwindcss&#x27;).Config</span>&#125; */</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="string">&#x27;./components/**/*.&#123;vue,js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有 Vue 組件</span></span><br><span class="line">    <span class="string">&#x27;./layouts/**/*.vue&#x27;</span>, <span class="comment">// 掃描所有布局文件</span></span><br><span class="line">    <span class="string">&#x27;./pages/**/*.vue&#x27;</span>, <span class="comment">// 掃描所有頁面文件</span></span><br><span class="line">    <span class="string">&#x27;./composables/**/*.&#123;js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有可組合式函數</span></span><br><span class="line">    <span class="string">&#x27;./plugins/**/*.&#123;js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有插件</span></span><br><span class="line">    <span class="string">&#x27;./utils/**/*.&#123;js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有工具函數</span></span><br><span class="line">    <span class="string">&#x27;./&#123;App,app&#125;.&#123;js,ts,vue&#125;&#x27;</span>, <span class="comment">// 掃描主應用文件</span></span><br><span class="line">    <span class="string">&#x27;./&#123;Error,error&#125;.&#123;js,ts,vue&#125;&#x27;</span>, <span class="comment">// 掃描錯誤處理文件</span></span><br><span class="line">    <span class="string">&#x27;./app.config.&#123;js,ts&#125;&#x27;</span> <span class="comment">// 掃描應用配置文件</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">theme</span>: &#123;</span><br><span class="line">    <span class="attr">extend</span>: &#123;</span><br><span class="line">      <span class="attr">colors</span>: &#123;</span><br><span class="line">        <span class="attr">blue1</span>: <span class="string">&#x27;#e9f1fe&#x27;</span>,</span><br><span class="line">        <span class="attr">blue2</span>: <span class="string">&#x27;#c4d7ed&#x27;</span>,</span><br><span class="line">        <span class="attr">blue3</span>: <span class="string">&#x27;#abc8e2&#x27;</span>,</span><br><span class="line">        <span class="attr">blue4</span>: <span class="string">&#x27;#375d81&#x27;</span>,</span><br><span class="line">        <span class="attr">blue5</span>: <span class="string">&#x27;#183152&#x27;</span>,</span><br><span class="line">        <span class="attr">red1</span>: <span class="string">&#x27;#ffaeaa&#x27;</span>,</span><br><span class="line">        <span class="attr">red2</span>: <span class="string">&#x27;#ed6f69&#x27;</span>,</span><br><span class="line">        <span class="attr">bg</span>: <span class="string">&#x27;#fff6ea&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [] <span class="comment">// 可以添加 Tailwind 插件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</details>
+
+<details>
+<summary><code>assets/css/main.css</code></summary>
+    
+<pre><code><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> url(<span class="string">&#x27;https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&amp;display=swap&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attr">--color-blue1</span>: <span class="number">#e9f1fe</span>;</span><br><span class="line">  <span class="attr">--color-blue2</span>: <span class="number">#c4d7ed</span>;</span><br><span class="line">  <span class="attr">--color-blue3</span>: <span class="number">#abc8e2</span>;</span><br><span class="line">  <span class="attr">--color-blue4</span>: <span class="number">#375d81</span>;</span><br><span class="line">  <span class="attr">--color-blue5</span>: <span class="number">#183152</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attr">--color-red1</span>: <span class="number">#ffaeaa</span>;</span><br><span class="line">  <span class="attr">--color-red2</span>: <span class="number">#ed6f69</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attr">--color-bg</span>: <span class="number">#fff6ea</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;Noto Sans TC&#x27;</span>, sans-serif;</span><br><span class="line">  <span class="attribute">letter-spacing</span>: <span class="number">1.25px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">var</span>(--color-bg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 消樣式 */</span></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-pseudo">:focus-visible</span> &#123;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">textarea</span><span class="selector-pseudo">:focus-visible</span> &#123;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">select</span><span class="selector-pseudo">:focus-visible</span> &#123;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 圖片通用 */</span></span><br><span class="line"><span class="selector-class">.pic-auto</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">object-fit</span>: cover;</span><br><span class="line">  <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 限制最大寬度 !&gt; 1200px, 搭配 px-5 使用 */</span></span><br><span class="line"><span class="selector-class">.page-max-w</span> &#123;</span><br><span class="line">  <span class="keyword">@apply</span> mx-auto w-full max-w-[<span class="number">1200px</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* hover 效果 */</span></span><br><span class="line"><span class="selector-class">.hover-auto</span> &#123;</span><br><span class="line">  <span class="keyword">@apply</span> transform duration-<span class="number">200</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</details>
+
+<p>好啦！這就是我們超酷導航欄的全部內容了。是不是覺得很有趣？雖然看起來有點複雜，但只要一步一步來，你也可以做出這麼厲害的導航欄喔！，加油！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！讓我們一起在 Nuxt3 的世界中探險吧！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Nuxt3/" rel="tag"># Nuxt3</a>
+              <a href="/tags/Vue3/" rel="tag"># Vue3</a>
+              <a href="/tags/Transition/" rel="tag"># Transition</a>
+              <a href="/tags/animate/" rel="tag"># animate</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/03/2024it/d24/" rel="prev" title="[ 2024 IT 鐵人賽 DAY24 ] Nuxt3 魔法教室：Vue 語法速成班">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY24 ] Nuxt3 魔法教室：Vue 語法速成班
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/05/2024it/d26/" rel="next" title="[ 2024 IT 鐵人賽 DAY26 ] Nuxt 3 進階技巧：Pinia、API 整合、Loading 元件">
+      [ 2024 IT 鐵人賽 DAY26 ] Nuxt 3 進階技巧：Pinia、API 整合、Loading 元件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E4%BE%86%E7%9C%8B%E7%9C%8B%E6%88%91%E5%80%91%E7%9A%84%E7%9B%AE%E6%A8%99"><span class="nav-number">2.</span> <span class="nav-text">先來看看我們的目標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E5%A7%8B%E5%8B%95%E6%89%8B%E5%81%9A%E5%90%A7%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">開始動手做吧！</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B4%E7%90%86-app-vue"><span class="nav-number">3.1.</span> <span class="nav-text">1. 整理 app.vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BB%BA%E7%AB%8B%E9%A6%96%E9%A0%81"><span class="nav-number">3.2.</span> <span class="nav-text">2. 建立首頁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%96%B0%E5%A2%9E%E5%85%B6%E4%BB%96%E9%A0%81%E9%9D%A2"><span class="nav-number">3.3.</span> <span class="nav-text">3. 新增其他頁面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%A8%AD%E5%AE%9A%E7%B6%B2%E7%AB%99%E5%9F%BA%E7%A4%8E%E9%85%8D%E8%89%B2"><span class="nav-number">3.4.</span> <span class="nav-text">4. 設定網站基礎配色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%AE%89%E8%A3%9D%E5%92%8C%E4%BD%BF%E7%94%A8-Nuxt-Icon"><span class="nav-number">3.5.</span> <span class="nav-text">5. 安裝和使用 Nuxt Icon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%BB%BA%E7%AB%8B%E5%85%83%E4%BB%B6-components-%E8%B3%87%E6%96%99%E5%A4%BE"><span class="nav-number">3.6.</span> <span class="nav-text">6. 建立元件 components 資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90-assets-%E8%B3%87%E6%96%99%E5%A4%BE"><span class="nav-number">3.7.</span> <span class="nav-text">7. 建立資源 assets 資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%BB%BA%E7%AB%8B-%E5%BB%BA%E7%AB%8B%E5%85%A8%E5%B1%80%E6%A8%A3%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="nav-number">3.8.</span> <span class="nav-text">8. 建立 建立全局樣式文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E6%9F%A5%E7%9C%8B%E8%A8%AD%E8%A8%88%E7%A8%BF"><span class="nav-number">3.9.</span> <span class="nav-text">9. 查看設計稿</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8E%E8%88%AA%E6%AC%84%E8%A9%B3%E7%B4%B0%E8%A3%BD%E4%BD%9C%E6%AD%A5%E9%A9%9F"><span class="nav-number">4.</span> <span class="nav-text">導航欄詳細製作步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BB%BA%E7%AB%8B%E5%9F%BA%E6%9C%AC%E7%B5%90%E6%A7%8B"><span class="nav-number">4.1.</span> <span class="nav-text">1. 建立基本結構</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A3%BD%E4%BD%9C-Logo"><span class="nav-number">4.2.</span> <span class="nav-text">2. 製作 Logo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A3%BD%E4%BD%9C%E9%81%B8%E5%96%AE%E6%8C%89%E9%88%95"><span class="nav-number">4.3.</span> <span class="nav-text">3. 製作選單按鈕</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%A3%BD%E4%BD%9C%E9%81%B8%E5%96%AE%E5%85%A7%E5%AE%B9"><span class="nav-number">4.4.</span> <span class="nav-text">4. 製作選單內容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%87%AA%E5%8B%95%E9%97%9C%E9%96%89%E9%81%B8%E5%96%AE"><span class="nav-number">4.5.</span> <span class="nav-text">5. 自動關閉選單</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%8D%E5%A4%96%E8%A3%9C%E5%85%85%EF%BC%9ATransition-%E5%8B%95%E7%95%AB%E6%95%88%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">額外補充：Transition 動畫效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-%E7%9A%84-Transition-%E5%85%83%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">Vue 的 Transition 元件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-%E9%81%8E%E6%B8%A1%E9%A1%9E%E5%88%A5"><span class="nav-number">5.3.</span> <span class="nav-text">CSS 過渡類別</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-%E6%A8%A3%E5%BC%8F%E5%AE%9A%E7%BE%A9"><span class="nav-number">5.4.</span> <span class="nav-text">CSS 樣式定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8B%95%E7%95%AB%E6%95%88%E6%9E%9C%E8%A7%A3%E6%9E%90"><span class="nav-number">5.5.</span> <span class="nav-text">動畫效果解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E6%88%90%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">6.</span> <span class="nav-text">今日成果展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%AF%84%E4%BE%8B%E5%AE%8C%E6%95%B4%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="nav-number">7.</span> <span class="nav-text">今日範例完整程式碼</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/10/04/2024it/d25/";
+    this.page.identifier = "2024/10/04/2024it/d25/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY25 ] Nuxt 3 開發之旅：顏色、圖示、導航欄到動畫效果";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDCQB8EPC3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HDCQB8EPC3');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

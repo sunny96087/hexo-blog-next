@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.cdnfonts.com/css/lxgw-wenkai" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今天，我們要來聊聊一個超級重要但常被新手忽視的話題：版本控制。別擔心，它沒有聽起來那麼可怕，反而超級有趣！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY13 ] GitHub 新手村：版本控制的第一步">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/22/2024it/d13/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="今天，我們要來聊聊一個超級重要但常被新手忽視的話題：版本控制。別擔心，它沒有聽起來那麼可怕，反而超級有趣！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/20159686Q1Akv15O8t.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/20159686YzW21h9Rbf.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/20159686r9XeEzbtp8.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/201596860W1qR0uNEc.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/20159686BIt0nd068v.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/20159686z2lffGyrmt.png">
+<meta property="article:published_time" content="2024-09-22T12:33:45.000Z">
+<meta property="article:modified_time" content="2024-11-18T14:44:11.107Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="版本控管">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240922/20159686Q1Akv15O8t.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/22/2024it/d13/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY13 ] GitHub 新手村：版本控制的第一步 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/22/2024it/d13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY13 ] GitHub 新手村：版本控制的第一步
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-22 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-22T20:33:45+08:00">2024-09-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-11-18 22:44:11" itemprop="dateModified" datetime="2024-11-18T22:44:11+08:00">2024-11-18</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/22/2024it/d13/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/22/2024it/d13/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天，我們要來聊聊一個超級重要但常被新手忽視的話題：版本控制。別擔心，它沒有聽起來那麼可怕，反而超級有趣！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="為什麼我們需要版本控制？"><a href="#為什麼我們需要版本控制？" class="headerlink" title="為什麼我們需要版本控制？"></a>為什麼我們需要版本控制？</h2><p>想像一下，你正在寫一篇重要的論文。你修改了好幾次，每次都另存新檔：「論文_最終版.docx」、「論文_最終版_真的最終.docx」、「論文_這次真的是最終版了啦.docx」… 聽起來熟悉嗎？</p>
+<p>版本控制就是為了解決這個問題而生的。在程式開發中，它就像是一個超強大的時光機，讓你可以：</p>
+<ol>
+<li>追蹤每一次的修改</li>
+<li>輕鬆回到之前的版本</li>
+<li>和其他人協作而不怕檔案搞混</li>
+</ol>
+<p>而 GitHub 就是目前最流行的版本控制平台之一。它不只是一個存放程式碼的地方，更是一個龐大的開發者社群。</p>
+<p>今天，我們就來學習如何使用 GitHub 進行專案版本控制吧！</p>
+<h3 id="1-註冊-GitHub-帳號"><a href="#1-註冊-GitHub-帳號" class="headerlink" title="1. 註冊 GitHub 帳號"></a>1. 註冊 GitHub 帳號</h3><p><a target="_blank" rel="noopener" href="https://github.com/">github 官網</a></p>
+<h3 id="2-在-Repositories-新增儲存庫"><a href="#2-在-Repositories-新增儲存庫" class="headerlink" title="2. 在 Repositories 新增儲存庫"></a>2. 在 Repositories 新增儲存庫</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240922/20159686Q1Akv15O8t.png" alt="https://ithelp.ithome.com.tw/upload/images/20240922/20159686Q1Akv15O8t.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240922/20159686YzW21h9Rbf.png" alt="https://ithelp.ithome.com.tw/upload/images/20240922/20159686YzW21h9Rbf.png"></p>
+<h3 id="3-在-vscode-打開專案-test-app，確認昨天的-gitignore-檔是否有建立"><a href="#3-在-vscode-打開專案-test-app，確認昨天的-gitignore-檔是否有建立" class="headerlink" title="3. 在 vscode 打開專案 test-app，確認昨天的 .gitignore 檔是否有建立"></a>3. 在 vscode 打開專案 test-app，確認昨天的 .gitignore 檔是否有建立</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不要上傳套件包</span></span><br><span class="line">node_modules/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不要上傳 config.env</span></span><br><span class="line">config.env</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不要上傳所有 .env</span></span><br><span class="line">*.<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240922/20159686r9XeEzbtp8.png" alt="https://ithelp.ithome.com.tw/upload/images/20240922/20159686r9XeEzbtp8.png"></p>
+<h3 id="4-打開終端機輸入指令將，專案推送到-github-儲存庫"><a href="#4-打開終端機輸入指令將，專案推送到-github-儲存庫" class="headerlink" title="4. 打開終端機輸入指令將，專案推送到 github 儲存庫"></a>4. 打開終端機輸入指令將，專案推送到 github 儲存庫</h3><p>照順序輸入指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化一個新的 Git 儲存庫。這將在當前目錄中建立一個 .git 資料夾，用於追蹤版本控制。</span></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 將當前目錄中的所有檔案和資料夾（包括變更、新增、刪除的檔案）添加到暫存區（staging area），準備進行提交。</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看目前的儲存庫狀態。這會顯示哪些檔案已被修改、哪些已經暫存，以及還有哪些檔案未被追蹤。</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 將暫存區中的變更提交到本地儲存庫，並附上提交訊息 update。這次提交會將所有被暫存的檔案變更記錄到 Git 的歷史紀錄中。</span></span><br><span class="line">git commit -m <span class="string">&#x27;update&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>回到 github 剛剛建立的儲存庫查看連接指令 (如圖圈取處)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加一個遠端儲存庫，並將其命名為 origin。這個遠端儲存庫的 URL 是 git@github.com:sunny96087/2024it-test-app.git，通常是你在 GitHub 或其他 Git 託管平台上建立的儲存庫。</span></span><br><span class="line">git remote add origin git@github.com:sunny96087/2024it-test-app.git</span><br><span class="line"><span class="comment"># 將當前分支重命名為 master。-M 表示無論當前分支是什麼名稱，都會強制將它重命名為 master。</span></span><br><span class="line">git branch -M master</span><br><span class="line"><span class="comment"># 將本地的 master 分支推送到名為 origin 的遠端儲存庫，並設定 origin/master 為本地 master 分支的默認上游分支。-u 參數讓後續的 git push 或 git pull 命令在不指定遠端和分支名稱的情況下，也能知道要與哪個遠端分支同步。</span></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240922/201596860W1qR0uNEc.png" alt="https://ithelp.ithome.com.tw/upload/images/20240922/201596860W1qR0uNEc.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240922/20159686BIt0nd068v.png" alt="https://ithelp.ithome.com.tw/upload/images/20240922/20159686BIt0nd068v.png"></p>
+<h3 id="回到-github-儲存庫頁面，重整後就會看到上傳成功的檔案囉"><a href="#回到-github-儲存庫頁面，重整後就會看到上傳成功的檔案囉" class="headerlink" title="回到 github 儲存庫頁面，重整後就會看到上傳成功的檔案囉"></a>回到 github 儲存庫頁面，重整後就會看到上傳成功的檔案囉</h3><p><a target="_blank" rel="noopener" href="https://github.com/sunny96087/2024it-test-app">今日範例 github 連結</a><br><img src="https://ithelp.ithome.com.tw/upload/images/20240922/20159686z2lffGyrmt.png" alt="https://ithelp.ithome.com.tw/upload/images/20240922/20159686z2lffGyrmt.png"></p>
+<blockquote>
+<p>💡 補充說明：<br>    - <code>git init</code>：這就像是在你的專案裡埋下一顆神奇的種子，讓它開始被 Git 追蹤。<br>    - <code>git add .</code>：想像你正在打包行李，這個指令就是把所有東西都塞進行李箱。<br>    - <code>git commit -m &#39;Initial commit&#39;</code>：這就像是在你的行李箱上貼上一個標籤，寫著這些東西是什麼。<br>    - <code>git push</code>：終於要出發啦！這個指令就是把你的行李箱（程式碼）送到機場（GitHub）。</p>
+</blockquote>
+<h2 id="進階技巧：分支管理"><a href="#進階技巧：分支管理" class="headerlink" title="進階技巧：分支管理"></a>進階技巧：分支管理</h2><p>在 Git 中，分支就像是平行宇宙。你可以在不同的分支上同時進行不同的實驗，而不會影響到主要的程式碼。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 創建新分支</span></span><br><span class="line">git branch new-feature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切換到新分支</span></span><br><span class="line">git checkout new-feature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者，一步到位</span></span><br><span class="line">git checkout -b new-featur</span><br></pre></td></tr></table></figure>
+<p>當你完成實驗，想要將變更合併回主分支時：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切換回主分支</span></span><br><span class="line">git checkout main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合併變更</span></span><br><span class="line">git merge new-feature</span><br></pre></td></tr></table></figure>
+
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>恭喜你完成了版本控制的入門學習！今天我們學習了以下重要內容：</p>
+<ol>
+<li>在 GitHub 上創建儲存庫</li>
+<li>使用 .gitignore 管理不需上傳的檔案</li>
+<li>運用基本的 Git 指令上傳專案</li>
+<li>簡單介紹了分支管理的概念<br>版本控制不僅僅是一個工具，它更是一種開發思維。它讓我們能夠安心地嘗試新想法，因為我們可以隨時回到之前的版本。同時，它也大大提升了團隊協作的效率，讓每個成員都能清楚看到專案的發展歷程。<br>當你在深夜 coding 時靈光乍現，想要對專案做大幅度修改，有了 Git 和 GitHub，你就可以放心大膽地實驗。即使遇到問題，也可以輕鬆回溯到先前的穩定版本。<br>養成定期 commit 變更的好習慣，為你的程式碼發展過程做好紀錄。隨著時間推移，你會發現 GitHub 上的 contribution graph 逐漸豐富，這不僅是一種成就感的展現，更是你技術成長的見證。<br>今天的 Git 學習就到這裡。可以找朋友一起多練習，熟能生巧。<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</li>
+</ol>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+              <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E7%AE%A1/" rel="tag"># 版本控管</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/21/2024it/d12/" rel="prev" title="[ 2024 IT 鐵人賽 DAY12 ] 後端開發好幫手：四大套件使用指南">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY12 ] 後端開發好幫手：四大套件使用指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/23/2024it/d14/" rel="next" title="[ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習">
+      [ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E5%80%91%E9%9C%80%E8%A6%81%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">為什麼我們需要版本控制？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A8%BB%E5%86%8A-GitHub-%E5%B8%B3%E8%99%9F"><span class="nav-number">2.1.</span> <span class="nav-text">1. 註冊 GitHub 帳號</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9C%A8-Repositories-%E6%96%B0%E5%A2%9E%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="nav-number">2.2.</span> <span class="nav-text">2. 在 Repositories 新增儲存庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9C%A8-vscode-%E6%89%93%E9%96%8B%E5%B0%88%E6%A1%88-test-app%EF%BC%8C%E7%A2%BA%E8%AA%8D%E6%98%A8%E5%A4%A9%E7%9A%84-gitignore-%E6%AA%94%E6%98%AF%E5%90%A6%E6%9C%89%E5%BB%BA%E7%AB%8B"><span class="nav-number">2.3.</span> <span class="nav-text">3. 在 vscode 打開專案 test-app，確認昨天的 .gitignore 檔是否有建立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%89%93%E9%96%8B%E7%B5%82%E7%AB%AF%E6%A9%9F%E8%BC%B8%E5%85%A5%E6%8C%87%E4%BB%A4%E5%B0%87%EF%BC%8C%E5%B0%88%E6%A1%88%E6%8E%A8%E9%80%81%E5%88%B0-github-%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="nav-number">2.4.</span> <span class="nav-text">4. 打開終端機輸入指令將，專案推送到 github 儲存庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0-github-%E5%84%B2%E5%AD%98%E5%BA%AB%E9%A0%81%E9%9D%A2%EF%BC%8C%E9%87%8D%E6%95%B4%E5%BE%8C%E5%B0%B1%E6%9C%83%E7%9C%8B%E5%88%B0%E4%B8%8A%E5%82%B3%E6%88%90%E5%8A%9F%E7%9A%84%E6%AA%94%E6%A1%88%E5%9B%89"><span class="nav-number">2.5.</span> <span class="nav-text">回到 github 儲存庫頁面，重整後就會看到上傳成功的檔案囉</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%B2%E9%9A%8E%E6%8A%80%E5%B7%A7%EF%BC%9A%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">進階技巧：分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.1.</span> <span class="nav-text">結語</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/22/2024it/d13/";
+    this.page.identifier = "2024/09/22/2024it/d13/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY13 ] GitHub 新手村：版本控制的第一步";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDCQB8EPC3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HDCQB8EPC3');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>
