@@ -1,8 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo 指令合集</title>
+    <url>/2024/05/17/hexo-instruction-collection/</url>
+    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
+<span id="more"></span>
+
+<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>誤打誤撞的 Docker Desktop 災情記錄與解決方案</title>
+    <url>/2025/01/19/hexo-docker-desktop-troubleshoot-1/</url>
+    <content><![CDATA[<p>最近想要在 Mac 上安裝 MSSQL，看了朋友推薦的 YouTube 教學影片，第一步就是要安裝 Docker。由於之前已經安裝過，就想說直接用快捷鍵開啟，結果系統竟然告訴我 Docker 已經被丟進垃圾桶了！</p>
+<p>抱持著「沒關係，重新安裝就好」的心態，前往官網準備重新下載，沒想到這個決定卻開啟了無止盡的錯誤彈窗轟炸…</p>
+<span id="more"></span>
+
+<h2 id="🔹-問題調查"><a href="#🔹-問題調查" class="headerlink" title="🔹 問題調查"></a>🔹 問題調查</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F1.png?alt=media&token=6aa2f2c5-6c48-4edc-bc31-a976193ab0cf" alt="錯誤彈窗"></p>
+<p>在網路上依照錯誤訊息搜尋相關資料時，發現這個問題早在 1 月 9 日就已經開始出現。</p>
+<p>一開始找到的多是對岸的部落格文章，正當考慮要依照這些文章建議的方法嘗試時，<br>幸運的發現了國外論壇的相關討論。</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-解決方案"><a href="#🔹-解決方案" class="headerlink" title="🔹 解決方案"></a>🔹 解決方案</h2><p>解決方案來自於 <a href="https://github.com/docker/for-mac/issues/7527">Docker Github Issue</a></p>
+<h3 id="1-安裝官方修復版本"><a href="#1-安裝官方修復版本" class="headerlink" title="1. 安裝官方修復版本"></a>1. 安裝官方修復版本</h3><p>首先嘗試安裝官方推薦的修復版本 4.37.2</p>
+<blockquote>
+<p>直接從<a href="https://docs.docker.com/desktop/release-notes/#4372">官方網站</a>下載</p>
+</blockquote>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F2.png?alt=media&token=f63af7b9-df77-43f0-aefd-cde133d7ecb7" alt="安裝官方推薦的修復版本 4.37.2"></p>
+<br />
+<hr />
+<br />
+
+<h3 id="2-若仍然出現錯誤"><a href="#2-若仍然出現錯誤" class="headerlink" title="2. 若仍然出現錯誤"></a>2. 若仍然出現錯誤</h3><p>如果安裝後持續出現錯誤彈窗，請依照 <a href="https://docs.docker.com/desktop/cert-revoke-solution/">Docker 文件</a> 建議執行以下步驟：</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F3.png?alt=media&token=3310eab7-3de7-4f4d-b9a5-77252883fa1c" alt="Docker 文件"></p>
+<ol>
+<li><p>終止所有無法正常啟動的 Docker 程序</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl bootout system/com.docker.vmnetd 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"><span class="built_in">sudo</span> launchctl bootout system/com.docker.socket 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /Library/PrivilegedHelperTools/com.docker.vmnetd || <span class="literal">true</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /Library/PrivilegedHelperTools/com.docker.socket || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (下面這行我沒有使用到) 因為複製貼上到終端機後無法 Enter，我把這行刪掉後，才成功執行 </span></span><br><span class="line">ps aux | grep -i docker | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | <span class="built_in">sudo</span> xargs <span class="built_in">kill</span> -9 2&gt;/dev/null</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>確認並永久關閉惡意軟體的彈出視窗</p>
+</li>
+<li><p>(可選) 打開活動監視器，查看是否有 Docker 相關的程序在運行，有的話強制終止</p>
+<p> <img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F5.png?alt=media&token=5b1ed9ad-f367-42c0-9317-7548f4244457" alt="活動監視器"></p>
+</li>
+<li><p>重新下載並安裝版本 4.37.2 - <a href="https://docs.docker.com/desktop/release-notes/#4372">下載連結</a></p>
+</li>
+<li><p>嘗試啟動 Docker Desktop</p>
+<p> <img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F4.png?alt=media&token=ad65d9a4-0c38-4356-97a1-19838420538a" alt="嘗試啟動 Docker Desktop"></p>
+</li>
+</ol>
+<p>按照上述步驟操作後，成功解決了這個問題！</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-心得總結"><a href="#🔹-心得總結" class="headerlink" title="🔹 心得總結"></a>🔹 心得總結</h2><p>這次的經驗讓我學到，遇到軟體問題時：</p>
+<ol>
+<li>除了參考部落格文章外，也要多查看官方文件</li>
+<li>善用國外論壇資源，因為最新的解決方案可能就在那裡</li>
+<li>遇到問題時，保持冷靜並有系統地一步一步排除才是上策</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>github 自定義個人頁面 ✨</title>
-    <url>/hexo-blog-next/2024/05/18/github-personal-page/</url>
+    <url>/2024/05/18/github-personal-page/</url>
     <content><![CDATA[<p>快跟我一起來自訂義獨一無二的個人 github 頁面吧！</p>
 <span id="more"></span>
 
@@ -134,44 +227,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 指令合集</title>
-    <url>/hexo-blog-next/2024/05/17/hexo-instruction-collection/</url>
-    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
-<span id="more"></span>
-
-<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-
-<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
-
-<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
-
-<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
-
-<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-
-<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-
-<br />
-<hr />
-<br />
-
-<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 進階 - part 1</title>
-    <url>/hexo-blog-next/2024/05/17/hexo-replenish-1/</url>
+    <url>/2024/05/17/hexo-replenish-1/</url>
     <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
 <span id="more"></span>
 
@@ -207,7 +264,7 @@
   </entry>
   <entry>
     <title>在 Nuxt.js 導入 phosphor-icons</title>
-    <url>/hexo-blog-next/2024/06/07/nuxt-icon-phosphor/</url>
+    <url>/2024/06/07/nuxt-icon-phosphor/</url>
     <content><![CDATA[<p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
 <span id="more"></span>
 
@@ -297,7 +354,7 @@
   </entry>
   <entry>
     <title>六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記</title>
-    <url>/hexo-blog-next/2024/10/25/hexschool-sql2024-section-homework-1/</url>
+    <url>/2024/10/25/hexschool-sql2024-section-homework-1/</url>
     <content><![CDATA[<!-- 簡介 -->
 <p>在這篇文章中，我們將探索六角學院 2024 後端工程師資料庫體驗營的精彩瞬間！跟隨小美的第一天工作，看看她如何在系統當機的危機中，運用 SQL 技能解決客戶需求。最後，我們還會提供實作內容的大綱，幫助你輕鬆掌握 SQL 查詢的基礎與進階技巧。準備好一起來學習了嗎？</p>
 <span id="more"></span>
