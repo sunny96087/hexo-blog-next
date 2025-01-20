@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="嘿！你有沒有發現，在撰寫程式的時候，總是會有一些程式碼不斷地重複出現？它們就像是影分身術一樣，在不同的地方出現，做著類似的事情。這些重複的程式碼不僅讓我們的程式變得冗長，也讓修改和維護變得更加困難。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/26/2024it/d17/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="嘿！你有沒有發現，在撰寫程式的時候，總是會有一些程式碼不斷地重複出現？它們就像是影分身術一樣，在不同的地方出現，做著類似的事情。這些重複的程式碼不僅讓我們的程式變得冗長，也讓修改和維護變得更加困難。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-09-26T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.163Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/26/2024it/d17/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/26/2024it/d17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-26 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-26T20:33:45+08:00">2024-09-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/26/2024it/d17/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/26/2024it/d17/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>嘿！你有沒有發現，在撰寫程式的時候，總是會有一些程式碼不斷地重複出現？它們就像是影分身術一樣，在不同的地方出現，做著類似的事情。這些重複的程式碼不僅讓我們的程式變得冗長，也讓修改和維護變得更加困難。</p>
+<span id="more"></span>
+
+<p>但是，身為一個聰明的開發者，我們怎麼能讓這些重複的程式碼繼續存在呢？就像孫悟空掌握了七十二變一樣，我們也要學會如何把這些重複的程式碼”變”出去，讓我們的程式碼變得更加簡潔和優雅。<br>除了重複的程式碼，錯誤處理也是我們經常要面對的問題。就像在玩遊戲時遇到 boss 一樣，錯誤總是在關鍵時刻出現，讓我們的程式陷入困境。但是，如果我們提前準備好對策，就可以輕鬆地應對這些錯誤，讓我們的程式穩定運行。<br>所以，讓我們一起來看看如何通過抽取重複的程式碼和實現全面的錯誤處理，讓我們的程式變得更加強大和可靠吧！相信學會這些技巧，你也能成為一名出色的開發者！</p>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="製作可重用的函式"><a href="#製作可重用的函式" class="headerlink" title="製作可重用的函式"></a>製作可重用的函式</h2><p>首先，我們在專案的根目錄下新增一個名為 <code>utils</code> 的資料夾，用於存放我們抽取出來的工具函式。<br>在 <code>utils</code> 資料夾中，我們新增一個名為 <code>handleSuccess.js</code> 的檔案，並添加以下程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/handleSuccess.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleSuccess</span>(<span class="params">res, data, message, statusCode</span>) &#123;</span><br><span class="line">  res.<span class="title function_">status</span>(statusCode).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">statusCode</span>: statusCode || <span class="number">200</span>,</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">    message,</span><br><span class="line">    data,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = handleSuccess;</span><br></pre></td></tr></table></figure>
+
+<p>這個 <code>handleSuccess</code> 函式用於處理成功回應。它接收四個參數：</p>
+<ul>
+<li><code>res</code>: Express 的回應物件</li>
+<li><code>data</code>: 要在回應中返回的資料</li>
+<li><code>message</code>: 成功訊息</li>
+<li><code>statusCode</code>: HTTP 狀態碼,預設為 200<br>函式內部使用 <code>res.status()</code> 方法設置 HTTP 狀態碼，然後使用 <code>res.json()</code> 方法返回一個包含狀態碼、狀態、訊息和資料的 JSON 物件。</li>
+</ul>
+<p>接下來，我們在 <code>utils</code> 資料夾中新增一個名為 <code>appError.js</code> 的檔案，並添加以下程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/appError.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">appError</span> = (<span class="params">httpStatus, errMessage, next</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> error = <span class="keyword">new</span> <span class="title class_">Error</span>(errMessage);</span><br><span class="line">  error.<span class="property">message</span> = errMessage;</span><br><span class="line">  error.<span class="property">statusCode</span> = httpStatus;</span><br><span class="line">  error.<span class="property">isOperational</span> = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">return</span> error;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = appError;</span><br></pre></td></tr></table></figure>
+
+<p>這個 <code>appError</code> 函式用於創建自定義的錯誤物件。它接收三個參數：</p>
+<ul>
+<li><code>httpStatus</code>：HTTP 狀態碼</li>
+<li><code>errMessage</code>：錯誤訊息</li>
+<li><code>next</code>：Express 的 <code>next</code> 函式<br>函式內部創建一個新的 <code>Error</code> 物件，並設置錯誤的屬性，包括錯誤訊息、HTTP 狀態碼和一個表示錯誤是否為操作錯誤的標誌 <code>isOperational</code>。最後，函式返回這個錯誤物件。<br>這個錯誤物件會被傳遞到 Express 的錯誤處理中間件中，我們稍後會在 <code>app.js</code> 中進行處理。<br>最後，我們在 <code>utils</code> 資料夾中新增一個名為 <code>handleErrorAsync.js</code> 的檔案，並添加以下程式碼：</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/handleErrorAsync.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handleErrorAsync = <span class="keyword">function</span> <span class="title function_">handleErrorAsync</span>(<span class="params">func</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    <span class="title function_">func</span>(req, res, next).<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">next</span>(error);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = handleErrorAsync;</span><br></pre></td></tr></table></figure>
+
+<p>這個 <code>handleErrorAsync</code> 函式是一個高階函式，用於處理異步函式的錯誤。它接收一個異步函式 <code>func</code> 作為參數，並返回一個新的函式。<br>這個新的函式會執行原始的異步函式 <code>func</code>，並使用 <code>catch</code> 方法捕獲可能發生的錯誤。如果發生錯誤，就將錯誤傳遞給 Express 的 <code>next</code> 函式，交給錯誤處理中間件進行處理。<br>使用 <code>handleErrorAsync</code> 函式可以簡化異步函式的錯誤處理，避免了繁瑣的 <code>try...catch</code> 語句。</p>
+<h2 id="全面的錯誤處理"><a href="#全面的錯誤處理" class="headerlink" title="全面的錯誤處理"></a>全面的錯誤處理</h2><p>有了上面的工具函式，我們就可以在 Express 應用程式中實現更全面的錯誤處理了。<br>我們回到 <code>app.js</code> 檔案：<br>添加一個全域的未捕獲異常處理程式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 程式出現重大錯誤時</span></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;uncaughtException&quot;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="comment">// 記錄錯誤下來,等到服務都處理完後,停掉該 process</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Uncaughted Exception！&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">  process.<span class="title function_">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這個處理程式會在程式出現未捕獲的異常時觸發。它會記錄錯誤訊息，並在服務處理完所有請求後，停止該 process。</p>
+<p>接下來，我們添加一個 404 錯誤處理中間件：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 404 錯誤</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    <span class="attr">message</span>: <span class="string">&quot;無此路由資訊&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: req.<span class="property">originalUrl</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這個中間件會在沒有匹配到任何路由時觸發，返回一個 404 錯誤訊息。</p>
+<p>然後，我們添加一個開發環境的錯誤處理函式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">resError</span> = (<span class="params">err, res</span>) =&gt; &#123;</span><br><span class="line">  res.<span class="title function_">status</span>(err.<span class="property">statusCode</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">message</span>: err.<span class="property">message</span>,</span><br><span class="line">    <span class="attr">statusCode</span>: err.<span class="property">statusCode</span>,</span><br><span class="line">    <span class="attr">isOperational</span>: err.<span class="property">isOperational</span>,</span><br><span class="line">    <span class="attr">stack</span>: err.<span class="property">stack</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>這個函式用於處理開發環境下的錯誤，返回詳細的錯誤訊息，包括錯誤堆疊。</p>
+<p>接下來，我們添加一個全域的錯誤處理中間件：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">err, req, res, next</span>) &#123;</span><br><span class="line">  err.<span class="property">statusCode</span> = err.<span class="property">statusCode</span> || <span class="number">500</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (err.<span class="property">name</span> === <span class="string">&quot;ValidationError&quot;</span>) &#123;</span><br><span class="line">    err.<span class="property">message</span> = <span class="string">&quot;資料欄位未填寫正確,請重新輸入！&quot;</span>;</span><br><span class="line">    err.<span class="property">isOperational</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">resError</span>(err, res);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">resError</span>(err, res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這個中間件會捕獲所有的錯誤，並進行處理。如果是資料驗證錯誤，就設置相應的錯誤訊息和 <code>isOperational</code> 標誌，然後呼叫 <code>resError</code> 函式處理錯誤。如果是其他類型的錯誤，就直接呼叫 <code>resError</code> 函式處理。</p>
+<p>最後，我們添加一個未捕獲的 Promise 錯誤處理程式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 未捕獲到的 catch</span></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;unhandledRejection&quot;</span>, <span class="function">(<span class="params">err, promise</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;未捕獲到的 rejection：&quot;</span>, promise, <span class="string">&quot;原因：&quot;</span>, err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = app;</span><br></pre></td></tr></table></figure>
+
+<p>這個處理程式會在有未捕獲的 Promise 錯誤時觸發，記錄錯誤訊息。</p>
+<h2 id="在路由中使用工具函式"><a href="#在路由中使用工具函式" class="headerlink" title="在路由中使用工具函式"></a>在路由中使用工具函式</h2><p>現在，我們可以在 Express 的路由中使用之前定義的工具函式了。<br>我們回到 <code>routes/feedback.js</code> 檔案，並在檔案的頂部引入工具函式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> handleSuccess = <span class="built_in">require</span>(<span class="string">&quot;../utils/handleSuccess&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> handleErrorAsync = <span class="built_in">require</span>(<span class="string">&quot;../utils/handleErrorAsync&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> appError = <span class="built_in">require</span>(<span class="string">&quot;../utils/appError&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>然後，在新增 feedback 的路由中，我們可以使用 <code>handleErrorAsync</code> 函式來處理異步函式的錯誤：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;/&quot;</span>,</span><br><span class="line">  <span class="title function_">handleErrorAsync</span>(<span class="title function_">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; contactPerson, phone, email, feedback &#125; = req.<span class="property">body</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必填欄位驗證</span></span><br><span class="line">    <span class="keyword">if</span> (!contactPerson || !email || !feedback) &#123;</span><br><span class="line">      <span class="comment">// 使用 appError 函式創建錯誤物件</span></span><br><span class="line">      <span class="comment">// 狀態碼為 400，錯誤訊息為 &quot;姓名、信箱、內容為必填欄位&quot;</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">next</span>(<span class="title function_">appError</span>(<span class="number">400</span>, <span class="string">&quot;姓名、信箱、內容為必填欄位&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> newFeedback = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">      contactPerson,</span><br><span class="line">      phone,</span><br><span class="line">      email,</span><br><span class="line">      feedback,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 handleSuccess 函式處理成功回應</span></span><br><span class="line">    <span class="comment">// 狀態碼為 201，回應中包含新創建的 feedback 資料和成功訊息</span></span><br><span class="line">    <span class="title function_">handleSuccess</span>(res, newFeedback, <span class="string">&quot;新增成功&quot;</span>, <span class="number">201</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>讓我們詳細解釋一下新增的錯誤和成功處理部分：</p>
+<ol>
+<li>錯誤處理：<ul>
+<li>在進行必填欄位驗證後，如果驗證失敗（即有欄位為空或未定義），我們使用 <code>appError</code> 函式創建一個自定義的錯誤物件。</li>
+<li><code>appError</code> 函式接收兩個參數：HTTP 狀態碼和錯誤訊息。在這裡，我們將狀態碼設為 400（Bad Request），表示客戶端提交的請求有問題。錯誤訊息設為 “姓名、信箱、內容為必填欄位”，明確指出哪些欄位是必填的。</li>
+<li>創建完錯誤物件後，我們使用 <code>return next(appError(...))</code>，將錯誤物件傳遞給 Express 的 <code>next</code> 函式。這會將錯誤交給 Express 的錯誤處理中間件進行處理。</li>
+<li>Express 的錯誤處理中間件會根據錯誤物件的屬性（如狀態碼和訊息）來生成適當的錯誤回應，並將其返回給客戶端。</li>
+</ul>
+</li>
+<li>成功處理：<ul>
+<li>當新增 feedback 成功時，我們使用 <code>handleSuccess</code> 函式來處理成功回應。</li>
+<li><code>handleSuccess</code> 函式接收四個參數：<ul>
+<li><code>res</code>：Express 的回應物件，用於發送回應給客戶端。</li>
+<li><code>newFeedback</code>：新創建的 feedback 資料，作為回應的一部分返回給客戶端。</li>
+<li>“新增成功”：成功訊息，告知客戶端新增 feedback 成功。</li>
+<li>201：HTTP 狀態碼，表示資源已成功創建。</li>
+</ul>
+</li>
+<li>在 <code>handleSuccess</code> 函式內部，它會設置適當的 HTTP 狀態碼（如果沒有提供，預設為 200），並將包含狀態、訊息和資料的 JSON 回應返回給客戶端。</li>
+<li>這樣，客戶端就能收到一個結構化的成功回應，其中包含了新創建的 feedback 資料和成功訊息。</li>
+</ul>
+</li>
+</ol>
+<p>通過使用 <code>appError</code> 和 <code>handleSuccess</code> 函式，我們將錯誤處理和成功回應的邏輯抽象到了單獨的函式中。這樣做的好處是：</p>
+<ul>
+<li>程式碼更加簡潔和可讀，不需要在路由處理函式中手動設置 HTTP 狀態碼和回應格式。</li>
+<li>錯誤處理和成功回應的邏輯被集中管理，提高了程式碼的一致性和可維護性。</li>
+<li>可以在多個路由處理函式中重複使用這些函式，減少了重複的程式碼。</li>
+</ul>
+<h3 id="app-js-完整程式碼"><a href="#app-js-完整程式碼" class="headerlink" title="app.js 完整程式碼"></a>app.js 完整程式碼</h3><details>
+<summary>點擊這裡查看完整範例程式碼</summary>
+    <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createError = <span class="built_in">require</span>(<span class="string">&quot;http-errors&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">&quot;cookie-parser&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">&quot;morgan&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> indexRouter = <span class="built_in">require</span>(<span class="string">&quot;./routes/index&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> usersRouter = <span class="built_in">require</span>(<span class="string">&quot;./routes/users&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> feedbackRoute = <span class="built_in">require</span>(<span class="string">&quot;./routes/feedback&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Feedback</span> = <span class="built_in">require</span>(<span class="string">&quot;./models/feedback&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 程式出現重大錯誤時</span></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;uncaughtException&quot;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 記錄錯誤下來，等到服務都處理完後，停掉該 process</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Uncaughted Exception！&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">  process.<span class="title function_">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DB</span> = process.<span class="property">env</span>.<span class="property">DATABASE</span>.<span class="title function_">replace</span>(</span><br><span class="line">  <span class="string">&quot;&lt;password&gt;&quot;</span>,</span><br><span class="line">  process.<span class="property">env</span>.<span class="property">DATABASE_PASSWORD</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">mongoose</span><br><span class="line">  .<span class="title function_">connect</span>(<span class="variable constant_">DB</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;資料庫連接成功&quot;</span>))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;MongoDB 連接失敗:&quot;</span>, err);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>());</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;views&quot;</span>, path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;views&quot;</span>));</span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;view engine&quot;</span>, <span class="string">&quot;ejs&quot;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">logger</span>(<span class="string">&quot;dev&quot;</span>));</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;public&quot;</span>)));</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/&quot;</span>, indexRouter);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/users&quot;</span>, usersRouter);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/feedbacks&quot;</span>, feedbackRoute);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 404 錯誤</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="comment">// 回應一個包含錯誤訊息的 JSON 對象</span></span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    <span class="attr">message</span>: <span class="string">&quot;無此路由資訊&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: req.<span class="property">originalUrl</span>, <span class="comment">// 提供更多的上下文信息</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// * 開發環境 錯誤處理</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">resError</span> = (<span class="params">err, res</span>) =&gt; &#123;</span><br><span class="line">  res.<span class="title function_">status</span>(err.<span class="property">statusCode</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">message</span>: err.<span class="property">message</span>,</span><br><span class="line">    <span class="attr">statusCode</span>: err.<span class="property">statusCode</span>,</span><br><span class="line">    <span class="attr">isOperational</span>: err.<span class="property">isOperational</span>,</span><br><span class="line">    <span class="attr">stack</span>: err.<span class="property">stack</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">err, req, res, next</span>) &#123;</span><br><span class="line">  err.<span class="property">statusCode</span> = err.<span class="property">statusCode</span> || <span class="number">500</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (err.<span class="property">name</span> === <span class="string">&quot;ValidationError&quot;</span>) &#123;</span><br><span class="line">    err.<span class="property">message</span> = <span class="string">&quot;資料欄位未填寫正確，請重新輸入！&quot;</span>;</span><br><span class="line">    err.<span class="property">isOperational</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">resError</span>(err, res);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">resError</span>(err, res);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 未捕捉到的 catch</span></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;unhandledRejection&quot;</span>, <span class="function">(<span class="params">err, promise</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;未捕捉到的 rejection：&quot;</span>, promise, <span class="string">&quot;原因：&quot;</span>, err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 導出給 ./bin/www 使用</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = app;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</details>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>在本文中，我們學習了如何將重複的程式碼抽取到單獨的函式或模組中，提高程式碼的可讀性和可維護性。我們創建了 <code>handleSuccess</code>、<code>appError</code> 和 <code>handleErrorAsync</code> 三個工具函式，分別用於處理成功回應、創建自定義錯誤物件和處理異步函式的錯誤。<br>然後，我們在 Express 應用程式中實現了更全面的錯誤處理，包括全域的未捕獲異常處理、404 錯誤處理、開發環境錯誤處理、全域錯誤處理中間件以及未捕獲的 Promise 錯誤處理。<br>最後，我們在 Express 的路由中使用了這些工具函式，簡化了路由的錯誤處理邏輯，提高了程式碼的可讀性。<br>希望通過本文的學習，你能夠更好地理解如何抽取重複的程式碼，並實現更全面的錯誤處理。如果你有任何問題或建議，歡迎在評論區留言討論。</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Express/" rel="tag"># Express</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/25/2024it/d16/" rel="prev" title="[ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/27/2024it/d18/" rel="next" title="[ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定">
+      [ 2024 IT 鐵人賽 DAY18 ] 手寫 API 文件？不用啦！Swagger 幫你搞定 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%BD%E4%BD%9C%E5%8F%AF%E9%87%8D%E7%94%A8%E7%9A%84%E5%87%BD%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">製作可重用的函式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E9%9D%A2%E7%9A%84%E9%8C%AF%E8%AA%A4%E8%99%95%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">全面的錯誤處理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E8%B7%AF%E7%94%B1%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">在路由中使用工具函式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#app-js-%E5%AE%8C%E6%95%B4%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="nav-number">4.1.</span> <span class="nav-text">app.js 完整程式碼</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">5.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/26/2024it/d17/";
+    this.page.identifier = "2024/09/26/2024it/d17/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

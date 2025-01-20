@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="大家好！已經來到第十篇文章了 🎉今天我們來聊聊如何使用 Firebase Storage 來存儲我們的圖片。上次我們把資料整理好並匯入了 MongoDB Compass，現在是時候來處理圖片了。一個漂亮的鸚鵡網站怎麼能少得了精美的圖片呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY10 ] 輕鬆管理網站圖片：Firebase Storage 使用教學">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/19/2024it/d10/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="大家好！已經來到第十篇文章了 🎉今天我們來聊聊如何使用 Firebase Storage 來存儲我們的圖片。上次我們把資料整理好並匯入了 MongoDB Compass，現在是時候來處理圖片了。一個漂亮的鸚鵡網站怎麼能少得了精美的圖片呢？">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/2015968666FbE0blqv.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686PRbhyxILNP.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686npFlVWfgS2.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686nfimwh3a8y.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686k62RjPKveu.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/201596860GV032nj1T.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686UmYV3rcvLU.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686YMBZlEaz26.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686KhTNvt0HHw.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686E7qwjbKfAt.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686hgvt5U8fuD.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686FeQjWFOWrp.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686mVKBiZ3q2l.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/20159686HaNnWuMq34.png">
+<meta property="article:published_time" content="2024-09-19T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.161Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240919/2015968666FbE0blqv.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/19/2024it/d10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY10 ] 輕鬆管理網站圖片：Firebase Storage 使用教學 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/19/2024it/d10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY10 ] 輕鬆管理網站圖片：Firebase Storage 使用教學
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-19 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-19T20:33:45+08:00">2024-09-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/19/2024it/d10/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/19/2024it/d10/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>大家好！已經來到第十篇文章了 🎉<br>今天我們來聊聊如何使用 Firebase Storage 來存儲我們的圖片。<br>上次我們把資料整理好並匯入了 MongoDB Compass，現在是時候來處理圖片了。一個漂亮的鸚鵡網站怎麼能少得了精美的圖片呢？</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<blockquote>
+<p>注意：Firebase 已經更改免費方案，所以這邊的教學只適用於舊的免費方案，新的方案請參考官方文件。</p>
+</blockquote>
+<h2 id="Firebase-Storage-是什麼？"><a href="#Firebase-Storage-是什麼？" class="headerlink" title="Firebase Storage 是什麼？"></a>Firebase Storage 是什麼？</h2><p>Firebase Storage 是 Google 提供的雲端存儲服務。它讓我們可以輕鬆地存儲和管理各種文件，特別適合用來存放圖片、影片等媒體文件。使用 Firebase Storage 的好處有：</p>
+<ol>
+<li>安全性高：提供安全的文件存儲。</li>
+<li>擴展性強：不用擔心存儲空間不夠用。</li>
+<li>訪問便捷：可以通過網址直接訪問文件。</li>
+<li>整合方便：與其他 Firebase 服務無縫連接。</li>
+</ol>
+<h2 id="如何使用-Firebase-Storage-存儲圖片"><a href="#如何使用-Firebase-Storage-存儲圖片" class="headerlink" title="如何使用 Firebase Storage 存儲圖片"></a>如何使用 Firebase Storage 存儲圖片</h2><p>讓我們一步步來看如何使用 Firebase Storage：</p>
+<h3 id="1-註冊-Firebase-帳號"><a href="#1-註冊-Firebase-帳號" class="headerlink" title="1. 註冊 Firebase 帳號"></a>1. 註冊 Firebase 帳號</h3><p>首先，前往 <a target="_blank" rel="noopener" href="https://firebase.google.com/?hl=zh-cn">Firebase 官網</a> 註冊帳號。如果你有 Google 帳號，直接用它登入就可以了。</p>
+<h3 id="2-創建新項目"><a href="#2-創建新項目" class="headerlink" title="2. 創建新項目"></a>2. 創建新項目</h3><ul>
+<li><p>登入後，點擊「新增專案」。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/2015968666FbE0blqv.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/2015968666FbE0blqv.png"></p>
+</li>
+<li><p>為專案取個名字，比如 <code>ex-project</code>。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686PRbhyxILNP.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686PRbhyxILNP.png"></p>
+</li>
+<li><p>在設置過程中，你會看到是否要啟用 Google Analytics 的選項：</p>
+<blockquote>
+<p>💡 關於 Google Analytics：<br>      Google Analytics 是一個強大的網站分析工具。雖然我們的專案不需要用到，但它確實有些有趣的功能：<br>      1. 訪客分析：可以了解有多少人瀏覽了你的網站，他們來自哪裡。<br>      2. 行為追蹤：知道訪客在網站上做了什麼，瀏覽了哪些頁面。<br>      3. 轉換率：如果你有特定目標（比如註冊會員），可以追蹤達成率。<br>      4. 即時數據：實時查看網站的訪問情況。<br>      對於個人項目來說，這些功能可能用不太到。但如果未來你的網站變得超級受歡迎，這些數據可能會變得很有用。<br>      現在先不用太在意，你可以根據自己的需求決定是否啟用。</p>
+</blockquote>
+<p>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686npFlVWfgS2.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686npFlVWfgS2.png"><br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686nfimwh3a8y.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686nfimwh3a8y.png"><br>  這邊要稍微耐心等候一下下<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686k62RjPKveu.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686k62RjPKveu.png"></p>
+</li>
+</ul>
+<h3 id="3-設置-Storage"><a href="#3-設置-Storage" class="headerlink" title="3. 設置 Storage"></a>3. 設置 Storage</h3><ul>
+<li><p>在左側選單中找到「Storage」並點擊。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/201596860GV032nj1T.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/201596860GV032nj1T.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686UmYV3rcvLU.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686UmYV3rcvLU.png"></p>
+</li>
+<li><p>選擇「正式版」模式，這會使用預設的安全規則。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686YMBZlEaz26.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686YMBZlEaz26.png"></p>
+</li>
+<li><p>選擇存儲位置，建議選擇離目標用戶較近的地方 (這邊使用預設值)。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686KhTNvt0HHw.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686KhTNvt0HHw.png"></p>
+</li>
+</ul>
+<h3 id="4-上傳圖片"><a href="#4-上傳圖片" class="headerlink" title="4. 上傳圖片"></a>4. 上傳圖片</h3><p>現在我們來上傳圖片：</p>
+<ul>
+<li><p>在 Firebase Console 中，進入 Storage 頁面 (上面步驟建立完成會直接進到該頁面)。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686E7qwjbKfAt.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686E7qwjbKfAt.png"></p>
+</li>
+<li><p>點擊「上傳檔案」按鈕。</p>
+</li>
+<li><p>選擇你要上傳的圖片文件。</p>
+</li>
+<li><p>等待上傳完成。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686hgvt5U8fuD.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686hgvt5U8fuD.png"></p>
+</li>
+</ul>
+<h3 id="5-創建文件夾"><a href="#5-創建文件夾" class="headerlink" title="5. 創建文件夾"></a>5. 創建文件夾</h3><p>為了更好地管理圖片，我們可以創建文件夾：</p>
+<ul>
+<li><p>在 Storage 頁面，點擊「創建文件夾」。</p>
+</li>
+<li><p>為文件夾命名，例如「鸚鵡圖片」。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686FeQjWFOWrp.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686FeQjWFOWrp.png"></p>
+</li>
+<li><p>將相關圖片上傳到這個文件夾中。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686mVKBiZ3q2l.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686mVKBiZ3q2l.png"></p>
+</li>
+</ul>
+<h3 id="6-獲取圖片-URL"><a href="#6-獲取圖片-URL" class="headerlink" title="6. 獲取圖片 URL"></a>6. 獲取圖片 URL</h3><p>上傳後，我們需要獲取圖片的 URL 來在網站中使用：</p>
+<ul>
+<li>在 Storage 中找到你上傳的圖片。</li>
+<li>點擊圖片，在右側面板中你會看到「文件詳細資料」，右鍵點擊檔案名稱。</li>
+<li>複製連結，它就是我們要用的圖片地址。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240919/20159686HaNnWuMq34.png" alt="https://ithelp.ithome.com.tw/upload/images/20240919/20159686HaNnWuMq34.png"></li>
+</ul>
+<h3 id="小提醒"><a href="#小提醒" class="headerlink" title="小提醒"></a>小提醒</h3><ol>
+<li>養成良好的文件組織習慣，使用清晰的文件夾結構。</li>
+<li>使用有意義的文件名，方便之後查找和管理。</li>
+<li>注意圖片的大小和格式，以優化網站加載速度 (上傳之前可以先 <a target="_blank" rel="noopener" href="https://www.fonepaw.com/tw/photo-compressor/">壓縮</a> 再上傳)。</li>
+</ol>
+<h3 id="為什麼選擇雲端圖片庫？"><a href="#為什麼選擇雲端圖片庫？" class="headerlink" title="為什麼選擇雲端圖片庫？"></a>為什麼選擇雲端圖片庫？</h3><p>在結束之前，你可能會問：「為什麼我們要使用 Firebase Storage，而不是直接把圖片放在專案裡呢？」這是個好問題！使用雲端圖片庫有幾個重要的優勢：</p>
+<ol>
+<li>節省空間：把圖片放在雲端可以減少專案的體積，讓你的程式碼更輕巧。</li>
+<li>更快的加載速度：Firebase 有強大的 CDN，可以讓世界各地的用戶都能快速載入圖片。</li>
+<li>易於管理：你可以隨時添加、刪除或更新圖片，而不需要重新部署整個專案。</li>
+<li>擴展性強：隨著網站成長，你可以輕鬆地存儲更多圖片，而不用擔心空間不足。</li>
+<li>版本控制更簡單：當你的專案沒有大量二進制文件（如圖片）時，版本控制會更加輕鬆。<br>所以，使用 Firebase Storage 不僅讓我們的開發過程更順暢，也為未來的擴展和維護鋪平了道路。這就是為什麼我們選擇雲端方案的原因啦！</li>
+</ol>
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>這就是使用 Firebase Storage 存儲圖片的基本流程了。是不是感覺很簡單？通過 Firebase Storage，我們可以輕鬆地為鸚鵡樂園添加漂亮的圖片，讓網站更加生動有趣。<br>接下來，我們就可以在網站上展示這些可愛的鸚鵡圖片了。想像一下，一隻隻色彩繽紛的鸚鵡在網頁上展翅，是不是很棒？<br>記住，優秀的網站開發不僅需要好的代碼，還需要優質的內容和圖片。下次我們會探討如何在前端頁面上展示這些圖片，大家繼續加油哦！<br>大家有沒有管理圖片資料的秘訣呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/18/2024it/d9/" rel="prev" title="[ 2024 IT 鐵人賽 DAY9 ] 資料庫填充秘笈：AI 助手、JSON 轉換與 Compass 完美配合">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY9 ] 資料庫填充秘笈：AI 助手、JSON 轉換與 Compass 完美配合
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/20/2024it/d11/" rel="next" title="[ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界">
+      [ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Firebase-Storage-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">Firebase Storage 是什麼？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Firebase-Storage-%E5%AD%98%E5%84%B2%E5%9C%96%E7%89%87"><span class="nav-number">3.</span> <span class="nav-text">如何使用 Firebase Storage 存儲圖片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A8%BB%E5%86%8A-Firebase-%E5%B8%B3%E8%99%9F"><span class="nav-number">3.1.</span> <span class="nav-text">1. 註冊 Firebase 帳號</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%89%B5%E5%BB%BA%E6%96%B0%E9%A0%85%E7%9B%AE"><span class="nav-number">3.2.</span> <span class="nav-text">2. 創建新項目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A8%AD%E7%BD%AE-Storage"><span class="nav-number">3.3.</span> <span class="nav-text">3. 設置 Storage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%B8%8A%E5%82%B3%E5%9C%96%E7%89%87"><span class="nav-number">3.4.</span> <span class="nav-text">4. 上傳圖片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%89%B5%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%BE"><span class="nav-number">3.5.</span> <span class="nav-text">5. 創建文件夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%8D%B2%E5%8F%96%E5%9C%96%E7%89%87-URL"><span class="nav-number">3.6.</span> <span class="nav-text">6. 獲取圖片 URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%8F%90%E9%86%92"><span class="nav-number">3.7.</span> <span class="nav-text">小提醒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%81%B8%E6%93%87%E9%9B%B2%E7%AB%AF%E5%9C%96%E7%89%87%E5%BA%AB%EF%BC%9F"><span class="nav-number">3.8.</span> <span class="nav-text">為什麼選擇雲端圖片庫？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.9.</span> <span class="nav-text">結語</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/19/2024it/d10/";
+    this.page.identifier = "2024/09/19/2024it/d10/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY10 ] 輕鬆管理網站圖片：Firebase Storage 使用教學";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

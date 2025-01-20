@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="大家好！我是2魚，今天我們要深入探討後端開發中兩個核心概念：API（應用程式介面）和CRUD（創建、讀取、更新、刪除）操作。這兩個概念是構建現代Web應用的基石。我們將從MongoDB資料庫設置開始，逐步實現一個完整的API，涵蓋所有CRUD操作。無論你是後端新手還是想複習基礎的開發者，這篇文章都會給你實用的洞見和hands-on經驗。讓我們開始這段精彩的後端之旅吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/24/2024it/d15/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="大家好！我是2魚，今天我們要深入探討後端開發中兩個核心概念：API（應用程式介面）和CRUD（創建、讀取、更新、刪除）操作。這兩個概念是構建現代Web應用的基石。我們將從MongoDB資料庫設置開始，逐步實現一個完整的API，涵蓋所有CRUD操作。無論你是後端新手還是想複習基礎的開發者，這篇文章都會給你實用的洞見和hands-on經驗。讓我們開始這段精彩的後端之旅吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/20159686Ef1NSznZiX.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/20159686nstyYoDZ87.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/20159686LIjyxmdmfD.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/201596864i1252skD9.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/201596861WiijIyO7A.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/201596866yv8AeBEgs.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/20159686idBwmleeX9.png">
+<meta property="article:published_time" content="2024-09-24T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.163Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240924/20159686Ef1NSznZiX.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/24/2024it/d15/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/24/2024it/d15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-24 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-24T20:33:45+08:00">2024-09-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/24/2024it/d15/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/24/2024it/d15/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>大家好！我是2魚，今天我們要深入探討後端開發中兩個核心概念：API（應用程式介面）和CRUD（創建、讀取、更新、刪除）操作。這兩個概念是構建現代Web應用的基石。我們將從MongoDB資料庫設置開始，逐步實現一個完整的API，涵蓋所有CRUD操作。無論你是後端新手還是想複習基礎的開發者，這篇文章都會給你實用的洞見和hands-on經驗。讓我們開始這段精彩的後端之旅吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="1-MongoDB-Atlas-環境準備"><a href="#1-MongoDB-Atlas-環境準備" class="headerlink" title="1. MongoDB Atlas 環境準備"></a>1. MongoDB Atlas 環境準備</h2><p>首先，我們需要確保MongoDB Atlas中的測試環境是乾淨的。這個步驟很重要，因為它可以幫助我們避免舊數據干擾新的開發過程。</p>
+<ol>
+<li><p>登入MongoDB Compass</p>
+</li>
+<li><p>找到你的test資料庫<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240924/20159686Ef1NSznZiX.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/20159686Ef1NSznZiX.png"></p>
+</li>
+<li><p>刪除所有現有的集合<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240924/20159686nstyYoDZ87.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/20159686nstyYoDZ87.png"><br>這樣做可以讓我們從一個乾淨的狀態開始開發，避免之前的測試數據影響我們的新功能開發。</p>
+</li>
+</ol>
+<h2 id="2-定義Mongoose模型"><a href="#2-定義Mongoose模型" class="headerlink" title="2. 定義Mongoose模型"></a>2. 定義Mongoose模型</h2><h3 id="1-打開-VsCode，在專案根目錄下創建models資料夾"><a href="#1-打開-VsCode，在專案根目錄下創建models資料夾" class="headerlink" title="1. 打開 VsCode，在專案根目錄下創建models資料夾"></a>1. 打開 VsCode，在專案根目錄下創建<code>models</code>資料夾</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240924/20159686LIjyxmdmfD.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/20159686LIjyxmdmfD.png"></p>
+<h3 id="2-參考我們在第七天規劃的資料表-Excel"><a href="#2-參考我們在第七天規劃的資料表-Excel" class="headerlink" title="2. 參考我們在第七天規劃的資料表 Excel"></a>2. 參考我們在第七天規劃的資料表 Excel</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240924/201596864i1252skD9.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/201596864i1252skD9.png"></p>
+<table>
+<thead>
+<tr>
+<th>KEY</th>
+<th>英文欄位名稱</th>
+<th>中文欄位名稱</th>
+<th>型態</th>
+<th>必填</th>
+<th>預設值</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PK</td>
+<td>_id</td>
+<td>ID</td>
+<td>ObjectID</td>
+<td>v</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>contactPerson</td>
+<td>名稱</td>
+<td>String</td>
+<td>v</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>phone</td>
+<td>電話</td>
+<td>String</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>email</td>
+<td>信箱</td>
+<td>String</td>
+<td>v</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>content</td>
+<td>內容</td>
+<td>String</td>
+<td>v</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>source</td>
+<td>從哪裡得知本網站</td>
+<td>Number</td>
+<td></td>
+<td></td>
+<td>1:網路搜尋 2:親友推薦 3:社群媒體 4:其他</td>
+</tr>
+<tr>
+<td></td>
+<td>createTime</td>
+<td>創建時間</td>
+<td>Date</td>
+<td></td>
+<td>now</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="3-在-models-資料夾內新增feedback-js文件"><a href="#3-在-models-資料夾內新增feedback-js文件" class="headerlink" title="3. 在 models 資料夾內新增feedback.js文件"></a>3. 在 models 資料夾內新增<code>feedback.js</code>文件</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240924/201596861WiijIyO7A.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/201596861WiijIyO7A.png"></p>
+<ol>
+<li><strong>引入 Mongoose 套件</strong> <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>);</span><br></pre></td></tr></table></figure>
+ 這行程式碼的作用是引入 <code>mongoose</code> 這個工具，它能幫助我們與 MongoDB 資料庫進行溝通，並且管理資料。</li>
+<li><strong>定義聯絡我們模型</strong> <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> feedbackSchema = <span class="keyword">new</span> mongoose.<span class="title class_">Schema</span>(</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 名稱</span></span><br><span class="line">    <span class="attr">contactPerson</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: [<span class="literal">true</span>, <span class="string">&quot;姓名未填寫&quot;</span>] &#125;,</span><br><span class="line">    <span class="comment">// 電話</span></span><br><span class="line">    <span class="attr">phone</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span> &#125;,</span><br><span class="line">    <span class="comment">// 信箱</span></span><br><span class="line">    <span class="attr">email</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: [<span class="literal">true</span>, <span class="string">&quot;信箱未填寫&quot;</span>] &#125;,</span><br><span class="line">    <span class="comment">// 內容</span></span><br><span class="line">    <span class="attr">feedback</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: [<span class="literal">true</span>, <span class="string">&quot;內容未填寫&quot;</span>] &#125;,</span><br><span class="line">    <span class="comment">// 從哪裡得知此網站</span></span><br><span class="line">    <span class="attr">source</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">      <span class="attr">enum</span>: [<span class="string">&quot;網路搜尋&quot;</span>, <span class="string">&quot;社群媒體&quot;</span>, <span class="string">&quot;親友介紹&quot;</span>, <span class="string">&quot;其他&quot;</span>],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">versionKey</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">timestamps</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+ 這段程式碼的目的是創建一個「模型」，用來描述我們想在資料庫裡儲存的「聯絡我們」資料的結構，簡而言之，就是這些資料的「樣板」。<blockquote>
+<p>每個欄位的說明：<br>     - **<code>contactPerson</code> (名稱)**：用於儲存用戶的名字。<code>type: String</code> 表示它是文字格式，而且必須填寫（<code>required: true</code>），如果沒填寫就會顯示「姓名未填寫」的錯誤訊息。<br>     - **<code>phone</code> (電話)**：用於儲存用戶的電話號碼。它是文字格式，但這個欄位可以不填（沒有 <code>required</code>）。<br>     - **<code>email</code> (信箱)**：用於儲存用戶的電子郵件地址。它也是文字格式，而且必須填寫，否則會顯示「信箱未填寫」的錯誤訊息。<br>     - **<code>feedback</code> (內容)**：用於儲存用戶給你的反饋內容。這也是必填項，沒填寫的話會顯示「內容未填寫」。<br>     - **<code>source</code> (從哪裡得知此網站)**：用於記錄用戶是從哪裡知道你這個網站的。它只能是幾個選項之一（例如「網路搜尋」、「社群媒體」等）。</p>
+</blockquote>
+<blockquote>
+<p>其他設定：<br>     - **<code>versionKey: false</code>**：這個設定讓 Mongoose 不會自動生成一個叫 <code>__v</code> 的版本號欄位。<br>     - **<code>timestamps: true</code>**：這個設定會自動幫你添加兩個欄位，分別記錄資料創建和最後更新的時間。</p>
+</blockquote>
+</li>
+<li><strong>創建並導出模型</strong> <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Feedback</span> = mongoose.<span class="title function_">model</span>(<span class="string">&quot;Feedback&quot;</span>, feedbackSchema);</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Feedback</span>;</span><br></pre></td></tr></table></figure>
+ 最後，我們使用 <code>mongoose.model</code> 創建了一個名為 <code>Feedback</code> 的模型，這個模型就像是我們剛剛定義的資料「樣板」的具體實現。<br> 接著，我們用 <code>module.exports</code> 將這個模型導出，這樣在其他地方的程式碼中也可以使用它。</li>
+</ol>
+<h3 id="4-掛載到-app-js-進行測試"><a href="#4-掛載到-app-js-進行測試" class="headerlink" title="4. 掛載到 app.js 進行測試"></a>4. 掛載到 <code>app.js</code> 進行測試</h3><ul>
+<li>打開 <code>app.js</code> 添加以下程式碼：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const Feedback = require(<span class="string">&quot;./models/feedback&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>開啟終端機，輸入 <code>npm start</code> 執行專案</li>
+<li>回到 compass 可以看到 test 資料庫多出一個新的 feedbacks 集合<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240924/201596866yv8AeBEgs.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/201596866yv8AeBEgs.png"></li>
+</ul>
+<blockquote>
+<p>💡 <strong>補充說明：為什麼新增的是 <code>feedbacks</code> 而不是 <code>feedback</code></strong></p>
+</blockquote>
+<p>當你使用 Mongoose 創建模型時，Mongoose 會自動將模型名稱轉換為複數形式，用來命名 MongoDB 中的集合。這是 Mongoose 的預設行為。</p>
+<h4 id="在上面的範例："><a href="#在上面的範例：" class="headerlink" title="在上面的範例："></a>在上面的範例：</h4><ul>
+<li>我們定義了一個模型叫 <code>Feedback</code>。</li>
+<li>Mongoose 會把 <code>Feedback</code> 變成 <code>feedbacks</code>，然後在資料庫裡建立這個集合。</li>
+<li>所以，當我們把資料存進去時，它會自動進入 <code>feedbacks</code> 這個集合，而不是 <code>feedback</code>。<br>這樣的設計是因為資料庫通常會存放多筆資料，所以用複數形式來命名會更符合實際情況。</li>
+</ul>
+<h4 id="如果你不想要複數形式："><a href="#如果你不想要複數形式：" class="headerlink" title="如果你不想要複數形式："></a>如果你不想要複數形式：</h4><p>如果你希望集合名稱保持單數，你可以在創建模型時指定具體的集合名稱：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 這是上面範例寫法，建立出來的集合會是 feedbacks</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Feedback</span> = mongoose.<span class="title function_">model</span>(<span class="string">&quot;Feedback&quot;</span>, feedbackSchema); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 自訂集合名稱，撰寫在 () 第三個變數，建立出來會是 feedback</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Feedback</span> = mongoose.<span class="title function_">model</span>(<span class="string">&quot;Feedback&quot;</span>, feedbackSchema, <span class="string">&quot;feedback&quot;</span>); </span><br></pre></td></tr></table></figure>
+
+<p>這樣資料就會存到名為 <code>feedback</code> 的集合裡，而不是 <code>feedbacks</code>。<br>這種自動複數化的行為是 Mongoose 幫你做的，但你也可以輕鬆地控制它。</p>
+<hr>
+<h2 id="開發第一個-API：Feedback-CRUD-操作"><a href="#開發第一個-API：Feedback-CRUD-操作" class="headerlink" title="開發第一個 API：Feedback CRUD 操作"></a>開發第一個 API：Feedback CRUD 操作</h2><p>接下來，我們將在 Express 專案中實現 CRUD（創建、讀取、更新、刪除）操作。<br>我們會以上面定義的 Feedback 模型為例，直接在 routes 中實現這些功能。</p>
+<h3 id="Step1-再次檢視我們的-Feedback-模型："><a href="#Step1-再次檢視我們的-Feedback-模型：" class="headerlink" title="Step1. 再次檢視我們的 Feedback 模型："></a>Step1. 再次檢視我們的 Feedback 模型：</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> feedbackSchema = <span class="keyword">new</span> mongoose.<span class="title class_">Schema</span>(</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">contactPerson</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: [<span class="literal">true</span>, <span class="string">&quot;姓名未填寫&quot;</span>] &#125;,</span><br><span class="line">    <span class="attr">phone</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span> &#125;,</span><br><span class="line">    <span class="attr">email</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: [<span class="literal">true</span>, <span class="string">&quot;信箱未填寫&quot;</span>] &#125;,</span><br><span class="line">    <span class="attr">feedback</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: [<span class="literal">true</span>, <span class="string">&quot;內容未填寫&quot;</span>] &#125;,</span><br><span class="line">    <span class="attr">source</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">      <span class="attr">enum</span>: [<span class="string">&quot;網路搜尋&quot;</span>, <span class="string">&quot;社群媒體&quot;</span>, <span class="string">&quot;親友介紹&quot;</span>, <span class="string">&quot;其他&quot;</span>],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">versionKey</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">timestamps</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Feedback</span> = mongoose.<span class="title function_">model</span>(<span class="string">&quot;Feedback&quot;</span>, feedbackSchema);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Feedback</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-2-在-routes-資料夾中創建-feedback-js-檔案，並實現-CRUD-操作："><a href="#Step-2-在-routes-資料夾中創建-feedback-js-檔案，並實現-CRUD-操作：" class="headerlink" title="Step 2. 在 routes 資料夾中創建 feedback.js 檔案，並實現 CRUD 操作："></a>Step 2. 在 <code>routes</code> 資料夾中創建 <code>feedback.js</code> 檔案，並實現 CRUD 操作：</h3><p>首先，我們需要設置基本的路由結構：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> router = express.<span class="title class_">Router</span>();</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Feedback</span> = <span class="built_in">require</span>(<span class="string">&quot;../models/feedback&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 這裡我們將添加我們的 CRUD 操作</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router;</span><br></pre></td></tr></table></figure>
+<p>現在，讓我們逐一實現 CRUD 操作：</p>
+<ol>
+<li><p>新增 feedback</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新增 feedback</span></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&quot;/&quot;</span>, <span class="title function_">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 從請求的 body 中提取出用戶提交的資料（姓名、電話、信箱、反饋內容）</span></span><br><span class="line">    <span class="keyword">const</span> &#123; contactPerson, phone, email, feedback &#125; = req.<span class="property">body</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 驗證必填欄位，檢查是否提供了姓名、信箱和反饋內容</span></span><br><span class="line">    <span class="keyword">if</span> (!contactPerson || !email || !feedback) &#123;</span><br><span class="line">      <span class="comment">// 如果缺少必填欄位，回應 400 錯誤狀態和錯誤信息</span></span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>,</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;姓名、信箱、內容為必填欄位&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果必填欄位都有，使用 Feedback 模型創建一條新的反饋記錄</span></span><br><span class="line">    <span class="keyword">const</span> newFeedback = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">      <span class="attr">contactPerson</span>: contactPerson,  <span class="comment">// 設置聯絡人姓名</span></span><br><span class="line">      <span class="attr">phone</span>: phone,  <span class="comment">// 設置聯絡人電話（可選）</span></span><br><span class="line">      <span class="attr">email</span>: email,  <span class="comment">// 設置聯絡人信箱</span></span><br><span class="line">      <span class="attr">feedback</span>: feedback,  <span class="comment">// 設置反饋內容</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成功創建後，回應 201 狀態（已創建）和成功信息，包含新創建的反饋數據</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">201</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">      <span class="attr">data</span>: newFeedback,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 如果在創建過程中發生錯誤，回應 400 錯誤狀態和錯誤信息</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>,</span><br><span class="line">      <span class="attr">message</span>: error.<span class="property">message</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="詳細解釋："><a href="#詳細解釋：" class="headerlink" title="詳細解釋："></a>詳細解釋：</h4><ol>
+<li><strong>路由設置</strong>：<code>router.post(&quot;/&quot;...)</code> 表示這是一個處理POST請求的路由，路徑為根路徑”&#x2F;“。</li>
+<li><strong>非同步處理</strong>：使用<code>async/await</code>來處理非同步操作，確保資料庫操作完成後再回應。</li>
+<li><strong>解構請求體</strong>：<code>const &#123; contactPerson, phone, email, feedback &#125; = req.body;</code> 從請求體中提取所需資料。</li>
+<li><strong>必填欄位驗證</strong>：檢查必填欄位是否存在，如果缺少則返回400錯誤。</li>
+<li><strong>創建新記錄</strong>：使用<code>Feedback.create()</code>方法創建新的feedback記錄。</li>
+<li><strong>成功回應</strong>：如果創建成功，返回201狀態碼和新創建的資料。</li>
+<li><strong>錯誤處理</strong>：如果過程中出現錯誤，捕獲錯誤並返回400錯誤狀態。</li>
+</ol>
+</li>
+<li><p>獲取所有 Feedback</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取得所有 feedback</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="title function_">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 使用 find() 方法從資料庫中取得所有 feedbacks</span></span><br><span class="line">    <span class="keyword">const</span> feedbacks = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">find</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成功取得資料後，回應 200 狀態碼和回傳的資料</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;success&quot;</span>, <span class="comment">// 狀態為成功</span></span><br><span class="line">      <span class="attr">results</span>: feedbacks.<span class="property">length</span>, <span class="comment">// 回傳的 feedbacks 數量</span></span><br><span class="line">      <span class="attr">data</span>: feedbacks, <span class="comment">// 回傳所有 feedbacks 的資料</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 如果發生錯誤（如資料庫連接問題），回應 404 錯誤狀態和錯誤訊息</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>, <span class="comment">// 狀態為失敗</span></span><br><span class="line">      <span class="attr">message</span>: error.<span class="property">message</span>, <span class="comment">// 返回錯誤訊息</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="詳細解釋：-1"><a href="#詳細解釋：-1" class="headerlink" title="詳細解釋："></a>詳細解釋：</h4><ol>
+<li><strong>GET請求處理</strong>：這個路由處理GET請求，用於獲取所有feedback。</li>
+<li><strong>查詢所有記錄</strong>：<code>Feedback.find()</code>方法不帶參數，會返回所有feedback記錄。</li>
+<li><strong>回應結構</strong>：回應包含狀態、結果數量和實際數據，為前端提供更多信息。</li>
+<li><strong>錯誤處理</strong>：如果查詢過程出錯，返回404錯誤。</li>
+</ol>
+</li>
+<li><p>獲取指定 ID 的 Feedback</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取得指定 id feedback</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/:id&quot;</span>, <span class="title function_">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 使用 findById 方法從資料庫中取得指定 id 的 feedback</span></span><br><span class="line">    <span class="keyword">const</span> feedback = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">findById</span>(req.<span class="property">params</span>.<span class="property">id</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果找不到該 id 對應的資料，回應 404 錯誤狀態和錯誤訊息</span></span><br><span class="line">    <span class="keyword">if</span> (!feedback) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>, <span class="comment">// 狀態為失敗</span></span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;找不到該 feedback&quot;</span>, <span class="comment">// 返回錯誤訊息</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成功取得資料後，回應 200 狀態碼和回傳的資料</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;success&quot;</span>, <span class="comment">// 狀態為成功</span></span><br><span class="line">      <span class="attr">data</span>: feedback, <span class="comment">// 回傳指定 id 的 feedback 資料</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 如果發生錯誤（如無效的 id），回應 404 錯誤狀態和錯誤訊息</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>, <span class="comment">// 狀態為失敗</span></span><br><span class="line">      <span class="attr">message</span>: error.<span class="property">message</span>, <span class="comment">// 返回錯誤訊息</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="詳細解釋：-2"><a href="#詳細解釋：-2" class="headerlink" title="詳細解釋："></a>詳細解釋：</h4><ol>
+<li><strong>路徑參數</strong>：<code>:id</code>是一個路徑參數，可以通過<code>req.params.id</code>獲取。</li>
+<li><strong>查找特定記錄</strong>：使用<code>Feedback.findById()</code>方法查找特定ID的feedback。</li>
+<li><strong>記錄不存在處理</strong>：如果找不到對應記錄，返回404錯誤。</li>
+<li><strong>成功回應</strong>：找到記錄後，返回200狀態碼和記錄數據。</li>
+</ol>
+</li>
+<li><p>更新指定 ID 的 Feedback</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 更新指定 id feedback</span></span><br><span class="line">router.<span class="title function_">patch</span>(<span class="string">&quot;/:id&quot;</span>, <span class="title function_">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 檢查必填欄位是否存在</span></span><br><span class="line">    <span class="keyword">const</span> &#123; contactPerson, email, feedback &#125; = req.<span class="property">body</span>;</span><br><span class="line">    <span class="keyword">if</span> (!contactPerson || !email || !feedback) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>,</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;姓名、信箱、內容為必填欄位&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 findByIdAndUpdate 更新資料</span></span><br><span class="line">    <span class="keyword">const</span> updatedFeedback = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">findByIdAndUpdate</span>(</span><br><span class="line">      req.<span class="property">params</span>.<span class="property">id</span>, <span class="comment">// 從 URL 參數中獲取要更新的資料 ID</span></span><br><span class="line">      req.<span class="property">body</span>, <span class="comment">// 使用請求 body 中的資料進行更新</span></span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">new</span>: <span class="literal">true</span>, <span class="comment">// 返回更新後的資料</span></span><br><span class="line">        <span class="attr">runValidators</span>: <span class="literal">true</span>, <span class="comment">// 在更新時執行驗證</span></span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果找不到該資料，回應 404 錯誤</span></span><br><span class="line">    <span class="keyword">if</span> (!updatedFeedback) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>,</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;找不到該 feedback&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成功更新後回應 200 狀態和更新後的資料</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">      <span class="attr">data</span>: updatedFeedback,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 捕獲錯誤並返回 400 錯誤狀態和錯誤信息</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>,</span><br><span class="line">      <span class="attr">message</span>: error.<span class="property">message</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="詳細解釋：-3"><a href="#詳細解釋：-3" class="headerlink" title="詳細解釋："></a>詳細解釋：</h4><ol>
+<li><strong>PATCH請求</strong>：使用PATCH方法允許部分更新資源。</li>
+<li><strong>必填欄位驗證</strong>：再次檢查必填欄位，確保更新操作的完整性。</li>
+<li><strong>更新操作</strong>：<code>findByIdAndUpdate</code>方法同時查找和更新文檔。<ul>
+<li><code>new: true</code>選項返回更新後的文檔。</li>
+<li><code>runValidators: true</code>確保更新時執行模型的驗證規則。</li>
+</ul>
+</li>
+<li><strong>更新失敗處理</strong>：如果找不到要更新的文檔，返回404錯誤。</li>
+<li><strong>成功回應</strong>：更新成功後，返回更新後的文檔。</li>
+</ol>
+</li>
+<li><p>刪除指定 ID 的 Feedback</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 刪除指定 id feedback</span></span><br><span class="line">router.<span class="title function_">delete</span>(<span class="string">&quot;/:id&quot;</span>, <span class="title function_">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 使用 findByIdAndDelete 根據 URL 中的 id 參數查找並刪除對應的 feedback</span></span><br><span class="line">    <span class="keyword">const</span> feedback = <span class="keyword">await</span> <span class="title class_">Feedback</span>.<span class="title function_">findByIdAndDelete</span>(req.<span class="property">params</span>.<span class="property">id</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果找不到對應的 feedback（即該 id 不存在），回應 404 錯誤</span></span><br><span class="line">    <span class="keyword">if</span> (!feedback) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>, <span class="comment">// 狀態為失敗</span></span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;找不到該 feedback&quot;</span>, <span class="comment">// 返回錯誤訊息</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果成功刪除，回應 200 狀態碼，表示成功操作</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;success&quot;</span>, <span class="comment">// 狀態為成功</span></span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;刪除成功&quot;</span>, <span class="comment">// 返回成功訊息</span></span><br><span class="line">      <span class="attr">data</span>: <span class="literal">null</span>, <span class="comment">// 雖然此處用 200，但不返回具體的資料，data 設為 null</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 如果發生錯誤（例如無效的 id），回應 400 錯誤狀態</span></span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;fail&quot;</span>, <span class="comment">// 狀態為失敗</span></span><br><span class="line">      <span class="attr">message</span>: error.<span class="property">message</span>, <span class="comment">// 返回錯誤訊息，通常是錯誤的詳細信息</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="詳細解釋：-4"><a href="#詳細解釋：-4" class="headerlink" title="詳細解釋："></a>詳細解釋：</h4><ol>
+<li><strong>刪除操作</strong>：使用<code>findByIdAndDelete</code>方法查找並刪除指定ID的文檔。</li>
+<li><strong>刪除失敗處理</strong>：如果找不到要刪除的文檔，返回404錯誤。</li>
+<li><strong>成功回應</strong>：刪除成功後，返回200狀態碼。注意這裡返回<code>data: null</code>，因為資源已被刪除。</li>
+<li><strong>錯誤處理</strong>：捕獲可能的錯誤（如無效ID）並返回400錯誤。</li>
+</ol>
+</li>
+<li><p>最後，別忘了在 <code>app.js</code> 中引入這個新的路由：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> feedbackRoute = <span class="built_in">require</span>(<span class="string">&quot;./routes/feedback&quot;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/feedbacks&quot;</span>, feedbackRoute);</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240924/20159686idBwmleeX9.png" alt="https://ithelp.ithome.com.tw/upload/images/20240924/20159686idBwmleeX9.png"></p>
+</li>
+</ol>
+<p>這樣，我們就完成了 Feedback 的 CRUD 操作！每個操作都有其特定的 HTTP 方法和路徑，使用了適當的 Mongoose 方法來操作數據庫。</p>
+<hr>
+<h2 id="API常用HTTP狀態碼"><a href="#API常用HTTP狀態碼" class="headerlink" title="API常用HTTP狀態碼"></a>API常用HTTP狀態碼</h2><p>在開發API時，正確使用HTTP狀態碼對於前後端溝通至關重要。以下是一些常用的狀態碼及其含義：</p>
+<ol>
+<li><strong>200 OK</strong>：請求成功。通常用於GET和PUT&#x2F;PATCH請求。</li>
+<li><strong>201 Created</strong>：請求成功並創建了新資源。常用於POST請求。</li>
+<li><strong>204 No Content</strong>：請求成功，但無返回內容。常用於DELETE請求。</li>
+<li><strong>400 Bad Request</strong>：客戶端請求有誤，例如請求體缺少必要參數。</li>
+<li><strong>401 Unauthorized</strong>：未經授權的請求，通常是因為缺少或無效的認證。</li>
+<li><strong>403 Forbidden</strong>：伺服器理解請求但拒絕執行，通常是權限問題。</li>
+<li><strong>404 Not Found</strong>：請求的資源不存在。</li>
+<li><strong>500 Internal Server Error</strong>：伺服器遇到未知錯誤，無法完成請求。<br>正確使用這些狀態碼可以幫助客戶端更好地理解請求的結果，提高API的可用性和可維護性。</li>
+</ol>
+<h2 id="HTTP狀態碼速查表"><a href="#HTTP狀態碼速查表" class="headerlink" title="HTTP狀態碼速查表"></a>HTTP狀態碼速查表</h2><table>
+<thead>
+<tr>
+<th>狀態碼</th>
+<th>說明</th>
+<th>使用情境</th>
+<th>餐廳情境比喻</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200 OK</td>
+<td>請求成功，資料已回傳。</td>
+<td>GET取得資料、PUT&#x2F;PATCH更新資料成功時。</td>
+<td>服務生：「您的餐點已送達，請慢用。」</td>
+</tr>
+<tr>
+<td>201 Created</td>
+<td>請求成功，新資源已建立。</td>
+<td>POST新增資料成功時。</td>
+<td>櫃台：「您的訂位已成功，座位已準備好。」</td>
+</tr>
+<tr>
+<td>204 No Content</td>
+<td>請求成功，但無需回傳資料。</td>
+<td>刪除成功，或不需回傳內容的操作。</td>
+<td>服務生收走空盤子，點頭示意但不說話。</td>
+</tr>
+<tr>
+<td>400 Bad Request</td>
+<td>請求有誤，伺服器無法處理。</td>
+<td>傳送的資料格式錯誤或缺少必要參數。</td>
+<td>廚師：「這個訂單資訊不完整，請確認後再下單。」</td>
+</tr>
+<tr>
+<td>401 Unauthorized</td>
+<td>需要驗證身份。</td>
+<td>未登入或登入已過期。</td>
+<td>櫃台：「對不起，這是會員專屬餐廳，請出示會員卡。」</td>
+</tr>
+<tr>
+<td>403 Forbidden</td>
+<td>已驗證身份，但權限不足。</td>
+<td>嘗試存取無權限的資源。</td>
+<td>經理：「很抱歉，員工專用廚房區域不對外開放。」</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>請求的資源不存在。</td>
+<td>訪問不存在的網址或資源。</td>
+<td>服務生：「對不起，我們的菜單上沒有這道菜。」</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>伺服器內部錯誤。</td>
+<td>伺服器端程式錯誤或未預期的異常。</td>
+<td>主廚：「非常抱歉，廚房設備突然故障，暫時無法處理訂單。」</td>
+</tr>
+</tbody></table>
+<h3 id="為什麼正確使用狀態碼很重要？"><a href="#為什麼正確使用狀態碼很重要？" class="headerlink" title="為什麼正確使用狀態碼很重要？"></a>為什麼正確使用狀態碼很重要？</h3><p>正確使用 HTTP 狀態碼能大幅提升 API 的可用性和可維護性。它不只幫助開發者快速理解請求的結果，也有助於前端更有效地處理不同情況。選擇適當的狀態碼，就像在 API 和使用者之間建立了一個清晰的溝通橋樑。<br>記住，優秀的 API 設計不僅僅是實現功能，更重要的是提供清晰的溝通。適當使用狀態碼，就像為您的 API 安裝了一個高效的訊息系統，讓每次的請求和回應都能一目了然，大大提升了開發效率和用戶體驗。</p>
+<h2 id="💡-輕鬆搞懂：HTTP狀態碼-200-OK-和-204-No-Content-的差別"><a href="#💡-輕鬆搞懂：HTTP狀態碼-200-OK-和-204-No-Content-的差別" class="headerlink" title="💡 輕鬆搞懂：HTTP狀態碼 200 OK 和 204 No Content 的差別"></a>💡 輕鬆搞懂：HTTP狀態碼 200 OK 和 204 No Content 的差別</h2><p>在處理API刪除操作時常見的兩種狀態碼：200 OK 和 204 No Content。它們到底有啥不一樣？來，讓我給你講個簡單的例子：</p>
+<h3 id="200-OK：「欸，搞定了啦！來，我跟你說說細節」"><a href="#200-OK：「欸，搞定了啦！來，我跟你說說細節」" class="headerlink" title="200 OK：「欸，搞定了啦！來，我跟你說說細節」"></a>200 OK：「欸，搞定了啦！來，我跟你說說細節」</h3><p>想像你請你的好麻吉幫忙刪掉一張尷尬的路邊攤醉倒照片。你麻吉不只幫你刪掉，還很熱心地跟你說：「搞定囉！那張照片是上個月吃宵夜時拍的，檔案有5MB大欸！」<br>在API裡面，用200 OK就是這種感覺，不只說刪掉了，還會給你一堆有的沒的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">  <span class="attr">message</span>: <span class="string">&quot;刪掉囉，放心啦&quot;</span>,</span><br><span class="line">  <span class="attr">deletedItem</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;醉倒路邊攤.jpg&quot;</span>,</span><br><span class="line">    <span class="attr">date</span>: <span class="string">&quot;2023-05-01&quot;</span>,</span><br><span class="line">    <span class="attr">size</span>: <span class="string">&quot;5MB&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="204-No-Content：「搞定了啦，就這樣」"><a href="#204-No-Content：「搞定了啦，就這樣」" class="headerlink" title="204 No Content：「搞定了啦，就這樣」"></a>204 No Content：「搞定了啦，就這樣」</h3><p>現在想像你的麻吉只是簡單回你：「OK啦」，什麼都沒多說。<br>在API裡，用204 No Content就是醬子的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="title function_">status</span>(<span class="number">204</span>).<span class="title function_">send</span>();</span><br></pre></td></tr></table></figure>
+<p>這基本上就是跟客戶端說：「刪掉了啦，沒事了，掰掰」。</p>
+<h3 id="什麼時候用哪個咧？"><a href="#什麼時候用哪個咧？" class="headerlink" title="什麼時候用哪個咧？"></a>什麼時候用哪個咧？</h3><ol>
+<li><strong>用 200 OK 的時機：</strong><br> - 你想跟前端多嘴幾句，講講刪掉什麼東西<br> - 前端需要這些資訊來更新畫面</li>
+<li><strong>用 204 No Content 的時機：</strong><br> - 你只想說「刪掉了啦」，不想多講<br> - 你想省點網路流量（因為204的回應通常是空的）</li>
+</ol>
+<h3 id="實際一點的例子"><a href="#實際一點的例子" class="headerlink" title="實際一點的例子"></a>實際一點的例子</h3><ul>
+<li>PTT刪除推文（用204）</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">delete</span>(<span class="string">&#x27;/posts/:id/comments/:commentId&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 刪除推文的程式碼</span></span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">204</span>).<span class="title function_">send</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>這裡啊，我們只要知道推文刪掉了就好，不用知道更多有的沒的。</p>
+<ul>
+<li>刪除雲端硬碟的檔案（用200）</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">delete</span>(<span class="string">&#x27;/files/:id&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 刪除檔案的程式碼</span></span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">message</span>: <span class="string">&quot;檔案刪掉囉&quot;</span>,</span><br><span class="line">    <span class="attr">deletedFile</span>: &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;期末報告.docx&quot;</span>,</span><br><span class="line">      <span class="attr">size</span>: <span class="string">&quot;2.5MB&quot;</span>,</span><br><span class="line">      <span class="attr">lastEdited</span>: <span class="string">&quot;2023-06-15&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>這個例子中，回傳被刪掉的檔案資訊可能對使用者有幫助，萬一誤刪還可以知道刪掉什麼。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li>200 OK：「搞定了啦，而且我還知道這個那個」</li>
+<li>204 No Content：「搞定了啦，沒什麼好講的」<br>選哪個主要看你的API到底要不要在刪除後多嘴幾句。記住喔，保持一致很重要 - 你的API決定要用哪種方式就要貫徹始終，不要三心二意喔！</li>
+</ul>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>好啦！我們的 API 小冒險暫時告一段落。從資料庫設置到 CRUD 操作，我們跑了一圈後端開發的小obstacle course。現在的你，就像剛學會騎腳踏車的小孩，已經可以自己平穩前進了！<br>記住，一個好的 API 就像一個好朋友：容易相處（易用性）、守信用（可靠性），而且總是能給出清楚的回應（狀態碼和錯誤訊息）。你現在已經認識了這位新朋友，接下來就是多多練習，讓你們的友誼更加深厚。<br>下一站，我們要認識一位新朋友：Postman。它就像是你的 API 健身教練，幫你檢查每個動作是否到位。準備好要再次揮灑汗水了嗎？<br>繼續保持熱情，開發的世界總有新奇等著你。現在，是時候歇口氣，喝杯咖啡，然後準備迎接下一個挑戰了！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Express/" rel="tag"># Express</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/23/2024it/d14/" rel="prev" title="[ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/25/2024it/d16/" rel="next" title="[ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南">
+      [ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MongoDB-Atlas-%E7%92%B0%E5%A2%83%E6%BA%96%E5%82%99"><span class="nav-number">2.</span> <span class="nav-text">1. MongoDB Atlas 環境準備</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%9A%E7%BE%A9Mongoose%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">2. 定義Mongoose模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%89%93%E9%96%8B-VsCode%EF%BC%8C%E5%9C%A8%E5%B0%88%E6%A1%88%E6%A0%B9%E7%9B%AE%E9%8C%84%E4%B8%8B%E5%89%B5%E5%BB%BAmodels%E8%B3%87%E6%96%99%E5%A4%BE"><span class="nav-number">3.1.</span> <span class="nav-text">1. 打開 VsCode，在專案根目錄下創建models資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8F%83%E8%80%83%E6%88%91%E5%80%91%E5%9C%A8%E7%AC%AC%E4%B8%83%E5%A4%A9%E8%A6%8F%E5%8A%83%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8-Excel"><span class="nav-number">3.2.</span> <span class="nav-text">2. 參考我們在第七天規劃的資料表 Excel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9C%A8-models-%E8%B3%87%E6%96%99%E5%A4%BE%E5%85%A7%E6%96%B0%E5%A2%9Efeedback-js%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">3. 在 models 資料夾內新增feedback.js文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%8E%9B%E8%BC%89%E5%88%B0-app-js-%E9%80%B2%E8%A1%8C%E6%B8%AC%E8%A9%A6"><span class="nav-number">3.4.</span> <span class="nav-text">4. 掛載到 app.js 進行測試</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E4%B8%8A%E9%9D%A2%E7%9A%84%E7%AF%84%E4%BE%8B%EF%BC%9A"><span class="nav-number">3.4.1.</span> <span class="nav-text">在上面的範例：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B8%8D%E6%83%B3%E8%A6%81%E8%A4%87%E6%95%B8%E5%BD%A2%E5%BC%8F%EF%BC%9A"><span class="nav-number">3.4.2.</span> <span class="nav-text">如果你不想要複數形式：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E7%99%BC%E7%AC%AC%E4%B8%80%E5%80%8B-API%EF%BC%9AFeedback-CRUD-%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">開發第一個 API：Feedback CRUD 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E5%86%8D%E6%AC%A1%E6%AA%A2%E8%A6%96%E6%88%91%E5%80%91%E7%9A%84-Feedback-%E6%A8%A1%E5%9E%8B%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">Step1. 再次檢視我們的 Feedback 模型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-%E5%9C%A8-routes-%E8%B3%87%E6%96%99%E5%A4%BE%E4%B8%AD%E5%89%B5%E5%BB%BA-feedback-js-%E6%AA%94%E6%A1%88%EF%BC%8C%E4%B8%A6%E5%AF%A6%E7%8F%BE-CRUD-%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">Step 2. 在 routes 資料夾中創建 feedback.js 檔案，並實現 CRUD 操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A9%B3%E7%B4%B0%E8%A7%A3%E9%87%8B%EF%BC%9A"><span class="nav-number">4.2.1.</span> <span class="nav-text">詳細解釋：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A9%B3%E7%B4%B0%E8%A7%A3%E9%87%8B%EF%BC%9A-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">詳細解釋：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A9%B3%E7%B4%B0%E8%A7%A3%E9%87%8B%EF%BC%9A-2"><span class="nav-number">4.2.3.</span> <span class="nav-text">詳細解釋：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A9%B3%E7%B4%B0%E8%A7%A3%E9%87%8B%EF%BC%9A-3"><span class="nav-number">4.2.4.</span> <span class="nav-text">詳細解釋：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A9%B3%E7%B4%B0%E8%A7%A3%E9%87%8B%EF%BC%9A-4"><span class="nav-number">4.2.5.</span> <span class="nav-text">詳細解釋：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API%E5%B8%B8%E7%94%A8HTTP%E7%8B%80%E6%85%8B%E7%A2%BC"><span class="nav-number">5.</span> <span class="nav-text">API常用HTTP狀態碼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E7%8B%80%E6%85%8B%E7%A2%BC%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="nav-number">6.</span> <span class="nav-text">HTTP狀態碼速查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%AD%A3%E7%A2%BA%E4%BD%BF%E7%94%A8%E7%8B%80%E6%85%8B%E7%A2%BC%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">為什麼正確使用狀態碼很重要？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%A1-%E8%BC%95%E9%AC%86%E6%90%9E%E6%87%82%EF%BC%9AHTTP%E7%8B%80%E6%85%8B%E7%A2%BC-200-OK-%E5%92%8C-204-No-Content-%E7%9A%84%E5%B7%AE%E5%88%A5"><span class="nav-number">7.</span> <span class="nav-text">💡 輕鬆搞懂：HTTP狀態碼 200 OK 和 204 No Content 的差別</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#200-OK%EF%BC%9A%E3%80%8C%E6%AC%B8%EF%BC%8C%E6%90%9E%E5%AE%9A%E4%BA%86%E5%95%A6%EF%BC%81%E4%BE%86%EF%BC%8C%E6%88%91%E8%B7%9F%E4%BD%A0%E8%AA%AA%E8%AA%AA%E7%B4%B0%E7%AF%80%E3%80%8D"><span class="nav-number">7.1.</span> <span class="nav-text">200 OK：「欸，搞定了啦！來，我跟你說說細節」</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#204-No-Content%EF%BC%9A%E3%80%8C%E6%90%9E%E5%AE%9A%E4%BA%86%E5%95%A6%EF%BC%8C%E5%B0%B1%E9%80%99%E6%A8%A3%E3%80%8D"><span class="nav-number">7.2.</span> <span class="nav-text">204 No Content：「搞定了啦，就這樣」</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%99%82%E5%80%99%E7%94%A8%E5%93%AA%E5%80%8B%E5%92%A7%EF%BC%9F"><span class="nav-number">7.3.</span> <span class="nav-text">什麼時候用哪個咧？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E4%B8%80%E9%BB%9E%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">7.4.</span> <span class="nav-text">實際一點的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">7.5.</span> <span class="nav-text">總結</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">8.</span> <span class="nav-text">結語</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/24/2024it/d15/";
+    this.page.identifier = "2024/09/24/2024it/d15/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

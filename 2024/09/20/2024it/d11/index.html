@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="嗨大家好！我是2魚，一個主攻前端的工程師。說實話，我也是今年初才在六角學院開始接觸後端的新手呢 🥹還記得剛看到 Node.js 和 Express 時，真的是一頭霧水。不過現在，我已經能搭建簡單的後端應用了。今天想和大家分享一下我的學習心得，一起來探索後端開發的世界吧！別被「後端」這個詞嚇到，我會用簡單的方式一步步解釋。畢竟，我也是剛從前端轉過來的，完全懂得入門時的各種困惑。準備好了嗎？我們開始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/20/2024it/d11/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="嗨大家好！我是2魚，一個主攻前端的工程師。說實話，我也是今年初才在六角學院開始接觸後端的新手呢 🥹還記得剛看到 Node.js 和 Express 時，真的是一頭霧水。不過現在，我已經能搭建簡單的後端應用了。今天想和大家分享一下我的學習心得，一起來探索後端開發的世界吧！別被「後端」這個詞嚇到，我會用簡單的方式一步步解釋。畢竟，我也是剛從前端轉過來的，完全懂得入門時的各種困惑。準備好了嗎？我們開始">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686NuLPZM0giJ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686SiJU3TD5jL.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686PQhx5OM97y.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686LD2NYKIiMv.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686WUodsDnamM.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686aJNizsLPZ5.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686AtShX1iuUn.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686IJi6SjlMDc.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686wqKj2YOcyB.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686O8ElFGGBdk.png">
+<meta property="article:published_time" content="2024-09-20T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.162Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240920/20159686NuLPZM0giJ.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/20/2024it/d11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/20/2024it/d11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-20 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-20T20:33:45+08:00">2024-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/20/2024it/d11/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/20/2024it/d11/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>嗨大家好！我是2魚，一個主攻前端的工程師。說實話，我也是今年初才在六角學院開始接觸後端的新手呢 🥹<br>還記得剛看到 Node.js 和 Express 時，真的是一頭霧水。不過現在，我已經能搭建簡單的後端應用了。今天想和大家分享一下我的學習心得，一起來探索後端開發的世界吧！<br>別被「後端」這個詞嚇到，我會用簡單的方式一步步解釋。畢竟，我也是剛從前端轉過來的，完全懂得入門時的各種困惑。準備好了嗎？我們開始吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="準備冒險裝備：設置電腦環境"><a href="#準備冒險裝備：設置電腦環境" class="headerlink" title="準備冒險裝備：設置電腦環境"></a>準備冒險裝備：設置電腦環境</h2><p>首先，我們需要準備一些必備的工具：</p>
+<ul>
+<li>Node.js：這是我們的主角。去 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js 官網</a> 下載安裝吧！選擇 LTS 版本就好，它比較穩定。</li>
+<li>編輯器：強烈推薦 VS Code。它不只是個編輯器，還能提示錯誤和自動補全，超級好用。</li>
+<li>終端機：Windows 用命令提示字元或 PowerShell，Mac 用 Terminal。不要被嚇到，它就是個可以輸入指令的小視窗啦！<br>安裝完這些後，打開終端機輸入 <code>node -v</code> 和 <code>npm -v</code>，如果都看到版本號，就代表安裝成功了！<br><img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686NuLPZM0giJ.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686NuLPZM0giJ.png"></li>
+</ul>
+<h2 id="認識我們的冒險夥伴：Express-框架"><a href="#認識我們的冒險夥伴：Express-框架" class="headerlink" title="認識我們的冒險夥伴：Express 框架"></a>認識我們的冒險夥伴：Express 框架</h2><p>Express 就像是 Node.js 的好幫手，讓我們寫後端變得更簡單。它主要幫我們處理：</p>
+<ul>
+<li>路由：管理不同的網址該做什麼事。</li>
+<li>中間件：像是流水線上的工人，可以對請求做各種處理。</li>
+<li>模板引擎：讓你更容易生成 HTML 頁面。<br>用 Express 可以快速搭建網站、做 API，真的是後端開發的好朋友！</li>
+</ul>
+<h2 id="探索網路世界的地圖：網址規則介紹"><a href="#探索網路世界的地圖：網址規則介紹" class="headerlink" title="探索網路世界的地圖：網址規則介紹"></a>探索網路世界的地圖：網址規則介紹</h2><p>說到網址，像 <code>http://www.example.com/users?id=123</code> 這種，其實是有規則的：</p>
+<ul>
+<li><code>http://</code> 是協議，告訴瀏覽器如何獲取資源。</li>
+<li><code>www.example.com</code> 是域名，相當於網站的門牌號碼。</li>
+<li><code>/users</code> 是路徑，指向網站的特定部分。</li>
+<li><code>?id=123</code> 是查詢參數，提供額外的信息。<br>在 Express 中，我們會根據不同的路徑（如 <code>/users</code>）來決定要執行什麼功能，這就是所謂的「路由」。來看看這個例子：<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/users&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;這裡是用戶列表&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+讓我來解釋一下這段代碼：</li>
+</ul>
+<ol>
+<li><code>app.get</code>: 這是在告訴 Express，「嘿，當有人用 GET 方法訪問我們的網站時，請注意一下」。GET 是最常見的 HTTP 方法，通常用於獲取資料。</li>
+<li><code>&#39;/users&#39;</code>: 這是路徑。它的意思是，我們只針對訪問 <code>/users</code> 這個地址的請求。</li>
+<li><code>(req, res) =&gt; &#123; ... &#125;</code>: 這是一個函數，它決定了當有人訪問 <code>/users</code> 時我們要做什麼。<ul>
+<li><code>req</code> 是 request 的縮寫，包含了請求的所有信息。</li>
+<li><code>res</code> 是 response 的縮寫，用來發送響應給用戶。</li>
+</ul>
+</li>
+<li><code>res.send(&#39;這裡是用戶列表&#39;);</code>: 這行代碼會向用戶發送一個響應，內容就是 ‘這裡是用戶列表’。<br>所以，整段代碼的意思是：當有人用瀏覽器訪問 <code>http://你的網站/users</code> 時，他們會看到一個寫著「這裡是用戶列表」的頁面。<br>這就是路由的基本概念！你可以根據不同的路徑，返回不同的內容。很酷吧？</li>
+</ol>
+<h2 id="分清楚主角和配角：Node-js-和-Express-的差異"><a href="#分清楚主角和配角：Node-js-和-Express-的差異" class="headerlink" title="分清楚主角和配角：Node.js 和 Express 的差異"></a>分清楚主角和配角：Node.js 和 Express 的差異</h2><p>Node.js 和 Express 的關係，可以想像成 Node.js 是引擎，Express 是用這個引擎做的跑車。</p>
+<ul>
+<li>Node.js：提供了在服務器端運行 JavaScript 的環境。它處理底層的事情，比如文件系統操作、網絡通信等。</li>
+<li>Express：是建立在 Node.js 之上的 Web 應用框架。它簡化了很多常見的 Web 開發任務，讓我們能夠更快地構建應用。<br>兩者結合使用，讓我們的後端開發事半功倍，理論說完，開始實戰吧！</li>
+</ul>
+<h2 id="踏上冒險之路：使用-express-generator-建立專案"><a href="#踏上冒險之路：使用-express-generator-建立專案" class="headerlink" title="踏上冒險之路：使用 express-generator 建立專案"></a>踏上冒險之路：使用 express-generator 建立專案</h2><p>嘿，還記得我們小時候用積木搭建城堡嗎？express-generator 就像是一個神奇的積木盒，它能幫我們快速搭建一個 Express 應用的基本結構。超級方便的啦！<br>首先，我們需要安裝這個神奇工具。打開你的終端機（就是那個小黑窗），輸入：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局安裝 express-generator</span></span><br><span class="line">npm install -g express-generator</span><br><span class="line"></span><br><span class="line"><span class="comment">// 檢查是否安裝成功</span></span><br><span class="line">npx express-generator --version</span><br></pre></td></tr></table></figure>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686SiJU3TD5jL.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686SiJU3TD5jL.png"><br>這行指令會全局安裝 express-generator，讓你在電腦的任何地方都能使用它。<br>安裝好後，我們就可以用它來創建新項目啦！</p>
+<p>這邊我們要創建一個叫 “test-app” 的專案，步驟如下：</p>
+<ul>
+<li><p>打開 vscode，開啟你想放置專案的資料夾 (位置)</p>
+</li>
+<li><p>開啟終端機，輸入指令快速建立專案</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">express -e test-app</span><br></pre></td></tr></table></figure>
+<p>  這行指令會做幾件事：</p>
+<ol>
+<li>創建一個名為 “test-app” 的新資料夾</li>
+<li>在這個資料夾裡生成一堆檔案和資料夾</li>
+<li>設定 EJS 作為視圖引擎（就是用來產生 HTML 的工具）<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686PQhx5OM97y.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686PQhx5OM97y.png"></li>
+</ol>
+</li>
+<li><p>完成後，你會看到終端機顯示了一些指示。按照指示，我們需要：</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 進入剛剛創建好的 test-app 資料夾 (也可以在 vscode 直接重新開啟建立好的test-app 資料夾)</span></span><br><span class="line">cd test-app</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 安裝所有需要的套件</span></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>  <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686LD2NYKIiMv.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686LD2NYKIiMv.png"></p>
+<p>  好啦，現在我們有了一個基本的 Express 應用結構！讓我們來看看這個神奇積木盒給我們準備了些什麼：</p>
+<ul>
+<li><code>app.js</code>: 這是我們應用的主文件，像是城堡的地基。</li>
+<li><code>routes/</code>: 這個資料夾存放所有的路由文件，決定了不同的網址要做什麼事。</li>
+<li><code>views/</code>: 這裡放的是 EJS 模板文件，負責產生 HTML。</li>
+<li><code>public/</code>: 靜態文件（如圖片、CSS）都放在這裡。</li>
+<li><code>bin/www</code>: 這是啟動我們應用的腳本。<br>  使用 express-generator 真的超省事的！它幫我們搞定了大部分的基礎設置，我們可以專注在開發真正重要的功能上。</li>
+</ul>
+</li>
+<li><p>要運行這個應用也超簡單，只要在終端機輸入：</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 執行</span></span><br><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<p>  <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686WUodsDnamM.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686WUodsDnamM.png"><br>  然後打開瀏覽器，輸入 <code>http://localhost:3000</code>，你就能看到你的新應用啦！<br>  是不是感覺像變魔術一樣？有了 express-generator，我們就能快速開始我們的 Express 之旅了！</p>
+</li>
+<li><p>試試修改 <code>routes/index.js</code> 文件，改變首頁顯示的內容，然後刷新頁面看看效果。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686aJNizsLPZ5.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686aJNizsLPZ5.png"><br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686AtShX1iuUn.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686AtShX1iuUn.png"><br>  但通常前後端分離的專案並不會使用到 views，因為資料會傳遞給前端頁面去使用</p>
+<blockquote>
+<p>💡 補充知識：當你想要停止應用運行時，只需在終端機中按 <code>Ctrl + C</code>。這個快捷鍵就像是應用的緊急煞車，隨時可以讓它停下來。無論你在 Windows、Mac 還是 Linux 上，這個魔法按鍵都是通用的哦！</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="一直手動刷新好麻煩-zzz-👉-不麻煩因為我們有-nodemon"><a href="#一直手動刷新好麻煩-zzz-👉-不麻煩因為我們有-nodemon" class="headerlink" title="一直手動刷新好麻煩 zzz 👉 不麻煩因為我們有 nodemon"></a>一直手動刷新好麻煩 zzz 👉 不麻煩因為我們有 nodemon</h3><p>使用 nodemon 可以讓你修改代碼後自動重啟服務器。</p>
+<ol>
+<li>在終端機輸入指令安裝nodemon  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install nodemon --save-dev</span><br></pre></td></tr></table></figure></li>
+<li>修改 start 指令，用 <code>nodemon</code> 代替 <code>node</code> 來執行啟動應用。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686IJi6SjlMDc.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686IJi6SjlMDc.png"> </li>
+<li>在終端機輸入指令 <code>npm start</code>  啟動應用，會發現變成使用我們修改的新指令了 <code>nodemon ./bin/www</code><br> <img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686wqKj2YOcyB.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686wqKj2YOcyB.png"></li>
+</ol>
+<h3 id="揪兜嘛爹-為什麼專案會啟動在-http-localhost-3000-呢"><a href="#揪兜嘛爹-為什麼專案會啟動在-http-localhost-3000-呢" class="headerlink" title="揪兜嘛爹!  為什麼專案會啟動在 http://localhost:3000/ 呢"></a>揪兜嘛爹!  為什麼專案會啟動在 <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000/</a> 呢</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240920/20159686O8ElFGGBdk.png" alt="https://ithelp.ithome.com.tw/upload/images/20240920/20159686O8ElFGGBdk.png"><br>首先，當執行 <code>npm start</code> 時，實際上是在運行 <code>./bin/www</code> 文件。這個文件包含了一些關鍵的程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> port = <span class="title function_">normalizePort</span>(process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="string">&#x27;3000&#x27;</span>); <span class="comment">// 如果把 3000 調整成 3666 那運行時就變成要打開 http://localhost:3666/ 做查看囉</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;port&#x27;</span>, port);</span><br></pre></td></tr></table></figure>
+<p>這段程式碼設定了應用的端口。如果沒有指定環境變數 PORT，它就會使用 3000。這解釋了為什麼我們的應用預設在 3000 端口啟動。<br>接著，這兩行程式碼創建並啟動了 HTTP 伺服器：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> server = http.<span class="title function_">createServer</span>(app);</span><br><span class="line">server.<span class="title function_">listen</span>(port);</span><br></pre></td></tr></table></figure>
+<p>其他還有一些錯誤處理的函數，比如 <code>onError</code>，用來處理啟動時可能遇到的問題。<code>onListening</code> 函數則在伺服器成功啟動時被調用。<br>總之，這個文件負責了伺服器的啟動過程。它設定端口，創建伺服器，然後開始監聽請求。<br>當運行 <code>npm start</code> 時，這個文件被執行，在 3000 端口（除非另有指定）啟動應用。這就是為什麼我們可以通過 <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000/</a> 訪問應用。<br>理解這些背後的機制很有意思。雖然這些程式碼不是我寫的，但通過閱讀和理解它們，我對後端開發有了更深入的認識。<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/19/2024it/d10/" rel="prev" title="[ 2024 IT 鐵人賽 DAY10 ] 輕鬆管理網站圖片：Firebase Storage 使用教學">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY10 ] 輕鬆管理網站圖片：Firebase Storage 使用教學
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/21/2024it/d12/" rel="next" title="[ 2024 IT 鐵人賽 DAY12 ] 後端開發好幫手：四大套件使用指南">
+      [ 2024 IT 鐵人賽 DAY12 ] 後端開發好幫手：四大套件使用指南 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%96%E5%82%99%E5%86%92%E9%9A%AA%E8%A3%9D%E5%82%99%EF%BC%9A%E8%A8%AD%E7%BD%AE%E9%9B%BB%E8%85%A6%E7%92%B0%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">準備冒險裝備：設置電腦環境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%8D%E8%AD%98%E6%88%91%E5%80%91%E7%9A%84%E5%86%92%E9%9A%AA%E5%A4%A5%E4%BC%B4%EF%BC%9AExpress-%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">認識我們的冒險夥伴：Express 框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E7%B6%B2%E8%B7%AF%E4%B8%96%E7%95%8C%E7%9A%84%E5%9C%B0%E5%9C%96%EF%BC%9A%E7%B6%B2%E5%9D%80%E8%A6%8F%E5%89%87%E4%BB%8B%E7%B4%B9"><span class="nav-number">4.</span> <span class="nav-text">探索網路世界的地圖：網址規則介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%B8%85%E6%A5%9A%E4%B8%BB%E8%A7%92%E5%92%8C%E9%85%8D%E8%A7%92%EF%BC%9ANode-js-%E5%92%8C-Express-%E7%9A%84%E5%B7%AE%E7%95%B0"><span class="nav-number">5.</span> <span class="nav-text">分清楚主角和配角：Node.js 和 Express 的差異</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B8%8F%E4%B8%8A%E5%86%92%E9%9A%AA%E4%B9%8B%E8%B7%AF%EF%BC%9A%E4%BD%BF%E7%94%A8-express-generator-%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="nav-number">6.</span> <span class="nav-text">踏上冒險之路：使用 express-generator 建立專案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%9B%B4%E6%89%8B%E5%8B%95%E5%88%B7%E6%96%B0%E5%A5%BD%E9%BA%BB%E7%85%A9-zzz-%F0%9F%91%89-%E4%B8%8D%E9%BA%BB%E7%85%A9%E5%9B%A0%E7%82%BA%E6%88%91%E5%80%91%E6%9C%89-nodemon"><span class="nav-number">6.1.</span> <span class="nav-text">一直手動刷新好麻煩 zzz 👉 不麻煩因為我們有 nodemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%AA%E5%85%9C%E5%98%9B%E7%88%B9-%E7%82%BA%E4%BB%80%E9%BA%BC%E5%B0%88%E6%A1%88%E6%9C%83%E5%95%9F%E5%8B%95%E5%9C%A8-http-localhost-3000-%E5%91%A2"><span class="nav-number">6.2.</span> <span class="nav-text">揪兜嘛爹!  為什麼專案會啟動在 http:&#x2F;&#x2F;localhost:3000&#x2F; 呢</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/20/2024it/d11/";
+    this.page.identifier = "2024/09/20/2024it/d11/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

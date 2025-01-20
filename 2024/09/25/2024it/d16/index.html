@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="嗨大家好！我是2魚，今天要和大家分享如何使用 Postman 來測試 API。還記得我們辛辛苦苦寫好的 API 嗎？接下來就讓我們來驗證成果吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/25/2024it/d16/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="嗨大家好！我是2魚，今天要和大家分享如何使用 Postman 來測試 API。還記得我們辛辛苦苦寫好的 API 嗎？接下來就讓我們來驗證成果吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686kR84yDoczw.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686dIi0nvkwhN.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686W4prt8XuzY.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686vl685iRXd7.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686h4GGTKVU8X.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/201596865ZzTTyomZr.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686dbOkmvQqCS.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686nBKpwlttuK.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686VWfyoyZDWM.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/2015968668Fd2O76RZ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/201596861fBZOPgAyO.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686toovyysloI.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686OjXM1ViyEP.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/201596861nVzJeedPz.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686X1YcYw9WaV.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686f7Fls8tIq7.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686QyfRkCHxrD.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686iWJZabxfOh.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686HpLXp2h1nl.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686OPNfEtYy01.png">
+<meta property="article:published_time" content="2024-09-25T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.163Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="Postman">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240925/20159686kR84yDoczw.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/25/2024it/d16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/25/2024it/d16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-25 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-25T20:33:45+08:00">2024-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/25/2024it/d16/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/25/2024it/d16/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>嗨大家好！我是2魚，今天要和大家分享如何使用 Postman 來測試 API。還記得我們辛辛苦苦寫好的 API 嗎？接下來就讓我們來驗證成果吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="開發-API-後的小抱怨時間"><a href="#開發-API-後的小抱怨時間" class="headerlink" title="開發 API 後的小抱怨時間"></a>開發 API 後的小抱怨時間</h2><p>寫完 API 後，你是不是也和我一樣有種「蝦？我到底在寫啥」的感覺？一堆程式碼看得眼花撩亂，卻不知道到底有沒有用？別擔心，這很正常！這就是為什麼我們需要 Postman 這個超級好用的工具來幫忙。</p>
+<h2 id="Postman：工程師的神隊友"><a href="#Postman：工程師的神隊友" class="headerlink" title="Postman：工程師的神隊友"></a>Postman：工程師的神隊友</h2><p>Postman 可以模擬各種 HTTP 請求，幫我們測試 API 的功能。簡單說，它就是一個可以幫我們「假裝是使用者」的工具，讓我們不用真的寫前端就能測試後端。太方便了，對吧？</p>
+<h3 id="step1-下載和註冊-Postman"><a href="#step1-下載和註冊-Postman" class="headerlink" title="step1. 下載和註冊 Postman"></a>step1. 下載和註冊 Postman</h3><p>首先，讓我們從 <a target="_blank" rel="noopener" href="https://www.postman.com/downloads/">Postman官網</a> 下載並安裝Postman。</p>
+<blockquote>
+<p>💡 小提示：Postman支持多種操作系統，包括Windows、macOS和Linux。選擇適合你系統的版本進行下載。</p>
+</blockquote>
+<h3 id="step2-打開應用程式並登入"><a href="#step2-打開應用程式並登入" class="headerlink" title="step2. 打開應用程式並登入"></a>step2. 打開應用程式並登入</h3><p>安裝完成後，打開Postman並創建一個帳號或使用現有帳號登入。登入後，你將看到Postman的主界面。</p>
+<h3 id="step3-建立工作區"><a href="#step3-建立工作區" class="headerlink" title="step3. 建立工作區"></a>step3. 建立工作區</h3><p>工作區（Workspace）是Postman中組織和管理API請求的重要概念。它就像是一個虛擬的辦公室，你可以在這裡整理所有與特定項目相關的API請求。</p>
+<blockquote>
+<p>老實說，我一開始也不知道工作區這麼好用，害我把首頁用的超級亂的 😅</p>
+</blockquote>
+<ul>
+<li>在左上角找到「Workspaces」，點擊「Create Workspace」<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686kR84yDoczw.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686kR84yDoczw.png"></li>
+<li>選擇「Blank Workspace」來創建一個空白的工作區<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686dIi0nvkwhN.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686dIi0nvkwhN.png"></li>
+<li>你的工作區命名。選擇一個有意義的名稱，例如「test-app api」<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686W4prt8XuzY.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686W4prt8XuzY.png"><blockquote>
+<p>💡 小技巧：取個好記的名字很重要喔！我通常會用專案名稱或 API 的主要功能來命名。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="step4-在工作區中創建集合"><a href="#step4-在工作區中創建集合" class="headerlink" title="step4. 在工作區中創建集合"></a>step4. 在工作區中創建集合</h3><p>集合（Collection）是Postman中用來組織相關API請求的容器。想像它就像是一個文件夾，裡面存放著同一個API或同一個項目的所有相關請求。</p>
+<ul>
+<li><p>點擊「+」按鈕，然後選擇「Blank collection」<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686vl685iRXd7.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686vl685iRXd7.png"></p>
+</li>
+<li><p>為集合命名。在這個例子中，我們將其命名為「local - feedback」，因為我們要在本地測試feedback API<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686h4GGTKVU8X.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686h4GGTKVU8X.png"></p>
+<blockquote>
+<p>💡 小提醒：集合名稱最好能反映裡面 API 的功能喔！像是測試會員註冊的 API，你可以叫它「User Registration API」之類的。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="step5-創建並測試第一個API請求"><a href="#step5-創建並測試第一個API請求" class="headerlink" title="step5. 創建並測試第一個API請求"></a>step5. 創建並測試第一個API請求</h3><p>現在，讓我們創建一個請求來測試「新增feedback」的功能。</p>
+<ul>
+<li><p>在剛剛創建的集合中，點擊「Add request」<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/201596865ZzTTyomZr.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/201596865ZzTTyomZr.png"></p>
+</li>
+<li><p>幫這個請求取名，就叫「新增 feedback」吧<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686dbOkmvQqCS.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686dbOkmvQqCS.png"></p>
+</li>
+<li><p>設置請求方法為 <code>POST</code>（記得嗎？這是我們在 <code>routes/feedback.js</code> 裡定義的）<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686nBKpwlttuK.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686nBKpwlttuK.png"></p>
+</li>
+<li><p>輸入請求URL：<code>http://127.0.0.1:3000/feedbacks/</code></p>
+<ul>
+<li><code>http://127.0.0.1:3000</code> 是本地服務器地址（當你運行 <code>npm start</code> 時使用的地址）</li>
+<li><code>/feedbacks</code> 是在 <code>app.js</code> 中定義的路由前綴<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686VWfyoyZDWM.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686VWfyoyZDWM.png">   </li>
+<li>最後的 <code>/</code> 對應 <code>routes/feedback.js</code> 中定義的根路由<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/2015968668Fd2O76RZ.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/2015968668Fd2O76RZ.png"></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 小知識：<code>127.0.0.1</code> 就是俗稱的 localhost，代表你的電腦自己。在開發時我們常用這個地址來測試。</p>
+</blockquote>
+<ul>
+<li><p>在「Body」標籤頁中，選擇「raw」並將格式設為「JSON」，然後輸入以下測試資料：</p>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;contactPerson&quot;</span><span class="punctuation">:</span> <span class="string">&quot;測試人員&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;test@gmail.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;feedback&quot;</span><span class="punctuation">:</span> <span class="string">&quot;測試回饋&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 小補充：JSON（JavaScript Object Notation）是一種輕量級的資料交換格式，在 API 溝通中超常用。它不只容易讓人讀懂，電腦也很容易處理喔！</p>
+</blockquote>
+</li>
+<li><p>按下「Send」按鈕發送請求。如果一切順利，你應該會看到類似這樣的回應：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/201596861fBZOPgAyO.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/201596861fBZOPgAyO.png"></p>
+<p>  這個回應對應了我們在 <code>routes/feedback.js</code> 中第 24 行的程式碼：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686toovyysloI.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686toovyysloI.png"></p>
+</li>
+<li><p>要確認資料是不是真的存到資料庫了，我們可以打開 MongoDB Compass 看看：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686OjXM1ViyEP.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686OjXM1ViyEP.png"></p>
+</li>
+</ul>
+<h3 id="step6-測試錯誤情況-試打失敗請求"><a href="#step6-測試錯誤情況-試打失敗請求" class="headerlink" title="step6. 測試錯誤情況 (試打失敗請求)"></a>step6. 測試錯誤情況 (試打失敗請求)</h3><p>測試 API 時，我們不只要確保正確的輸入能正常運作，還要確認 API 能適當處理錯誤的輸入。這就像是在檢查一個自動販賣機，不只要確定它能正確給出商品，還要確保當投幣不足或選擇的商品賣完時，它能給出適當的提示。</p>
+<ul>
+<li><p>先回顧一下我們的錯誤處理邏輯：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/201596861nVzJeedPz.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/201596861nVzJeedPz.png"></p>
+</li>
+<li><p>現在，我們來修改 Postman 中的請求內容，故意少寫一個必填欄位：</p>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;contactPerson&quot;</span><span class="punctuation">:</span> <span class="string">&quot;測試人員&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;test@gmail.com&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>發送請求後，你應該會看到一個錯誤回應：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686X1YcYw9WaV.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686X1YcYw9WaV.png"><br>  這個回應對應了程式碼中第 11 行的錯誤處理邏輯。</p>
+</li>
+</ul>
+<blockquote>
+<p>💡 小撇步：要做好 API 測試，最好能想到各種可能的輸入情況，包括正確的、錯誤的，甚至是一些奇奇怪怪的邊界情況。這樣才能確保你的 API 在各種情況下都能正確運作喔！</p>
+</blockquote>
+<hr>
+<h2 id="其他-API-操作的-Postman-測試"><a href="#其他-API-操作的-Postman-測試" class="headerlink" title="其他 API 操作的 Postman 測試"></a>其他 API 操作的 Postman 測試</h2><h3 id="獲取所有feedback"><a href="#獲取所有feedback" class="headerlink" title="獲取所有feedback"></a>獲取所有feedback</h3><ul>
+<li>方法：GET（就像是在自動販賣機上按「顯示所有商品」的按鈕）</li>
+<li>URL：<a target="_blank" rel="noopener" href="http://127.0.0.1:3000/feedbacks/">http://127.0.0.1:3000/feedbacks/</a></li>
+<li>結果示例：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686f7Fls8tIq7.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686f7Fls8tIq7.png"></li>
+</ul>
+<h3 id="獲取指定-ID-的-feedback"><a href="#獲取指定-ID-的-feedback" class="headerlink" title="獲取指定 ID 的 feedback"></a>獲取指定 ID 的 feedback</h3><ul>
+<li><p>方法：GET（這次是按「顯示特定商品詳情」的按鈕）</p>
+</li>
+<li><p>URL：<a target="_blank" rel="noopener" href="http://127.0.0.1:3000/feedbacks/:id%EF%BC%88%E8%A8%98%E5%BE%97%E6%8A%8A">http://127.0.0.1:3000/feedbacks/:id（記得把</a> :id 換成實際的 ID 喔）</p>
+</li>
+<li><p>如何獲取 ID：可以從 MongoDB Compass 中複製物件的 ID<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686QyfRkCHxrD.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686QyfRkCHxrD.png"></p>
+</li>
+<li><p>結果示例：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686iWJZabxfOh.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686iWJZabxfOh.png"></p>
+</li>
+</ul>
+<h3 id="更新指定-ID-的-feedback"><a href="#更新指定-ID-的-feedback" class="headerlink" title="更新指定 ID 的 feedback"></a>更新指定 ID 的 feedback</h3><ul>
+<li><p>方法：PATCH（就像是在自動販賣機上更改你的訂單）</p>
+</li>
+<li><p>URL：<a target="_blank" rel="noopener" href="http://127.0.0.1:3000/feedbacks/:id">http://127.0.0.1:3000/feedbacks/:id</a> （別忘了把 :id 換成你要更新的 feedback 的實際 ID 喔）</p>
+</li>
+<li><p>Body示例：</p>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;contactPerson&quot;</span><span class="punctuation">:</span> <span class="string">&quot;測試人員&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;test@gmail.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;feedback&quot;</span><span class="punctuation">:</span> <span class="string">&quot;測試更新&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>結果示例：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686HpLXp2h1nl.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686HpLXp2h1nl.png"></p>
+</li>
+</ul>
+<h3 id="刪除指定-ID-的-feedback"><a href="#刪除指定-ID-的-feedback" class="headerlink" title="刪除指定 ID 的 feedback"></a>刪除指定 ID 的 feedback</h3><ul>
+<li>方法：DELETE（想像成按下自動販賣機上的「取消訂單」按鈕）</li>
+<li>URL：<a target="_blank" rel="noopener" href="http://127.0.0.1:3000/feedbacks/:id">http://127.0.0.1:3000/feedbacks/:id</a> （記得替換 :id 喔）</li>
+<li>結果示例：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240925/20159686OPNfEtYy01.png" alt="https://ithelp.ithome.com.tw/upload/images/20240925/20159686OPNfEtYy01.png"><blockquote>
+<p>小提醒：刪除操作要小心使用，因為它通常是不可逆的。在實際應用中，我們可能會考慮使用「軟刪除」（將資料標記為已刪除而不是真的刪掉）來避免意外情況。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>哇！我們終於完成了所有 CRUD（創建、讀取、更新、刪除）操作的測試。是不是感覺對 API 更有掌控感了呢？使用 Postman 真的讓 API 測試變得超級方便，就像是有了一個強大的翻譯器，幫我們和後端溝通。</p>
+<p>記住，好的 API 測試不只是確保功能正常，還要考慮各種可能的情況：</p>
+<ol>
+<li>正確的輸入：確保 API 在正常情況下工作正常。</li>
+<li>錯誤的輸入：測試 API 如何處理異常情況，例如缺少必要欄位或格式錯誤。</li>
+<li>邊界情況：測試一些極端情況，例如很長的字串或特殊字符。</li>
+<li>權限測試：如果你的 API 有權限控制，要確保未授權的請求被正確拒絕。<br>透過這些測試，我們可以大大提高 API 的穩定性和可靠性。這就像是在發布前給自動販賣機做全面檢查，確保它能夠應對各種情況，不會在用戶使用時出現意外。</li>
+</ol>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>學會使用 Postman 只是開始哦！接下來，你可以自行探索更多 Postman 的進階功能，例如：</p>
+<ol>
+<li>環境變數：用於管理不同環境（如開發、測試、生產）的設定。</li>
+<li>自動化測試：編寫測試腳本，自動驗證 API 響應。</li>
+<li>監控：設置定期運行的測試，確保 API 持續可用。</li>
+<li>文檔生成：基於你的 API 請求自動生成文檔。<br>記住，API 開發和測試是一個持續學習的過程。每次你遇到新的挑戰，解決新的問題，都是在提升自己的技能。保持好奇心，不斷嘗試新東西，你會發現 API 的世界其實超有趣的！</li>
+</ol>
+<p>最後，希望這篇教學對你有幫助。如果你有任何問題或想分享你的 API 測試經驗，歡迎留言討論哦！我們一起在程式設計的海洋中航行，一起成長進步！加油！🚀✨</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+              <a href="/tags/Postman/" rel="tag"># Postman</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/24/2024it/d15/" rel="prev" title="[ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/26/2024it/d17/" rel="next" title="[ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理">
+      [ 2024 IT 鐵人賽 DAY17 ] 後端開發的關鍵：可重用函式設計與全面錯誤管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E7%99%BC-API-%E5%BE%8C%E7%9A%84%E5%B0%8F%E6%8A%B1%E6%80%A8%E6%99%82%E9%96%93"><span class="nav-number">2.</span> <span class="nav-text">開發 API 後的小抱怨時間</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Postman%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%B8%AB%E7%9A%84%E7%A5%9E%E9%9A%8A%E5%8F%8B"><span class="nav-number">3.</span> <span class="nav-text">Postman：工程師的神隊友</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-%E4%B8%8B%E8%BC%89%E5%92%8C%E8%A8%BB%E5%86%8A-Postman"><span class="nav-number">3.1.</span> <span class="nav-text">step1. 下載和註冊 Postman</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step2-%E6%89%93%E9%96%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%B8%A6%E7%99%BB%E5%85%A5"><span class="nav-number">3.2.</span> <span class="nav-text">step2. 打開應用程式並登入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step3-%E5%BB%BA%E7%AB%8B%E5%B7%A5%E4%BD%9C%E5%8D%80"><span class="nav-number">3.3.</span> <span class="nav-text">step3. 建立工作區</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step4-%E5%9C%A8%E5%B7%A5%E4%BD%9C%E5%8D%80%E4%B8%AD%E5%89%B5%E5%BB%BA%E9%9B%86%E5%90%88"><span class="nav-number">3.4.</span> <span class="nav-text">step4. 在工作區中創建集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step5-%E5%89%B5%E5%BB%BA%E4%B8%A6%E6%B8%AC%E8%A9%A6%E7%AC%AC%E4%B8%80%E5%80%8BAPI%E8%AB%8B%E6%B1%82"><span class="nav-number">3.5.</span> <span class="nav-text">step5. 創建並測試第一個API請求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step6-%E6%B8%AC%E8%A9%A6%E9%8C%AF%E8%AA%A4%E6%83%85%E6%B3%81-%E8%A9%A6%E6%89%93%E5%A4%B1%E6%95%97%E8%AB%8B%E6%B1%82"><span class="nav-number">3.6.</span> <span class="nav-text">step6. 測試錯誤情況 (試打失敗請求)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96-API-%E6%93%8D%E4%BD%9C%E7%9A%84-Postman-%E6%B8%AC%E8%A9%A6"><span class="nav-number">4.</span> <span class="nav-text">其他 API 操作的 Postman 測試</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8D%B2%E5%8F%96%E6%89%80%E6%9C%89feedback"><span class="nav-number">4.1.</span> <span class="nav-text">獲取所有feedback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8D%B2%E5%8F%96%E6%8C%87%E5%AE%9A-ID-%E7%9A%84-feedback"><span class="nav-number">4.2.</span> <span class="nav-text">獲取指定 ID 的 feedback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%8C%87%E5%AE%9A-ID-%E7%9A%84-feedback"><span class="nav-number">4.3.</span> <span class="nav-text">更新指定 ID 的 feedback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E6%8C%87%E5%AE%9A-ID-%E7%9A%84-feedback"><span class="nav-number">4.4.</span> <span class="nav-text">刪除指定 ID 的 feedback</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">5.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="nav-number">6.</span> <span class="nav-text">下一步</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/25/2024it/d16/";
+    this.page.identifier = "2024/09/25/2024it/d16/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY16 ] Postman 初體驗：API 測試小白入門指南";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

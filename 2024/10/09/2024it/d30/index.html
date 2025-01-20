@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哇！終於到最後一天了，感覺不只變成鐵人，都快要變成小金人了啦！這一個月真的是超級充實，每天寫文章、寫程式，腦細胞都要燒光光了呢！但是，回頭一看，才發現我們已經走了這麼長的一段路，真的是太有成就感了！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY30 ] 鐵人賽尾聲：回顧、感想與未來展望">
+<meta property="og:url" content="https://blog.2fishs.com/2024/10/09/2024it/d30/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哇！終於到最後一天了，感覺不只變成鐵人，都快要變成小金人了啦！這一個月真的是超級充實，每天寫文章、寫程式，腦細胞都要燒光光了呢！但是，回頭一看，才發現我們已經走了這麼長的一段路，真的是太有成就感了！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241009/20159686G9qRylFGmj.jpg">
+<meta property="article:published_time" content="2024-10-09T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.167Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20241009/20159686G9qRylFGmj.jpg">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/10/09/2024it/d30/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY30 ] 鐵人賽尾聲：回顧、感想與未來展望 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/10/09/2024it/d30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY30 ] 鐵人賽尾聲：回顧、感想與未來展望
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-09 20:33:45" itemprop="dateCreated datePublished" datetime="2024-10-09T20:33:45+08:00">2024-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/09/2024it/d30/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/09/2024it/d30/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哇！終於到最後一天了，感覺不只變成鐵人，都快要變成小金人了啦！這一個月真的是超級充實，每天寫文章、寫程式，腦細胞都要燒光光了呢！但是，回頭一看，才發現我們已經走了這麼長的一段路，真的是太有成就感了！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="回顧這一個月的歷程"><a href="#回顧這一個月的歷程" class="headerlink" title="回顧這一個月的歷程"></a>回顧這一個月的歷程</h2><p>我們從無到有，一步一步地完成了這個專案：</p>
+<ul>
+<li>從腦中的想法開始發想</li>
+<li>認真地收集和整理各種資料</li>
+<li>畫了一堆超級厲害的圖稿（自己說）</li>
+<li>設計出吸睛的網頁介面</li>
+<li>建立了一個完整的資料庫</li>
+<li>開發了一系列的 API</li>
+<li>前端辛苦地切版、串接資料</li>
+<li>實作了各種有趣的功能</li>
+<li>最後還把網站成功部署上線<br>是不是光是看這個列表就覺得超有料的啊！我自己回想起來都覺得不可思議，我們真的在一個月內完成了這麼多事情！</li>
+</ul>
+<h2 id="關於這個專案的小秘密"><a href="#關於這個專案的小秘密" class="headerlink" title="關於這個專案的小秘密"></a>關於這個專案的小秘密</h2><p>其實啊，這個專案在兩個月前就已經完整地做好了。本來我是打算直接拿現成的程式碼來寫文章，想說這樣應該很輕鬆。結果！我發現這樣不行欸！因為我怕我寫的步驟跟實際操作不一樣，可能會讓大家遇到麻煩。<br>所以，我做了一個瘋狂的決定 —— 全部重寫！沒錯，你沒聽錯，我把整個專案從頭到尾重新寫了一遍。這真的是一個超級大工程，每天寫到手指快斷掉了啦！但是為了讓大家能夠順利跟著學習，這點辛苦算什麼呢？</p>
+<h2 id="專案連結"><a href="#專案連結" class="headerlink" title="專案連結"></a>專案連結</h2><p>好啦，說了這麼多，相信大家一定很想看看完整的程式碼吧？來，這邊幫大家準備好了四個連結，包括鐵人賽的範例和完整專案的前後端 Repo：</p>
+<ol>
+<li>鐵人賽範例 前端 <a target="_blank" rel="noopener" href="https://github.com/sunny96087/2024it-test-web">Repo</a></li>
+<li>鐵人賽範例 後端 <a target="_blank" rel="noopener" href="https://github.com/sunny96087/2024it-test-app">Repo</a></li>
+<li>鐵人賽範例 網站 <a target="_blank" rel="noopener" href="https://2024it-test-web.vercel.app/">Demo</a></li>
+<li>完整專案 前端 <a target="_blank" rel="noopener" href="https://github.com/sunny96087/parrot_web">Repo</a></li>
+<li>完整專案 後端 <a target="_blank" rel="noopener" href="https://github.com/sunny96087/parrot_api">Repo</a></li>
+<li>完整 網站 <a target="_blank" rel="noopener" href="https://parrot.2fishs.com/">Demo</a><br>不過要提醒大家的是，因為重寫的關係，範例和完整專案可能會有一些不同。建議大家不要混著用喔，不然可能會遇到一些奇怪的問題呢！</li>
+</ol>
+<h2 id="專案的起源"><a href="#專案的起源" class="headerlink" title="專案的起源"></a>專案的起源</h2><p>還記得我在第一天時跟大家分享的嗎？我因為南漂到高雄工作，租的房子不能養寵物。作為一個遵紀守法的好公民，我當然不會偷偷養啦！但是，想養鸚鵡的心情實在是太強烈了，所以就想說，既然不能真的養，那就來寫個專案過過乾癮吧！</p>
+<p>不過呢，我要跟大家報告一個好消息！其實在我開始寫這系列文章之前，我已經搬好新家，而且成功養到鸚鵡了！來，讓我介紹一下我的新朋友們：左邊這位帥哥是金凱 空空，右邊這位帥哥是和尚 Bebe。是不是覺得他們超可愛的啊？我每天看到他們都會融化呢！<br><img src="https://ithelp.ithome.com.tw/upload/images/20241009/20159686G9qRylFGmj.jpg" alt="https://ithelp.ithome.com.tw/upload/images/20241009/20159686G9qRylFGmj.jpg"></p>
+<h2 id="專案的未來展望"><a href="#專案的未來展望" class="headerlink" title="專案的未來展望"></a>專案的未來展望</h2><p>說實在的，一開始我只是想做個簡單的鸚鵡飲食計算機就好。但是，在跟 AI 聊天的過程中，它給了我超多天馬行空的想法！所以呢，我現在腦袋裡已經有一堆新點子在蠢蠢欲動了。</p>
+<p>初步的計畫是這樣的：</p>
+<ul>
+<li>加入會員登入功能：讓每個鸚鵡奴都能有自己的專屬帳號</li>
+<li>鸚鵡日記：記錄寶貝們每天的生活點滴</li>
+<li>討論區：讓鸚鵡愛好者們可以交流心得、分享經驗</li>
+</ul>
+<p>當然啦，這些功能最後會不會真的實現，還要看我有沒有時間（誤）。不過，就算真的做出來了，可能也不會有人用啦！（自己默默地覺得很有趣）</p>
+<h2 id="總結與心得"><a href="#總結與心得" class="headerlink" title="總結與心得"></a>總結與心得</h2><p>老實說，做這個專案的初衷，是希望能夠幫助到那些跟以前的我一樣，對 API 還一知半解的前端朋友們。我希望通過這個專案，大家能夠更了解前後端是如何合作的，在跟設計師討論或是規劃頁面的時候，能夠更有自信、更站得住腳。<br>如果你覺得這個系列對你有幫助，歡迎在下面留言分享你的心得或回饋喔！你的每一個留言都是我持續創作的動力呢！</p>
+<h2 id="學習的道路永無止盡"><a href="#學習的道路永無止盡" class="headerlink" title="學習的道路永無止盡"></a>學習的道路永無止盡</h2><p>說真的，自從轉職進入這個領域後，我才發現技術的世界真的是無窮無盡。每天都有新的東西冒出來，感覺永遠都學不完！不過，這也正是這個領域最迷人的地方，不是嗎？<br>我自己還有一堆想學的技術呢：React、Docker、AWS、Python…光是想到就覺得興奮又害怕（笑）。<br>希望大家都能保持這份學習的熱情，繼續在程式的世界裡探索、成長。共勉之！讓我們一起加油，用程式碼改變世界吧！💪✨</p>
+<h2 id="從軍人到工程師：我的轉職心路歷程"><a href="#從軍人到工程師：我的轉職心路歷程" class="headerlink" title="從軍人到工程師：我的轉職心路歷程"></a>從軍人到工程師：我的轉職心路歷程</h2><p>最後的最後，我想跟大家分享一下我的故事。我曾經是一名空軍志願役，服役了 3 年半。沒錯，你沒聽錯，是 3 年半！因為我最後決定賠錢退伍，只為了不再蹉跎任何一天在那個不適合我的地方。<br>我的軍旅生涯是從志願役士兵開始的。作為一名飛修科畢業生，我透過專長遴選成為了一名飛修兵。（說真的，除非你對飛機有特別的熱情，否則真的不建議去碰飛機啊！）<br>入伍訓後，我被分配到空軍第一戰術戰鬥機聯隊。我們的主要工作是負責飛機的週期保養和定檢。因為飛機數量多，工作量自然也就很大。白天要出公差、修飛機，晚上還要打掃、點名、整理工單。雖然單位裡大多數人都很 nice（除了一位有點奇怪的方丈班長），但那種朝五晚十一的生活真的很累人。<br>另外因為單位說修飛機需要「高壓管理」，所以我沒有外膳宿的機會，放假還只能放洞八。（ 我真的謝謝</p>
+<p>兩年後，我終於去報名了兵轉士。</p>
+<p>接著就是航校的日子了。去過航校的人都懂，沒去過的…嗯，不知道可能比較好。那裡真的不是人待的地方。<br>最後，我以不錯的成績畢業，自選到了空軍第一後勤指揮部。當時只能選擇專長名稱和地點，下部隊後才知道是做後勤文書類的工作。本來以為終於找到理想的工作環境，結果辦公室裡都是老學長姐，融入起來有點困難。<br>更糟的是，我來沒多久，一連走了三位比我早來的學長姐，他們的業務全都落到我一個人身上。工作量大得讓人喘不過氣，學長姐們不願意幫忙就算了，還一直找麻煩。最後，我決定當個「爛草莓」，直接申請退伍。</p>
+<p>轉職成為前端工程師的路並不平坦。我經歷了無數個日夜的苦惱和不知所措，常常感覺像是在迷霧中摸索前進。但我從未放棄，不斷地查資料、請教老師、諮詢 AI，努力找尋前進的方向。<br>最讓我感恩的是，我遇到了一群志同道合的同學。我們一起討論問題、合作專案，甚至還一起參加比賽寫文章！正是這些經歷，讓我在轉職的道路上不至於感到孤單。<br>如今，我不只成功轉職，還有機會帶領一群新手朋友們做專題（目前是個美食地圖項目）。雖然最近他們的學習熱情有點低落（也許是因為免費的東西總是缺乏動力？哈哈），但我仍然樂在其中。<br>我深知轉職路上的艱辛，所以現在的我希望能夠幫助更多人少走一些彎路。如果你正在考慮轉職，或是在學習路上感到迷茫，歡迎來跟我聊聊天！也許我能為你指點一二，或者只是單純地給你一些鼓勵。</p>
+<p>記住，每個人的轉職故事都是獨一無二的。無論你現在在哪個階段，只要保持熱情和毅力，終會找到屬於自己的一片天！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/08/2024it/d29/" rel="prev" title="[ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/25/hexschool-sql2024-section-homework-1/" rel="next" title="六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記">
+      六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%A7%E9%80%99%E4%B8%80%E5%80%8B%E6%9C%88%E7%9A%84%E6%AD%B7%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">回顧這一個月的歷程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC%E9%80%99%E5%80%8B%E5%B0%88%E6%A1%88%E7%9A%84%E5%B0%8F%E7%A7%98%E5%AF%86"><span class="nav-number">3.</span> <span class="nav-text">關於這個專案的小秘密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E9%80%A3%E7%B5%90"><span class="nav-number">4.</span> <span class="nav-text">專案連結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E7%9A%84%E8%B5%B7%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">專案的起源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E7%9A%84%E6%9C%AA%E4%BE%86%E5%B1%95%E6%9C%9B"><span class="nav-number">6.</span> <span class="nav-text">專案的未來展望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90%E8%88%87%E5%BF%83%E5%BE%97"><span class="nav-number">7.</span> <span class="nav-text">總結與心得</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%B8%E7%BF%92%E7%9A%84%E9%81%93%E8%B7%AF%E6%B0%B8%E7%84%A1%E6%AD%A2%E7%9B%A1"><span class="nav-number">8.</span> <span class="nav-text">學習的道路永無止盡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%9E%E8%BB%8D%E4%BA%BA%E5%88%B0%E5%B7%A5%E7%A8%8B%E5%B8%AB%EF%BC%9A%E6%88%91%E7%9A%84%E8%BD%89%E8%81%B7%E5%BF%83%E8%B7%AF%E6%AD%B7%E7%A8%8B"><span class="nav-number">9.</span> <span class="nav-text">從軍人到工程師：我的轉職心路歷程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/10/09/2024it/d30/";
+    this.page.identifier = "2024/10/09/2024it/d30/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY30 ] 鐵人賽尾聲：回顧、感想與未來展望";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

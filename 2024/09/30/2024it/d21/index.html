@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哇！各位鐵粉們，今天是我們後端專案的最後一篇文章囉！已經過了 2&#x2F;3 的賽程，我們一起繼續努力堅持下去～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/30/2024it/d21/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哇！各位鐵粉們，今天是我們後端專案的最後一篇文章囉！已經過了 2&#x2F;3 的賽程，我們一起繼續努力堅持下去～">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/201596860QexNhuzAi.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686NAQMkn4ecM.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686z0bjoiwOEM.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686pgqUXbrPA3.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686CILj8jo3QX.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686xkXxFm6PCb.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686TdWfgMhCLc.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686tUKhqB8mwF.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686sI4Fbs70wX.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686W4caF1K9pw.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686KTEBgiL1GP.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686BBLcULXq13.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/201596862u1krlIx7L.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/201596863HT5Z7PqQV.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686p8AMgYZAfn.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/201596869tFG9lR4cJ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686m3uDpytewM.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686TkyUdCcydt.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/20159686T2kc07du8X.png">
+<meta property="article:published_time" content="2024-09-30T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.165Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="Postman">
+<meta property="article:tag" content="Render">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240930/201596860QexNhuzAi.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/30/2024it/d21/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/30/2024it/d21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-30 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-30T20:33:45+08:00">2024-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/30/2024it/d21/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/30/2024it/d21/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哇！各位鐵粉們，今天是我們後端專案的最後一篇文章囉！已經過了 2&#x2F;3 的賽程，我們一起繼續努力堅持下去～</p>
+<span id="more"></span>
+
+<p>雖然有時候會覺得好像要寫不完了，但想到大家的支持，就又充滿力量了呢！</p>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="調整指令"><a href="#調整指令" class="headerlink" title="調整指令"></a>調整指令</h2><p>欸嘿，前面寫得太開心，直接把部署需要的原始指令給忘光光了啦！真是個菜鳥工程師呢 XD<br>不過沒關係，我們在部署前先把它加回來吧！就當作是復習一下之前學過的東西啦！</p>
+<ol>
+<li><p>打開 VSCode，找到 <code>package.json</code> 檔案。（沒錯，就是那個記錄我們專案靈魂的檔案！）</p>
+</li>
+<li><p>我們要把最初修改的 <code>&quot;start&quot;: &quot;node ./bin/www&quot;</code> 調整一下。為什麼要調整呢？因為我們要區分「開發環境」和「正式環境」啦！就像是我們平常穿的居家服和出門的正式服一樣，各有各的用途喔！<br> 調整成以下範例：</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node ./bin/www&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nodemon ./bin/www&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;swagger&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node ./swagger.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/201596860QexNhuzAi.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/201596860QexNhuzAi.png"><br> 解釋一下：</p>
+<ul>
+<li><code>start</code>：這是我們要留給部署時使用的指令。就像是正式出場時穿的西裝革履！</li>
+<li><code>dev</code>：這是我們開發時使用的指令。就像是在家裡爬 bug 時穿的舒適睡衣～</li>
+<li><code>swagger</code>：這個不變，還是用來生成我們的 API 文件的。<br> 小提醒：<code>nodemon</code> 是一個超棒的工具，它會在我們修改程式碼時自動重新啟動服務器，省去我們手動重啟的麻煩。如果你還沒安裝的話，可以用 <code>npm install nodemon --save-dev</code> 來安裝喔！</li>
+</ul>
+</li>
+</ol>
+<h2 id="推送更新到-Github"><a href="#推送更新到-Github" class="headerlink" title="推送更新到 Github"></a>推送更新到 Github</h2><p>好啦，調整完指令之後，我們要把這些變更推送到 Github 囉！這次我們要使用 VSCode 內建的版本控制功能，超方便der～</p>
+<ol>
+<li>在左側選單點擊「原始檔控制」（Source Control）。看到那個長得像樹枝的圖示了嗎？對，就是它！</li>
+<li>在上方的輸入框中輸入本次變更的 Commit 訊息。例如：「調整 package.json 中的 start 和 dev 指令」。這就像是在寫一個小日記，記錄我們做了什麼變更。</li>
+<li>選取要推送的變更檔案。通常 VSCode 會自動選取所有變更的檔案，但如果你只想推送部分變更，可以手動選擇。</li>
+<li>點擊「提交」（Commit）按鈕。這就像是把我們的變更封裝起來，準備送出去。</li>
+<li>最後，點擊「同步變更」（Sync Changes）按鈕，將本地端的檔案推送到遠端儲存庫。這就像是把我們的變更寄出去啦！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686NAQMkn4ecM.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686NAQMkn4ecM.png"><br>恭喜恭喜！我們成功將更新的檔案都推送到遠端囉～接下來，讓我們一起把專案部署到 Render 吧！</li>
+</ol>
+<h2 id="Render-介紹"><a href="#Render-介紹" class="headerlink" title="Render 介紹"></a>Render 介紹</h2><p>Render 是一個超級好用的雲端平台，可以讓我們輕鬆部署我們的網站和應用程式。它就像是一個網路上的超級電腦，可以幫我們把專案跑起來，讓全世界的人都能使用我們的 API！</p>
+<h3 id="Render-休眠機制"><a href="#Render-休眠機制" class="headerlink" title="Render 休眠機制"></a>Render 休眠機制</h3><p>不過要注意的是，Render 的免費方案有一個小小的特色——休眠機制。它就像是一個愛睡覺的小貓咪，如果一段時間沒有人「摸」它（也就是沒有人使用我們的 API），它就會進入睡眠狀態。<br>當有新的請求進來時，它需要一點時間「伸懶腰」（喚醒服務），可能會有幾秒鐘的延遲。所以如果你發現第一次呼叫 API 特別慢，別緊張，這是正常的！後續的請求就會恢復正常速度啦。</p>
+<h2 id="部署到-Render"><a href="#部署到-Render" class="headerlink" title="部署到 Render"></a>部署到 Render</h2><p>好啦，現在讓我們開始部署的魔法儀式吧！</p>
+<ol>
+<li><p>首先，前往 <a target="_blank" rel="noopener" href="https://render.com/">Render 官網</a> 註冊一個帳號。這裡建議使用 Github 帳號登入，因為這樣可以直接連結我們的 Github 專案，超級方便的啦！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686z0bjoiwOEM.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686z0bjoiwOEM.png"></p>
+</li>
+<li><p>進入儀表板後，我們要「New」一個「Web Service」。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686pgqUXbrPA3.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686pgqUXbrPA3.png"></p>
+</li>
+<li><p>選擇你的 Github 專案。這裡 Render 會列出你 Github 上的所有專案，選擇我們要部署的那個就可以了。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686CILj8jo3QX.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686CILj8jo3QX.png"><br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686xkXxFm6PCb.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686xkXxFm6PCb.png"></p>
+</li>
+<li><p>接下來要填入一些基本資料：</p>
+<ul>
+<li>Name：幫你的專案取個響亮的名字吧！</li>
+<li>Language：選擇 Node（因為我們用的是 Node.js 嘛）</li>
+<li>Branch：選擇你的主要分支（通常是 main 或 master）</li>
+<li>Build Command：填入 <code>npm install</code>（這是告訴 Render 要安裝我們專案的所有依賴）</li>
+<li>Start Command：填入 <code>npm run start</code>（這是告訴 Render 如何啟動我們的專案）</li>
+<li>Instance Type：選擇 <code>Free $0 / month</code>（誰說免費的不好，免費的完全夠用！）<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686TdWfgMhCLc.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686TdWfgMhCLc.png"></li>
+</ul>
+</li>
+<li><p>環境變數設定：<br>這裡要特別注意！我們需要把本地 <code>.env</code> 檔案中的所有變數都複製到 Render 的環境變數設定中。為什麼要這麼做呢？因為 <code>.env</code> 檔案通常包含一些敏感資訊（比如資料庫密碼），我們不會把它上傳到 Github。但是我們的專案需要這些資訊才能正常運作，所以要在 Render 中設定。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686tUKhqB8mwF.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686tUKhqB8mwF.png"></p>
+</li>
+<li><p>一切都設定好後，點擊「Deploy web service」開始部署！</p>
+</li>
+<li><p>接下來就是見證奇蹟的時刻…等待部署完成！這個過程可能需要幾分鐘，你可以趁這個時間去泡杯咖啡，或者像我一樣看著他轉圈圈（誤）。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686sI4Fbs70wX.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686sI4Fbs70wX.png"></p>
+</li>
+<li><p>當你看到「Your service is live 🎉」的訊息時，恭喜你！你的專案已經成功部署到雲端了！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686W4caF1K9pw.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686W4caF1K9pw.png"></p>
+</li>
+</ol>
+<h2 id="用-Postman-測試部署的-API"><a href="#用-Postman-測試部署的-API" class="headerlink" title="用 Postman 測試部署的 API"></a>用 Postman 測試部署的 API</h2><p>部署完成後，我們當然要測試一下我們的 API 是不是真的能用啦！</p>
+<ol>
+<li><p>複製 Render 給我們的網址。它通常長得像 <code>https://你的專案名稱.onrender.com</code>。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686KTEBgiL1GP.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686KTEBgiL1GP.png"></p>
+</li>
+<li><p>打開我們的好朋友 Postman，新增一個請求。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686BBLcULXq13.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686BBLcULXq13.png"></p>
+</li>
+<li><p>把剛才複製的網址貼到 URL 欄位，記得在後面加上你的 API 路徑（例如 <code>/api/freshfoods</code>）。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/201596862u1krlIx7L.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/201596862u1krlIx7L.png"></p>
+</li>
+<li><p>選擇正確的 HTTP 方法（GET、POST 等），然後點擊「Send」。</p>
+</li>
+<li><p>如果你收到了預期的回應，那就代表我們的 API 已經成功部署並且可以正常使用啦！恭喜恭喜！🎉</p>
+</li>
+</ol>
+<h2 id="調整-Swagger-url"><a href="#調整-Swagger-url" class="headerlink" title="調整 Swagger url"></a>調整 Swagger url</h2><p>如果要將 API 文件交付給前端或是團隊的話，記得要修改 url：</p>
+<ol>
+<li><p>到 Render 複製 url<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/201596863HT5Z7PqQV.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/201596863HT5Z7PqQV.png"></p>
+</li>
+<li><p>VSCode 打開 <code>swagger.js</code> 修改成部署用的 <code>host</code> &amp; <code>schemes</code></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">host: &quot;two024it-test-app.onrender.com&quot;, // 請使用自己的 url</span><br><span class="line">schemes: [&quot;https&quot;],</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>host</code> 注意不需要加前面 <code>https://</code> 哦！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686p8AMgYZAfn.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686p8AMgYZAfn.png">
+ </p>
+</blockquote>
+</li>
+<li><p>儲存並編譯 API 文件</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run swagger</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/201596869tFG9lR4cJ.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/201596869tFG9lR4cJ.png"></p>
+</li>
+<li><p>推送最新的變更<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686m3uDpytewM.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686m3uDpytewM.png"></p>
+</li>
+<li><p>等待一大段時間，直到看到 Deploy live 部署成功，點擊 url 查看<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686TkyUdCcydt.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686TkyUdCcydt.png"></p>
+</li>
+<li><p>進到頁面後，自行加上 &#x2F;api-docs 進入到 swagger UI<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240930/20159686T2kc07du8X.png" alt="https://ithelp.ithome.com.tw/upload/images/20240930/20159686T2kc07du8X.png"></p>
+</li>
+</ol>
+<blockquote>
+<p>現在，可以把你開好的 API 給朋友使用囉 ~</p>
+</blockquote>
+<h3 id="範例後端專案-Github-repo"><a href="#範例後端專案-Github-repo" class="headerlink" title="範例後端專案 Github repo"></a>範例後端專案 Github <a target="_blank" rel="noopener" href="https://github.com/sunny96087/2024it-test-app">repo</a></h3><h3 id="完整版後端專案-Github-repo"><a href="#完整版後端專案-Github-repo" class="headerlink" title="完整版後端專案 Github repo"></a>完整版後端專案 Github <a target="_blank" rel="noopener" href="https://github.com/sunny96087/parrot_api">repo</a></h3><h2 id="後端專案總結"><a href="#後端專案總結" class="headerlink" title="後端專案總結"></a>後端專案總結</h2><p>哇～我們終於走完了後端的極簡流程耶！雖然因為時間有限，我們只講解了三種不同類型的 API（新增回饋、取得食物、計算鮮食攝取量），但是我們確實完整走過了一個專案開發的流程呢 😎</p>
+<p>從最初的環境設置、資料庫連接，到 API 的設計與實作，再到文件的撰寫，最後是部署上線。每一步都是工程師日常工作中會遇到的挑戰，而我們都一一克服了！</p>
+<p>接下來的 10 天，我們要一頭栽進前端的精彩世界囉！準備好要學習如何把我們辛苦開發的 API 變成漂亮的網頁介面了嗎？我已經迫不及待要開始了呢！</p>
+<p>最後，我要特別感謝一路支持著我們的各位讀者。是你們的鼓勵讓我有動力堅持到現在。讓我們一起繼續在程式的海洋中航行，在前端的花園裡遨遊吧！Go go go！💪</p>
+<p>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Express/" rel="tag"># Express</a>
+              <a href="/tags/Postman/" rel="tag"># Postman</a>
+              <a href="/tags/Render/" rel="tag"># Render</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/29/2024it/d20/" rel="prev" title="[ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/01/2024it/d22/" rel="next" title="[ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知">
+      [ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%BF%E6%95%B4%E6%8C%87%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">調整指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E6%9B%B4%E6%96%B0%E5%88%B0-Github"><span class="nav-number">3.</span> <span class="nav-text">推送更新到 Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Render-%E4%BB%8B%E7%B4%B9"><span class="nav-number">4.</span> <span class="nav-text">Render 介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Render-%E4%BC%91%E7%9C%A0%E6%A9%9F%E5%88%B6"><span class="nav-number">4.1.</span> <span class="nav-text">Render 休眠機制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0-Render"><span class="nav-number">5.</span> <span class="nav-text">部署到 Render</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-Postman-%E6%B8%AC%E8%A9%A6%E9%83%A8%E7%BD%B2%E7%9A%84-API"><span class="nav-number">6.</span> <span class="nav-text">用 Postman 測試部署的 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%BF%E6%95%B4-Swagger-url"><span class="nav-number">7.</span> <span class="nav-text">調整 Swagger url</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88-Github-repo"><span class="nav-number">7.1.</span> <span class="nav-text">範例後端專案 Github repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%89%88%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88-Github-repo"><span class="nav-number">7.2.</span> <span class="nav-text">完整版後端專案 Github repo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88%E7%B8%BD%E7%B5%90"><span class="nav-number">8.</span> <span class="nav-text">後端專案總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/30/2024it/d21/";
+    this.page.identifier = "2024/09/30/2024it/d21/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

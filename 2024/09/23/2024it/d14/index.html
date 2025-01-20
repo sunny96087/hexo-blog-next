@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="嗨大家好！我是2魚。今天我們要進行一個重要的任務：將前幾天建立的雲端資料庫 MongoDB Atlas 與我們的專案連接起來。這個步驟在實際開發中非常常見，讓我們一起來學習吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/23/2024it/d14/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="嗨大家好！我是2魚。今天我們要進行一個重要的任務：將前幾天建立的雲端資料庫 MongoDB Atlas 與我們的專案連接起來。這個步驟在實際開發中非常常見，讓我們一起來學習吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686zYJQ84e5fa.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686CbQEiw0iPm.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686LOQYyar9zv.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686h8XTeyfjs9.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686V4g6NccabE.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686rEUHoO7JDc.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686DltMH5Qmfk.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686f0WXgzZGZL.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686bPEm4a0psK.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686tqcRpXvUKq.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686iWZJIhHU4X.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/2015968616WAMOqX8N.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/2015968666kXevDrb7.png">
+<meta property="article:published_time" content="2024-09-23T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.162Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="版本控管">
+<meta property="article:tag" content="MongoDB">
+<meta property="article:tag" content="Mongoose">
+<meta property="article:tag" content="雲端資料庫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240923/20159686zYJQ84e5fa.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/23/2024it/d14/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/23/2024it/d14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-23 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-23T20:33:45+08:00">2024-09-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/23/2024it/d14/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/23/2024it/d14/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>嗨大家好！我是2魚。今天我們要進行一個重要的任務：將前幾天建立的雲端資料庫 MongoDB Atlas 與我們的專案連接起來。這個步驟在實際開發中非常常見，讓我們一起來學習吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<blockquote>
+<p>知識點：MongoDB Atlas 是一個雲端託管的 MongoDB 服務。它提供了高可用性、自動備份等功能，讓我們不用煩惱伺服器維護的問題。</p>
+</blockquote>
+<h2 id="首先，讓我們打開-MongoDB-Atlas-的網頁儀表板："><a href="#首先，讓我們打開-MongoDB-Atlas-的網頁儀表板：" class="headerlink" title="首先，讓我們打開 MongoDB Atlas 的網頁儀表板："></a>首先，讓我們打開 <a target="_blank" rel="noopener" href="https://www.mongodb.com/zh-cn/lp/cloud/atlas/try4?utm_source=bing&utm_campaign=search_bs_pl_evergreen_atlas_core_prosp-brand_gic-null_apac-tw_ps-all_desktop_eng_lead&utm_term=mongodb%20atlas&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=415204532&adgroup=1223756911396751&msclkid=794cc8d6b4cb1f79d943ae172f01fce1?utm_source=bing&utm_campaign=search_bs_pl_evergreen_atlas_core_prosp-brand_gic-null_apac-tw_ps-all_desktop_eng_lead&utm_term=mongodb%20atlas&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=415204532&adgroup=1223756911396751&msclkid=794cc8d6b4cb1f79d943ae172f01fce1">MongoDB Atlas</a> 的網頁儀表板：</h2><ul>
+<li><p>點擊 “Connect” 連接按鈕<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686zYJQ84e5fa.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686zYJQ84e5fa.png"></p>
+</li>
+<li><p>選擇 “Drivers” 連接方式<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686CbQEiw0iPm.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686CbQEiw0iPm.png"></p>
+</li>
+<li><p>會開啟一個彈窗，先不要關閉，等等會用到<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686LOQYyar9zv.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686LOQYyar9zv.png"></p>
+</li>
+</ul>
+<h2 id="接下來，我們要在專案中設置環境變數："><a href="#接下來，我們要在專案中設置環境變數：" class="headerlink" title="接下來，我們要在專案中設置環境變數："></a>接下來，我們要在專案中設置環境變數：</h2><ul>
+<li><p>打開 VS Code，找到 <code>config.env</code> 文件</p>
+</li>
+<li><p>輸入以下兩個環境變數（之前示範的可以刪除）：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DATABASE=mongodb+srv://test123456:&lt;password&gt;@cluster0.5dkg9.mongodb.net/?retryWrites=<span class="literal">true</span>&amp;w=majority&amp;appName=Cluster0</span><br><span class="line">DATABASE_PASSWORD=test123456</span><br></pre></td></tr></table></figure>
+<p>  <code>DATABASE</code> 貼上複製的代碼，<br>  <code>DATABASE_PASSWORD</code> 則是輸入之前建立資料庫時，創建用戶的密碼<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686h8XTeyfjs9.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686h8XTeyfjs9.png"></p>
+<blockquote>
+<p>知識點：環境變數是一種在應用程式外部設置配置的方法。這樣做可以提高安全性（不直接在代碼中暴露敏感信息）和靈活性（可以根據不同環境更改配置）。</p>
+</blockquote>
+</li>
+<li><p>關閉頁面彈窗，到集合頁面查看上次建立的 <code>Database</code> 名稱（我的範例是 <code>test</code>）<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686V4g6NccabE.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686V4g6NccabE.png"></p>
+</li>
+<li><p>回到 vscode <code>config.env</code> 填入剛剛確認好的資料庫名稱，我這邊填入 <code>test</code><br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686rEUHoO7JDc.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686rEUHoO7JDc.png"></p>
+</li>
+</ul>
+<h2 id="現在，讓我們使用-Mongoose-來建立連接"><a href="#現在，讓我們使用-Mongoose-來建立連接" class="headerlink" title="現在，讓我們使用 Mongoose 來建立連接"></a>現在，讓我們使用 Mongoose 來建立連接</h2><ul>
+<li>開啟 app.js 檔案，添加範例程式碼，進行資料庫連接  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 導入 mongoose 套件使用</span></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 .env 檔案中的變數載入到 process.env 中</span></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宣告 DB 常數，將 &lt;password&gt; 字串替換為 .env 檔案內的 DATABASE_PASSWORD (就是我們的資料庫用戶密碼)</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DB</span> = process.<span class="property">env</span>.<span class="property">DATABASE</span>.<span class="title function_">replace</span>(</span><br><span class="line">  <span class="string">&quot;&lt;password&gt;&quot;</span>,</span><br><span class="line">  process.<span class="property">env</span>.<span class="property">DATABASE_PASSWORD</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 連接資料庫</span></span><br><span class="line">mongoose</span><br><span class="line">  .<span class="title function_">connect</span>(<span class="variable constant_">DB</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;資料庫連接成功&quot;</span>)) <span class="comment">// 連接成功會看到 log(&quot;資料庫連接成功&quot;)</span></span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;MongoDB 連接失敗:&quot;</span>, err); <span class="comment">// 反之，捕捉錯誤並 log 顯示錯誤原因</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686DltMH5Qmfk.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686DltMH5Qmfk.png"></li>
+</ul>
+<h2 id="補充：將-Mongo-改成任何人都可以連接-沒有改的話之後可能會連不上資料庫"><a href="#補充：將-Mongo-改成任何人都可以連接-沒有改的話之後可能會連不上資料庫" class="headerlink" title="補充：將 Mongo 改成任何人都可以連接 (沒有改的話之後可能會連不上資料庫)"></a>補充：將 Mongo 改成任何人都可以連接 (沒有改的話之後可能會連不上資料庫)</h2><ul>
+<li>打開 Mongo 網頁，進到 <code>Network Access</code><br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686f0WXgzZGZL.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686f0WXgzZGZL.png"></li>
+<li>點擊 <code>Edit</code>，點擊 <code>Allow Access From Anywhere</code>，看到 <code>Access List Entry</code> 變成 <code>0.0.0.0/0</code> 後就可以點擊 <code>Confirm</code> 儲存了<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686bPEm4a0psK.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686bPEm4a0psK.png"></li>
+</ul>
+<h2 id="最後，讓我們複習一下-Git-的使用，將今天的變更推送到儲存庫："><a href="#最後，讓我們複習一下-Git-的使用，將今天的變更推送到儲存庫：" class="headerlink" title="最後，讓我們複習一下 Git 的使用，將今天的變更推送到儲存庫："></a>最後，讓我們複習一下 Git 的使用，將今天的變更推送到儲存庫：</h2><ol>
+<li><p>關閉正在運行的服務（在終端機中按 Ctrl + C）<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686tqcRpXvUKq.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686tqcRpXvUKq.png"></p>
+</li>
+<li><p>輸入以下 Git 指令：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 將當前目錄中的所有檔案和資料夾（包括變更、新增、刪除的檔案）添加到暫存區（staging area），準備進行提交。</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># (非必要) 用來查看目前的儲存庫狀態。這會顯示哪些檔案已被修改、哪些已經暫存，以及還有哪些檔案未被追蹤。</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 將暫存區中的變更提交到本地儲存庫，並附上提交訊息 Connect mongoDB。這次提交會將所有被暫存的檔案變更記錄到 Git 的歷史紀錄中。</span></span><br><span class="line">git commit -m <span class="string">&#x27;Connect mongoDB&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 將本地變更推送到遠程儲存庫。</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240923/20159686iWZJIhHU4X.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/20159686iWZJIhHU4X.png"></p>
+</li>
+</ol>
+<p>還沒完呢！讓我們再介紹一個超實用的小工具，它能讓我們更直觀地理解 Git 的運作。</p>
+<h2 id="Git-Graph：Git-的視覺化助手"><a href="#Git-Graph：Git-的視覺化助手" class="headerlink" title="Git Graph：Git 的視覺化助手"></a>Git Graph：Git 的視覺化助手</h2><p>在開發過程中，有時候我們可能會搞不清楚 Git 分支的狀態。這時候，Git Graph 這個 VS Code 擴充套件就派上用場了。它能幫我們將 Git 的歷史記錄轉換成易懂的圖形界面。<br>使用步驟：</p>
+<ol>
+<li>在 VS Code 左側選單中點擊擴充套件圖標。</li>
+<li>在搜尋欄輸入 “Git Graph”。</li>
+<li>找到 Git Graph 套件並點擊。</li>
+<li>點擊 “安裝” 按鈕。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240923/2015968616WAMOqX8N.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/2015968616WAMOqX8N.png"></li>
+<li>安裝完成後，你會在 VS Code 左下角看到 Git Graph 的圖標。點擊它就可以查看視覺化的 Git 歷史記錄了。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240923/2015968666kXevDrb7.png" alt="https://ithelp.ithome.com.tw/upload/images/20240923/2015968666kXevDrb7.png"><br>有了 Git Graph，你就能輕鬆掌握專案的版本歷史，分支的創建和合併一目了然。這對於理解複雜的開發流程特別有幫助。</li>
+</ol>
+<h3 id="今日範例程式碼-app-js"><a href="#今日範例程式碼-app-js" class="headerlink" title="今日範例程式碼 app.js"></a>今日範例程式碼 <code>app.js</code></h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createError = <span class="built_in">require</span>(<span class="string">&quot;http-errors&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">&quot;cookie-parser&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">&quot;morgan&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>); <span class="comment">// 引入允許跨網域套件 cors</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(process.env.DB_HOST); // 從 process.env 中讀取並打印 DB_HOST 變數的值 // 這邊會得到 localhost</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&quot;uuid&quot;</span>);</span><br><span class="line"><span class="comment">// console.log(uuidv4()); // 輸出類似：&#x27;1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indexRouter = <span class="built_in">require</span>(<span class="string">&quot;./routes/index&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> usersRouter = <span class="built_in">require</span>(<span class="string">&quot;./routes/users&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 .env 檔案中的變數載入到 process.env 中</span></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// ? 連接資料庫</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DB</span> = process.<span class="property">env</span>.<span class="property">DATABASE</span>.<span class="title function_">replace</span>(</span><br><span class="line">  <span class="string">&quot;&lt;password&gt;&quot;</span>,</span><br><span class="line">  process.<span class="property">env</span>.<span class="property">DATABASE_PASSWORD</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">mongoose</span><br><span class="line">  .<span class="title function_">connect</span>(<span class="variable constant_">DB</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;資料庫連接成功&quot;</span>))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;MongoDB 連接失敗:&quot;</span>, err);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>()); <span class="comment">// 全部放行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// view engine setup</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;views&quot;</span>, path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;views&quot;</span>));</span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;view engine&quot;</span>, <span class="string">&quot;ejs&quot;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">logger</span>(<span class="string">&quot;dev&quot;</span>));</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;public&quot;</span>)));</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/&quot;</span>, indexRouter);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/users&quot;</span>, usersRouter);</span><br><span class="line"></span><br><span class="line"><span class="comment">// catch 404 and forward to error handler</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title function_">next</span>(<span class="title function_">createError</span>(<span class="number">404</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// error handler</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">err, req, res, next</span>) &#123;</span><br><span class="line">  <span class="comment">// set locals, only providing error in development</span></span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">message</span> = err.<span class="property">message</span>;</span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">error</span> = req.<span class="property">app</span>.<span class="title function_">get</span>(<span class="string">&quot;env&quot;</span>) === <span class="string">&quot;development&quot;</span> ? err : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// render the error page</span></span><br><span class="line">  res.<span class="title function_">status</span>(err.<span class="property">status</span> || <span class="number">500</span>);</span><br><span class="line">  res.<span class="title function_">render</span>(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = app;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>config.env 不提供，請使用自己的資料庫 😂</p>
+</blockquote>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>今天我們完成了幾項重要的任務：</p>
+<ol>
+<li>將我們的專案與 MongoDB Atlas 雲端資料庫連接。</li>
+<li>學習了如何使用環境變數來保護敏感資訊。</li>
+<li>使用 Mongoose 建立了資料庫連接。</li>
+<li>複習了 Git 的基本操作，將變更推送到 GitHub。</li>
+<li>認識了 Git Graph 這個強大的視覺化工具。<br>這些步驟雖然看起來不少，但每一步都是開發流程中不可或缺的一環。通過今天的學習，我們為接下來的開發工作打下了堅實的基礎。<br>明天我們會更進一步，探索 Mongoose 模型的定義，學習如何撰寫 API 來與資料庫互動，還會使用 Postman 進行測試。這些都是實際開發中經常用到的技能，相信大家會覺得很有趣！<br>希望今天的內容對大家有幫助。記住，學習編程就像爬樓梯，一步一個腳印，慢慢來但別停下腳步。<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</li>
+</ol>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+              <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E7%AE%A1/" rel="tag"># 版本控管</a>
+              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+              <a href="/tags/Mongoose/" rel="tag"># Mongoose</a>
+              <a href="/tags/%E9%9B%B2%E7%AB%AF%E8%B3%87%E6%96%99%E5%BA%AB/" rel="tag"># 雲端資料庫</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/22/2024it/d13/" rel="prev" title="[ 2024 IT 鐵人賽 DAY13 ] GitHub 新手村：版本控制的第一步">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY13 ] GitHub 新手村：版本控制的第一步
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/24/2024it/d15/" rel="next" title="[ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功">
+      [ 2024 IT 鐵人賽 DAY15 ] 打造自己的 API：CRUD 基本功 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E8%AE%93%E6%88%91%E5%80%91%E6%89%93%E9%96%8B-MongoDB-Atlas-%E7%9A%84%E7%B6%B2%E9%A0%81%E5%84%80%E8%A1%A8%E6%9D%BF%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">首先，讓我們打開 MongoDB Atlas 的網頁儀表板：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E4%B8%8B%E4%BE%86%EF%BC%8C%E6%88%91%E5%80%91%E8%A6%81%E5%9C%A8%E5%B0%88%E6%A1%88%E4%B8%AD%E8%A8%AD%E7%BD%AE%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">接下來，我們要在專案中設置環境變數：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8F%BE%E5%9C%A8%EF%BC%8C%E8%AE%93%E6%88%91%E5%80%91%E4%BD%BF%E7%94%A8-Mongoose-%E4%BE%86%E5%BB%BA%E7%AB%8B%E9%80%A3%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">現在，讓我們使用 Mongoose 來建立連接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%EF%BC%9A%E5%B0%87-Mongo-%E6%94%B9%E6%88%90%E4%BB%BB%E4%BD%95%E4%BA%BA%E9%83%BD%E5%8F%AF%E4%BB%A5%E9%80%A3%E6%8E%A5-%E6%B2%92%E6%9C%89%E6%94%B9%E7%9A%84%E8%A9%B1%E4%B9%8B%E5%BE%8C%E5%8F%AF%E8%83%BD%E6%9C%83%E9%80%A3%E4%B8%8D%E4%B8%8A%E8%B3%87%E6%96%99%E5%BA%AB"><span class="nav-number">5.</span> <span class="nav-text">補充：將 Mongo 改成任何人都可以連接 (沒有改的話之後可能會連不上資料庫)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%BE%8C%EF%BC%8C%E8%AE%93%E6%88%91%E5%80%91%E8%A4%87%E7%BF%92%E4%B8%80%E4%B8%8B-Git-%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%B0%87%E4%BB%8A%E5%A4%A9%E7%9A%84%E8%AE%8A%E6%9B%B4%E6%8E%A8%E9%80%81%E5%88%B0%E5%84%B2%E5%AD%98%E5%BA%AB%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">最後，讓我們複習一下 Git 的使用，將今天的變更推送到儲存庫：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-Graph%EF%BC%9AGit-%E7%9A%84%E8%A6%96%E8%A6%BA%E5%8C%96%E5%8A%A9%E6%89%8B"><span class="nav-number">7.</span> <span class="nav-text">Git Graph：Git 的視覺化助手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%AF%84%E4%BE%8B%E7%A8%8B%E5%BC%8F%E7%A2%BC-app-js"><span class="nav-number">7.1.</span> <span class="nav-text">今日範例程式碼 app.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">7.2.</span> <span class="nav-text">總結</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/23/2024it/d14/";
+    this.page.identifier = "2024/09/23/2024it/d14/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY14 ] 串接專案與雲端資料庫：MongoDB Atlas 連接與 Git 複習";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="嗨，大家好！昨天我們學會了如何定義鮮食的 Model，以及如何建立一個 API 來取得資料庫中的鮮食資料。相信大家對於如何在 Express 專案中建立 API，以及如何與 MongoDB 互動，已經有了一個基本的了解了。今天，我們要繼續探索，學習如何建立一個計算每日應攝取量的 API。這個 API 會根據使用者輸入的體重和活動量，以及選擇的鮮食，計算出每日應攝取的營養素量和熱量。這樣一來，我們就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/29/2024it/d20/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="嗨，大家好！昨天我們學會了如何定義鮮食的 Model，以及如何建立一個 API 來取得資料庫中的鮮食資料。相信大家對於如何在 Express 專案中建立 API，以及如何與 MongoDB 互動，已經有了一個基本的了解了。今天，我們要繼續探索，學習如何建立一個計算每日應攝取量的 API。這個 API 會根據使用者輸入的體重和活動量，以及選擇的鮮食，計算出每日應攝取的營養素量和熱量。這樣一來，我們就">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240929/20159686z32JCzXM0L.png">
+<meta property="article:published_time" content="2024-09-29T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.165Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240929/20159686z32JCzXM0L.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/29/2024it/d20/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/29/2024it/d20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-29 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-29T20:33:45+08:00">2024-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/29/2024it/d20/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/29/2024it/d20/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>嗨，大家好！昨天我們學會了如何定義鮮食的 Model，以及如何建立一個 API 來取得資料庫中的鮮食資料。相信大家對於如何在 Express 專案中建立 API，以及如何與 MongoDB 互動，已經有了一個基本的了解了。<br>今天，我們要繼續探索，學習如何建立一個計算每日應攝取量的 API。這個 API 會根據使用者輸入的體重和活動量，以及選擇的鮮食，計算出每日應攝取的營養素量和熱量。這樣一來，我們就可以給使用者一個參考，讓他們知道自己的鸚鵡每天應該吃多少食物，攝取多少營養素。</p>
+<span id="more"></span>
+
+<p>在開始寫程式之前，我們先來了解一下如何計算鸚鵡的每日所需熱量和營養素吧！</p>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="計算鸚鵡每日所需熱量"><a href="#計算鸚鵡每日所需熱量" class="headerlink" title="計算鸚鵡每日所需熱量"></a>計算鸚鵡每日所需熱量</h2><p>要計算鸚鵡每日所需的熱量，我們需要知道以下幾個數據：</p>
+<ol>
+<li>鸚鵡的體重（單位：克）</li>
+<li>鸚鵡的活動量（低、中、高）</li>
+<li>鸚鵡的基礎代謝率（BMR）<br>其中，BMR 是指在完全休息狀態下，維持身體基本功能所需的最低熱量。我們可以使用一個專門針對鸚鵡設計的 BMR 計算公式來計算鸚鵡的 BMR：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BMR = K * (weight / 1000)^0.75</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>K</code> 是一個常數，代表鸚鵡的代謝系數，通常取 175。<code>weight</code> 是鸚鵡的體重，單位是克。我們將體重除以 1000，轉換為公斤，然後取 0.75 次方。<br>有了 BMR 後，我們還需要根據鸚鵡的活動量來調整 BMR，得到鸚鵡每日所需的總熱量。我們可以定義三個活動量等級，每個等級對應一個調整係數：</p>
+<ul>
+<li>低活動量：1.2</li>
+<li>中活動量：1.4</li>
+<li>高活動量：1.6<br>我們將 BMR 乘以對應的調整係數，就得到了鸚鵡每日所需的總熱量。</li>
+</ul>
+<h2 id="計算鸚鵡每日所需營養素"><a href="#計算鸚鵡每日所需營養素" class="headerlink" title="計算鸚鵡每日所需營養素"></a>計算鸚鵡每日所需營養素</h2><p>除了熱量，我們還需要計算鸚鵡每日所需的三大營養素：蛋白質、脂肪、碳水化合物。我們可以假設這三大營養素在總熱量中所占的比例如下：</p>
+<ul>
+<li>蛋白質：20%</li>
+<li>脂肪：20%</li>
+<li>碳水化合物：60%<br>我們將每日所需總熱量乘以這些百分比，就得到了每種營養素所需的熱量。然後，我們再將這些熱量除以每克營養素的熱量（蛋白質和碳水化合物每克 4 卡，脂肪每克 9 卡），就得到了每日所需的三大營養素的克數。</li>
+</ul>
+<h2 id="計算鮮食可提供的營養素和熱量"><a href="#計算鮮食可提供的營養素和熱量" class="headerlink" title="計算鮮食可提供的營養素和熱量"></a>計算鮮食可提供的營養素和熱量</h2><p>現在，我們知道了如何計算鸚鵡每日所需的熱量和營養素。接下來，我們要計算選擇的鮮食可以提供多少營養素和熱量。<br>首先，我們需要從鮮食的 Model 中取出以下數據：</p>
+<ul>
+<li>食物的熱量（每 100 克）</li>
+<li>食物的蛋白質含量（每 100 克）</li>
+<li>食物的脂肪含量（每 100 克）</li>
+<li>食物的碳水化合物含量（每 100 克）</li>
+<li>食物的最大攝取量（單位：克）<br>然後，我們可以計算在最大攝取量下，這個食物可以提供多少熱量。同時，我們也可以計算在不超過每日所需熱量的情況下，這個食物最多可以攝取多少克。<br>有了食物的最大攝取量後，我們可以計算這個食物可以提供多少克的三大營養素。我們將最大攝取量乘以食物的營養素含量百分比，就得到了每種營養素的攝取量。</li>
+</ul>
+<p>接著，我們可以計算這個食物提供的總熱量。我們將每種營養素的攝取量乘以其熱量，然後相加，就得到了總熱量。</p>
+<p>最後，我們可以計算這個食物提供的熱量與每日所需熱量的差異。這個差異可以讓使用者知道，如果只吃這一種食物，是否能滿足每日所需的熱量。</p>
+<h2 id="開始寫程式"><a href="#開始寫程式" class="headerlink" title="開始寫程式"></a>開始寫程式</h2><p>好了，現在我們對計算鸚鵡每日所需熱量和營養素的方法有了一個大致的了解。讓我們開始寫程式吧！</p>
+<h3 id="第一步：定義路由和-Swagger-註解"><a href="#第一步：定義路由和-Swagger-註解" class="headerlink" title="第一步：定義路由和 Swagger 註解"></a>第一步：定義路由和 Swagger 註解</h3><p>首先，我們要定義一個 POST 請求的路由，路徑是 <code>/calculatefood</code>。這個路由會接收一個 JSON 格式的請求體，其中包含了以下幾個欄位：</p>
+<ul>
+<li><code>weight</code>：鸚鵡的體重，單位是克。</li>
+<li><code>activity</code>：鸚鵡的活動量，可以是 <code>&quot;low&quot;</code>、<code>&quot;medium&quot;</code> 或 <code>&quot;high&quot;</code>。</li>
+<li><code>foodId</code>：要計算的鮮食的 ID。<br>我們使用 Swagger 的註解來描述這個 API 的詳細信息，包括請求體的結構。這樣，其他人在使用我們的 API 時，就可以直接在 Swagger UI 中看到這些信息，方便他們理解和使用我們的 API。</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;/calculatefood&quot;</span>,</span><br><span class="line">  <span class="title function_">handleErrorAsync</span>(<span class="title function_">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 路由處理函數的內容</span></span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：取得請求參數並進行驗證"><a href="#第二步：取得請求參數並進行驗證" class="headerlink" title="第二步：取得請求參數並進行驗證"></a>第二步：取得請求參數並進行驗證</h3><p>進入路由處理函數後，我們首先從請求體中取出 <code>weight</code>、<code>activity</code> 和 <code>foodId</code> 這三個參數。然後，我們對這些參數進行驗證，確保它們都是必填的，並且 <code>foodId</code> 對應的鮮食是存在的。如果驗證失敗，我們就使用 <code>appError</code> 函數返回一個錯誤訊息。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取得參數</span></span><br><span class="line"><span class="keyword">const</span> &#123; weight, activity, foodId &#125; = req.<span class="property">body</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 驗證必填欄位</span></span><br><span class="line"><span class="keyword">if</span> (!weight || !activity || !foodId) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">next</span>(<span class="title function_">appError</span>(<span class="number">400</span>, <span class="string">&quot;weight, activity, foodId 為必填&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 驗證食物是否存在</span></span><br><span class="line"><span class="keyword">const</span> freshFood = <span class="keyword">await</span> <span class="title class_">FreshFood</span>.<span class="title function_">findById</span>(foodId);</span><br><span class="line"><span class="keyword">if</span> (!freshFood) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">next</span>(<span class="title function_">appError</span>(<span class="number">400</span>, <span class="string">&quot;食物不存在&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三步：計算-BMR-和每日所需熱量"><a href="#第三步：計算-BMR-和每日所需熱量" class="headerlink" title="第三步：計算 BMR 和每日所需熱量"></a>第三步：計算 BMR 和每日所需熱量</h3><p>接下來，我們開始計算鸚鵡的基礎代謝率（BMR）。我們將鸚鵡的體重轉換為公斤，然後帶入 BMR 計算公式計算出 BMR。<br>然後，我們根據鸚鵡的活動量來調整 BMR。我們使用一個 <code>switch</code> 語句，根據 <code>activity</code> 的值來決定活動量對應的係數。然後，我們將 BMR 乘以這個係數，得到調整後的 BMR。<br>調整後的 BMR 就是鸚鵡每日所需的總熱量。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用新的 BMR 計算公式</span></span><br><span class="line"><span class="keyword">const</span> K = <span class="number">175</span>; <span class="comment">// 鸚鵡的 K 值</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">BMR</span> = K * <span class="title class_">Math</span>.<span class="title function_">pow</span>(weight / <span class="number">1000</span>, <span class="number">0.75</span>); <span class="comment">// 體重轉換為公斤並計算基礎代謝率</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 根據活動水平調整BMR</span></span><br><span class="line"><span class="keyword">let</span> activityLevel = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">switch</span> (activity) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;low&quot;</span>:</span><br><span class="line">    activityLevel = <span class="number">1.2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;medium&quot;</span>:</span><br><span class="line">    activityLevel = <span class="number">1.4</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;high&quot;</span>:</span><br><span class="line">    activityLevel = <span class="number">1.6</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> adjustedBMR = <span class="variable constant_">BMR</span> * activityLevel; <span class="comment">// 調整後的BMR</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 計算每日所需熱量</span></span><br><span class="line"><span class="keyword">let</span> dailyCalories = adjustedBMR;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步：計算每日所需營養素"><a href="#第四步：計算每日所需營養素" class="headerlink" title="第四步：計算每日所需營養素"></a>第四步：計算每日所需營養素</h3><p>有了每日所需熱量後，我們可以計算鸚鵡每日所需的三大營養素（蛋白質、脂肪、碳水化合物）的量。我們假設蛋白質和脂肪各占總熱量的 20%，碳水化合物占 60%。<br>然後，我們將每日所需熱量乘以這些百分比，再除以每克營養素的熱量（蛋白質和碳水化合物每克 4 卡，脂肪每克 9 卡），就得到了每日所需的三大營養素的克數。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 營養素需求計算</span></span><br><span class="line"><span class="keyword">const</span> proteinNeed = dailyCalories * <span class="number">0.2</span>; <span class="comment">// 蛋白質需求占總熱量的20%</span></span><br><span class="line"><span class="keyword">const</span> fatNeed = dailyCalories * <span class="number">0.2</span>; <span class="comment">// 脂肪需求占總熱量的20%</span></span><br><span class="line"><span class="keyword">const</span> carbsNeed = dailyCalories * <span class="number">0.6</span>; <span class="comment">// 碳水化合物需求占總熱量的60%</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 營養素需求計算 (每日所需熱量的20%為蛋白質需求，20%為脂肪需求，60%為碳水化合物需求)</span></span><br><span class="line"><span class="keyword">const</span> dailyProteinNeed = (dailyCalories * <span class="number">0.2</span>) / <span class="number">4</span>; <span class="comment">// 蛋白質每克4卡</span></span><br><span class="line"><span class="keyword">const</span> dailyFatNeed = (dailyCalories * <span class="number">0.2</span>) / <span class="number">9</span>; <span class="comment">// 脂肪每克9卡</span></span><br><span class="line"><span class="keyword">const</span> dailyCarbsNeed = (dailyCalories * <span class="number">0.6</span>) / <span class="number">4</span>; <span class="comment">// 碳水化合物每克4卡</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步：計算鮮食可提供的營養素和熱量"><a href="#第五步：計算鮮食可提供的營養素和熱量" class="headerlink" title="第五步：計算鮮食可提供的營養素和熱量"></a>第五步：計算鮮食可提供的營養素和熱量</h3><p>接下來，我們要計算選擇的鮮食可以提供多少營養素和熱量。我們從鮮食的 Model 中取出食物的熱量、蛋白質、脂肪、碳水化合物含量，以及最大攝取量。<br>然後，我們計算在最大攝取量下，這個食物可以提供多少熱量。同時，我們也計算在不超過每日所需熱量的情況下，這個食物最多可以攝取多少克。<br>有了食物的最大攝取量後，我們可以計算這個食物可以提供多少克的三大營養素。我們將最大攝取量乘以食物的營養素含量百分比，就得到了每種營養素的攝取量。<br>然後，我們計算這個食物提供的總熱量。我們將每種營養素的攝取量乘以其熱量，然後相加，就得到了總熱量。<br>接著，我們計算這個食物提供的熱量與每日所需熱量的差異。這個差異可以讓使用者知道，如果只吃這一種食物，是否能滿足每日所需的熱量。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 計算該食物可攝取量</span></span><br><span class="line"><span class="keyword">const</span> foodCalories = freshFood.<span class="property">calories</span>;</span><br><span class="line"><span class="keyword">const</span> foodProtein = freshFood.<span class="property">protein</span>;</span><br><span class="line"><span class="keyword">const</span> foodFat = freshFood.<span class="property">fat</span>;</span><br><span class="line"><span class="keyword">const</span> foodCarbs = freshFood.<span class="property">carbs</span>;</span><br><span class="line"><span class="keyword">const</span> foodMaxIntake = freshFood.<span class="property">maxIntake</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 計算該食物每日可攝取量</span></span><br><span class="line"><span class="keyword">let</span> maxCaloriesFromFood = foodCalories * (foodMaxIntake / <span class="number">100</span>); <span class="comment">// 每日最大攝取量下的熱量</span></span><br><span class="line"><span class="keyword">let</span> maxFoodIntake = <span class="title class_">Math</span>.<span class="title function_">min</span>(</span><br><span class="line">  foodMaxIntake,</span><br><span class="line">  (dailyCalories / foodCalories) * <span class="number">100</span></span><br><span class="line">); <span class="comment">// 不超過每日所需熱量的最大攝取量(g)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 計算食物提供的營養素量</span></span><br><span class="line"><span class="keyword">let</span> proteinIntake = (maxFoodIntake * (foodProtein / <span class="number">100</span>)).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">let</span> fatIntake = (maxFoodIntake * (foodFat / <span class="number">100</span>)).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">let</span> carbsIntake = (maxFoodIntake * (foodCarbs / <span class="number">100</span>)).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 計算食物提供的總熱量</span></span><br><span class="line"><span class="keyword">let</span> foodProvidedCalories = (</span><br><span class="line">  proteinIntake * <span class="number">4</span> +</span><br><span class="line">  fatIntake * <span class="number">9</span> +</span><br><span class="line">  carbsIntake * <span class="number">4</span></span><br><span class="line">).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 計算與每日所需熱量的差異</span></span><br><span class="line"><span class="keyword">let</span> caloriesDifference = (dailyCalories - foodProvidedCalories).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="第六步：返回計算結果"><a href="#第六步：返回計算結果" class="headerlink" title="第六步：返回計算結果"></a>第六步：返回計算結果</h3><p>最後，我們將所有計算結果整理到一個物件中，並使用 <code>handleSuccess</code> 函數返回給客戶端。這個物件包含了使用者輸入的體重和活動量、選擇的食物、計算出的 BMR 和調整後的 BMR、每日所需熱量和三大營養素量、食物的最大攝取量和實際攝取量、食物提供的營養素量和總熱量、熱量差異，以及每種營養素提供的詳細熱量。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回結果</span></span><br><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">  weight,</span><br><span class="line">  activity,</span><br><span class="line">  <span class="attr">food</span>: freshFood,</span><br><span class="line">  <span class="attr">BMR</span>: <span class="variable constant_">BMR</span>.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 基礎代謝率 (BMR)</span></span><br><span class="line">  <span class="attr">adjustedBMR</span>: adjustedBMR.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 調整後的 BMR</span></span><br><span class="line">  <span class="attr">dailyCalories</span>: dailyCalories.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需熱量</span></span><br><span class="line">  <span class="attr">dailyProteinNeed</span>: dailyProteinNeed.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需蛋白質</span></span><br><span class="line">  <span class="attr">dailyFatNeed</span>: dailyFatNeed.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需脂肪</span></span><br><span class="line">  <span class="attr">dailyCarbsNeed</span>: dailyCarbsNeed.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需碳水化合物</span></span><br><span class="line">  <span class="attr">maxIntake</span>: foodMaxIntake.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 最大攝取量</span></span><br><span class="line">  <span class="attr">foodIntake</span>: maxFoodIntake.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 實際攝取量</span></span><br><span class="line">  <span class="attr">nutrientsProvided</span>: &#123;</span><br><span class="line">    <span class="attr">protein</span>: proteinIntake, <span class="comment">// 每日食物中的蛋白質克數</span></span><br><span class="line">    <span class="attr">fat</span>: fatIntake, <span class="comment">// 每日食物中的脂肪克數</span></span><br><span class="line">    <span class="attr">carbs</span>: carbsIntake, <span class="comment">// 每日食物中的碳水化合物克數</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">foodProvidedCalories</span>: foodProvidedCalories, <span class="comment">// 食物提供的總熱量</span></span><br><span class="line">  <span class="attr">caloriesDifference</span>: caloriesDifference, <span class="comment">// 熱量差異</span></span><br><span class="line">  <span class="attr">detailedNutrientsCalories</span>: &#123;</span><br><span class="line">    <span class="attr">protein</span>: proteinCalories, <span class="comment">// 蛋白質提供的熱量</span></span><br><span class="line">    <span class="attr">fat</span>: fatCalories, <span class="comment">// 脂肪提供的熱量</span></span><br><span class="line">    <span class="attr">carbs</span>: carbsCalories, <span class="comment">// 碳水化合物提供的熱量</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">handleSuccess</span>(res, data, <span class="string">&quot;計算鮮食可攝取量成功&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在這個物件中,我們包含了許多有用的資訊：</p>
+<ul>
+<li><code>weight</code>：使用者輸入的體重</li>
+<li><code>activity</code>：使用者選擇的活動量</li>
+<li><code>food</code>：使用者選擇的鮮食</li>
+<li><code>BMR</code>：計算出的基礎代謝率</li>
+<li><code>adjustedBMR</code>：根據活動量調整後的 BMR</li>
+<li><code>dailyCalories</code>：每日所需總熱量</li>
+<li><code>dailyProteinNeed</code>、<code>dailyFatNeed</code>、<code>dailyCarbsNeed</code>：每日所需的三大營養素量</li>
+<li><code>maxIntake</code>：鮮食的最大攝取量</li>
+<li><code>foodIntake</code>：在不超過每日所需熱量的情況下,鮮食的實際攝取量</li>
+<li><code>nutrientsProvided</code>：鮮食提供的三大營養素克數</li>
+<li><code>foodProvidedCalories</code>：鮮食提供的總熱量</li>
+<li><code>caloriesDifference</code>：鮮食提供的熱量與每日所需熱量的差異</li>
+<li><code>detailedNutrientsCalories</code>：每種營養素提供的詳細熱量<br>最後，我們使用 <code>handleSuccess</code> 函數將這個物件返回給客戶端，並附上一個成功的訊息：”計算鮮食可攝取量成功”。<br>這樣，我們就完成了整個 API 的實作。讓我們用 Postman 來測試一下吧！</li>
+</ul>
+<h2 id="Postman-測試"><a href="#Postman-測試" class="headerlink" title="Postman 測試"></a>Postman 測試</h2><blockquote>
+<p>專案記得要 RUN 起來歐！</p>
+</blockquote>
+<ol>
+<li><p>打開 Postman ，創建一個新的請求。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240929/20159686z32JCzXM0L.png" alt="https://ithelp.ithome.com.tw/upload/images/20240929/20159686z32JCzXM0L.png"></p>
+</li>
+<li><p>將請求方法設為 POST，請求的 URL 設為 <code>http://127.0.0.1:3000/foods/calculatefood</code>。</p>
+</li>
+<li><p>點擊 Body 標籤，選擇 raw 格式，然後在文本框中輸入以下 JSON：</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;weight&quot;</span><span class="punctuation">:</span> <span class="number">500</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;activity&quot;</span><span class="punctuation">:</span> <span class="string">&quot;medium&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;foodId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;66c8c33f41748cc91ee1f348&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p> 這個 JSON 中，我們設置了一隻體重為 500 克、活動量為中等的鸚鵡，並選擇了一種鮮食（foodId 需要替換為你資料庫中存在的鮮食 ID）。</p>
+</li>
+<li><p>點擊 Send 按鈕，發送請求。如果一切正常，你應該會收到類似下面這樣的回應：</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;statusCode&quot;</span><span class="punctuation">:</span> <span class="number">200</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;success&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;計算鮮食可攝取量成功&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;data&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;weight&quot;</span><span class="punctuation">:</span> <span class="string">&quot;500&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;activity&quot;</span><span class="punctuation">:</span> <span class="string">&quot;medium&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;food&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;66c8c33f41748cc91ee1f348&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;向日葵籽&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">584</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">20.78</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">51.46</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">20</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;note&quot;</span><span class="punctuation">:</span> <span class="string">&quot;生食&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;nutrition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;向日葵籽富含健康脂肪、蛋白質及纖維，有助於心血管健康和提供長時間的能量。&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;BMR&quot;</span><span class="punctuation">:</span> <span class="string">&quot;104.06&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;adjustedBMR&quot;</span><span class="punctuation">:</span> <span class="string">&quot;145.68&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;dailyCalories&quot;</span><span class="punctuation">:</span> <span class="string">&quot;145.68&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;dailyProteinNeed&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7.28&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;dailyFatNeed&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3.24&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;dailyCarbsNeed&quot;</span><span class="punctuation">:</span> <span class="string">&quot;21.85&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;maxIntake&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10.00&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;foodIntake&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10.00&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;nutrientsProvided&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.08&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5.15&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.00&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;foodProvidedCalories&quot;</span><span class="punctuation">:</span> <span class="string">&quot;62.67&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;caloriesDifference&quot;</span><span class="punctuation">:</span> <span class="string">&quot;83.01&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;detailedNutrientsCalories&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="string">&quot;8.32&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="string">&quot;46.35&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="string">&quot;8.00&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p> 在回應中，你可以看到我們計算出的各種數據，包括鸚鵡的 BMR、每日所需熱量和營養素、選擇的鮮食的各種資訊、鮮食可提供的營養素和熱量等。<br> 如果你收到了類似的回應，那麼恭喜你，你的 API 已經可以正常工作了！</p>
+</li>
+</ol>
+<h2 id="完整程式碼"><a href="#完整程式碼" class="headerlink" title="完整程式碼"></a>完整程式碼</h2><details>
+<summary>為了方便你查看和學習,這裡我再次提供完整的程式碼：</summary>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> router = express.<span class="title class_">Router</span>();</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">FreshFood</span> = <span class="built_in">require</span>(<span class="string">&quot;../models/freshFood&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> handleSuccess = <span class="built_in">require</span>(<span class="string">&quot;../utils/handleSuccess&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> handleErrorAsync = <span class="built_in">require</span>(<span class="string">&quot;../utils/handleErrorAsync&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> appError = <span class="built_in">require</span>(<span class="string">&quot;../utils/appError&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// * 每日鮮食計算</span></span><br><span class="line">router.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;/calculatefood&quot;</span>,</span><br><span class="line">  <span class="comment">/*  #swagger.tags = [&#x27;Food&#x27;]</span></span><br><span class="line"><span class="comment">      #swagger.summary = &#x27;每日鮮食計算&#x27;</span></span><br><span class="line"><span class="comment">      #swagger.description = &#x27;每日鮮食計算&#x27;</span></span><br><span class="line"><span class="comment">      #swagger.parameters[&#x27;body&#x27;] = &#123;</span></span><br><span class="line"><span class="comment">          in: &#x27;body&#x27;,</span></span><br><span class="line"><span class="comment">          required: true,</span></span><br><span class="line"><span class="comment">          schema:&#123;</span></span><br><span class="line"><span class="comment">              $memberId:&#x27;會員 ID&#x27;,</span></span><br><span class="line"><span class="comment">              $weight:&#x27;體重&#x27;,</span></span><br><span class="line"><span class="comment">              $activity: &#x27;活動量&#x27;,</span></span><br><span class="line"><span class="comment">              $foodId:&#x27;食物 ID&#x27;,</span></span><br><span class="line"><span class="comment">          &#125;</span></span><br><span class="line"><span class="comment">      &#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="title function_">handleErrorAsync</span>(<span class="title function_">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 取得參數</span></span><br><span class="line">    <span class="keyword">const</span> &#123; weight, activity, foodId &#125; = req.<span class="property">body</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 驗證必填欄位</span></span><br><span class="line">    <span class="keyword">if</span> (!weight || !activity || !foodId) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">next</span>(<span class="title function_">appError</span>(<span class="number">400</span>, <span class="string">&quot;weight, activity, foodId 為必填&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 驗證食物是否存在</span></span><br><span class="line">    <span class="keyword">const</span> freshFood = <span class="keyword">await</span> <span class="title class_">FreshFood</span>.<span class="title function_">findById</span>(foodId);</span><br><span class="line">    <span class="keyword">if</span> (!freshFood) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">next</span>(<span class="title function_">appError</span>(<span class="number">400</span>, <span class="string">&quot;食物不存在&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用新的 BMR 計算公式</span></span><br><span class="line">    <span class="keyword">const</span> K = <span class="number">175</span>; <span class="comment">// 鸚鵡的 K 值</span></span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">BMR</span> = K * <span class="title class_">Math</span>.<span class="title function_">pow</span>(weight / <span class="number">1000</span>, <span class="number">0.75</span>); <span class="comment">// 體重轉換為公斤並計算基礎代謝率</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根據活動水平調整BMR</span></span><br><span class="line">    <span class="keyword">let</span> activityLevel = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">switch</span> (activity) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;low&quot;</span>:</span><br><span class="line">        activityLevel = <span class="number">1.2</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;medium&quot;</span>:</span><br><span class="line">        activityLevel = <span class="number">1.4</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;high&quot;</span>:</span><br><span class="line">        activityLevel = <span class="number">1.6</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> adjustedBMR = <span class="variable constant_">BMR</span> * activityLevel; <span class="comment">// 調整後的BMR</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算每日所需熱量</span></span><br><span class="line">    <span class="keyword">let</span> dailyCalories = adjustedBMR;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 營養素需求計算</span></span><br><span class="line">    <span class="keyword">const</span> proteinNeed = dailyCalories * <span class="number">0.2</span>; <span class="comment">// 蛋白質需求占總熱量的20%</span></span><br><span class="line">    <span class="keyword">const</span> fatNeed = dailyCalories * <span class="number">0.2</span>; <span class="comment">// 脂肪需求占總熱量的20%</span></span><br><span class="line">    <span class="keyword">const</span> carbsNeed = dailyCalories * <span class="number">0.6</span>; <span class="comment">// 碳水化合物需求占總熱量的60%</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 營養素需求計算 (每日所需熱量的20%為蛋白質需求，20%為脂肪需求，60%為碳水化合物需求)</span></span><br><span class="line">    <span class="keyword">const</span> dailyProteinNeed = (dailyCalories * <span class="number">0.2</span>) / <span class="number">4</span>; <span class="comment">// 蛋白質每克4卡</span></span><br><span class="line">    <span class="keyword">const</span> dailyFatNeed = (dailyCalories * <span class="number">0.2</span>) / <span class="number">9</span>; <span class="comment">// 脂肪每克9卡</span></span><br><span class="line">    <span class="keyword">const</span> dailyCarbsNeed = (dailyCalories * <span class="number">0.6</span>) / <span class="number">4</span>; <span class="comment">// 碳水化合物每克4卡</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算該食物可攝取量</span></span><br><span class="line">    <span class="keyword">const</span> foodCalories = freshFood.<span class="property">calories</span>;</span><br><span class="line">    <span class="keyword">const</span> foodProtein = freshFood.<span class="property">protein</span>;</span><br><span class="line">    <span class="keyword">const</span> foodFat = freshFood.<span class="property">fat</span>;</span><br><span class="line">    <span class="keyword">const</span> foodCarbs = freshFood.<span class="property">carbs</span>;</span><br><span class="line">    <span class="keyword">const</span> foodMaxIntake = freshFood.<span class="property">maxIntake</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算該食物每日可攝取量</span></span><br><span class="line">    <span class="keyword">let</span> maxCaloriesFromFood = foodCalories * (foodMaxIntake / <span class="number">100</span>); <span class="comment">// 每日最大攝取量下的熱量</span></span><br><span class="line">    <span class="keyword">let</span> maxFoodIntake = <span class="title class_">Math</span>.<span class="title function_">min</span>(</span><br><span class="line">      foodMaxIntake,</span><br><span class="line">      (dailyCalories / foodCalories) * <span class="number">100</span></span><br><span class="line">    ); <span class="comment">// 不超過每日所需熱量的最大攝取量(g)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算食物提供的營養素量</span></span><br><span class="line">    <span class="keyword">let</span> proteinIntake = (maxFoodIntake * (foodProtein / <span class="number">100</span>)).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">let</span> fatIntake = (maxFoodIntake * (foodFat / <span class="number">100</span>)).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">let</span> carbsIntake = (maxFoodIntake * (foodCarbs / <span class="number">100</span>)).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算食物提供的總熱量</span></span><br><span class="line">    <span class="keyword">let</span> foodProvidedCalories = (</span><br><span class="line">      proteinIntake * <span class="number">4</span> +</span><br><span class="line">      fatIntake * <span class="number">9</span> +</span><br><span class="line">      carbsIntake * <span class="number">4</span></span><br><span class="line">    ).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算與每日所需熱量的差異</span></span><br><span class="line">    <span class="keyword">let</span> caloriesDifference = (dailyCalories - foodProvidedCalories).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 計算食物提供的營養素熱量</span></span><br><span class="line">    <span class="keyword">let</span> proteinCalories = (proteinIntake * <span class="number">4</span>).<span class="title function_">toFixed</span>(<span class="number">2</span>); <span class="comment">// 蛋白質提供的熱量</span></span><br><span class="line">    <span class="keyword">let</span> fatCalories = (fatIntake * <span class="number">9</span>).<span class="title function_">toFixed</span>(<span class="number">2</span>); <span class="comment">// 脂肪提供的熱量</span></span><br><span class="line">    <span class="keyword">let</span> carbsCalories = (carbsIntake * <span class="number">4</span>).<span class="title function_">toFixed</span>(<span class="number">2</span>); <span class="comment">// 碳水化合物提供的熱量</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回結果</span></span><br><span class="line">    <span class="keyword">let</span> data = &#123;</span><br><span class="line">      weight,</span><br><span class="line">      activity,</span><br><span class="line">      <span class="attr">food</span>: freshFood,</span><br><span class="line">      <span class="attr">BMR</span>: <span class="variable constant_">BMR</span>.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 基礎代謝率 (BMR)</span></span><br><span class="line">      <span class="attr">adjustedBMR</span>: adjustedBMR.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 調整後的 BMR</span></span><br><span class="line">      <span class="attr">dailyCalories</span>: dailyCalories.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需熱量</span></span><br><span class="line">      <span class="attr">dailyProteinNeed</span>: dailyProteinNeed.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需蛋白質</span></span><br><span class="line">      <span class="attr">dailyFatNeed</span>: dailyFatNeed.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需脂肪</span></span><br><span class="line">      <span class="attr">dailyCarbsNeed</span>: dailyCarbsNeed.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 每日所需碳水化合物</span></span><br><span class="line">      <span class="attr">maxIntake</span>: foodMaxIntake.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 最大攝取量</span></span><br><span class="line">      <span class="attr">foodIntake</span>: maxFoodIntake.<span class="title function_">toFixed</span>(<span class="number">2</span>), <span class="comment">// 實際攝取量</span></span><br><span class="line">      <span class="attr">nutrientsProvided</span>: &#123;</span><br><span class="line">        <span class="attr">protein</span>: proteinIntake, <span class="comment">// 每日食物中的蛋白質克數</span></span><br><span class="line">        <span class="attr">fat</span>: fatIntake, <span class="comment">// 每日食物中的脂肪克數</span></span><br><span class="line">        <span class="attr">carbs</span>: carbsIntake, <span class="comment">// 每日食物中的碳水化合物克數</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">foodProvidedCalories</span>: foodProvidedCalories, <span class="comment">// 食物提供的總熱量</span></span><br><span class="line">      <span class="attr">caloriesDifference</span>: caloriesDifference, <span class="comment">// 熱量差異</span></span><br><span class="line">      <span class="attr">detailedNutrientsCalories</span>: &#123;</span><br><span class="line">        <span class="attr">protein</span>: proteinCalories, <span class="comment">// 蛋白質提供的熱量</span></span><br><span class="line">        <span class="attr">fat</span>: fatCalories, <span class="comment">// 脂肪提供的熱量</span></span><br><span class="line">        <span class="attr">carbs</span>: carbsCalories, <span class="comment">// 碳水化合物提供的熱量</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">handleSuccess</span>(res, data, <span class="string">&quot;計算鮮食可攝取量成功&quot;</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router;</span><br></pre></td></tr></table></figure>
+</details>
+## 總結
+
+<p>終於把這個計算鸚鵡每日應攝取量的 API 完成了！雖然這個功能看起來很簡單，但實際實現起來還真不是一件容易的事情。<br>一開始，我對如何計算鸚鵡的每日所需營養完全沒有概念。為了找到最合適的計算方法，我查了不少資料，也試了好幾種不同的公式。過程中難免遇到一些挫折，但我知道，只要持續不斷地嘗試，就有機會找到最佳解決方案。<br>最後，我選擇了一個包含 K 值的公式。這個 K 值是最近才被研究出來的，它考慮了鸚鵡的特殊生理特性。能夠將最新的研究成果應用到自己的專案中，我還挺自豪的。<br>有了計算公式，接下來的任務就是把它轉化為 API。這一部分相對來說比較常規，畢竟之前的文章中我們已經學過如何定義路由，如何進行參數驗證，如何使用 Swagger 等等。不過，透過這個實際的案例，我對這些知識有了更深入的理解和運用。<br>現在，這個 API 已經可以正常運作了。它可以根據鸚鵡的體重和活動量，計算出每日所需的熱量和各種營養素，並根據選擇的食物，計算出適合的攝取量。雖然它可能還有一些地方可以優化，但作為一個初始版本，我已經很滿意了。</p>
+<p>明天我們把專案部署到 Render 上吧，就不只是在本機跑，而是可以讓別人直接使用你的 API 囉！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Express/" rel="tag"># Express</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/28/2024it/d19/" rel="prev" title="[ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY19 ] 後端專案實戰：鮮食 API 的資料模型、路由與測試
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/30/2024it/d21/" rel="next" title="[ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略">
+      [ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%88%E7%AE%97%E9%B8%9A%E9%B5%A1%E6%AF%8F%E6%97%A5%E6%89%80%E9%9C%80%E7%86%B1%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">計算鸚鵡每日所需熱量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%88%E7%AE%97%E9%B8%9A%E9%B5%A1%E6%AF%8F%E6%97%A5%E6%89%80%E9%9C%80%E7%87%9F%E9%A4%8A%E7%B4%A0"><span class="nav-number">3.</span> <span class="nav-text">計算鸚鵡每日所需營養素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%88%E7%AE%97%E9%AE%AE%E9%A3%9F%E5%8F%AF%E6%8F%90%E4%BE%9B%E7%9A%84%E7%87%9F%E9%A4%8A%E7%B4%A0%E5%92%8C%E7%86%B1%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">計算鮮食可提供的營養素和熱量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E5%A7%8B%E5%AF%AB%E7%A8%8B%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">開始寫程式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%AE%9A%E7%BE%A9%E8%B7%AF%E7%94%B1%E5%92%8C-Swagger-%E8%A8%BB%E8%A7%A3"><span class="nav-number">5.1.</span> <span class="nav-text">第一步：定義路由和 Swagger 註解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%8F%96%E5%BE%97%E8%AB%8B%E6%B1%82%E5%8F%83%E6%95%B8%E4%B8%A6%E9%80%B2%E8%A1%8C%E9%A9%97%E8%AD%89"><span class="nav-number">5.2.</span> <span class="nav-text">第二步：取得請求參數並進行驗證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E8%A8%88%E7%AE%97-BMR-%E5%92%8C%E6%AF%8F%E6%97%A5%E6%89%80%E9%9C%80%E7%86%B1%E9%87%8F"><span class="nav-number">5.3.</span> <span class="nav-text">第三步：計算 BMR 和每日所需熱量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E8%A8%88%E7%AE%97%E6%AF%8F%E6%97%A5%E6%89%80%E9%9C%80%E7%87%9F%E9%A4%8A%E7%B4%A0"><span class="nav-number">5.4.</span> <span class="nav-text">第四步：計算每日所需營養素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%A8%88%E7%AE%97%E9%AE%AE%E9%A3%9F%E5%8F%AF%E6%8F%90%E4%BE%9B%E7%9A%84%E7%87%9F%E9%A4%8A%E7%B4%A0%E5%92%8C%E7%86%B1%E9%87%8F"><span class="nav-number">5.5.</span> <span class="nav-text">第五步：計算鮮食可提供的營養素和熱量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E8%BF%94%E5%9B%9E%E8%A8%88%E7%AE%97%E7%B5%90%E6%9E%9C"><span class="nav-number">5.6.</span> <span class="nav-text">第六步：返回計算結果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Postman-%E6%B8%AC%E8%A9%A6"><span class="nav-number">6.</span> <span class="nav-text">Postman 測試</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="nav-number">7.</span> <span class="nav-text">完整程式碼</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/29/2024it/d20/";
+    this.page.identifier = "2024/09/29/2024it/d20/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY20 ] 後端專案實戰：鸚鵡飲食計算 API 開發全紀錄";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

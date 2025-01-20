@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈囉大家早安！昨天我們成功建立了 Nuxt3 的開發環境，今天我們要來認識幾個超級實用的開發工具和套件。這些工具就像是我們的小幫手，不只能讓我們的程式碼變得更漂亮、更好讀，還能幫我們省下不少除錯的時間呢！準備好了嗎？讓我們一起打開 VSCode，開始今天的學習之旅吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY23 ] Nuxt3 開發必備：套件安裝懶人包">
+<meta property="og:url" content="https://blog.2fishs.com/2024/10/02/2024it/d23/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哈囉大家早安！昨天我們成功建立了 Nuxt3 的開發環境，今天我們要來認識幾個超級實用的開發工具和套件。這些工具就像是我們的小幫手，不只能讓我們的程式碼變得更漂亮、更好讀，還能幫我們省下不少除錯的時間呢！準備好了嗎？讓我們一起打開 VSCode，開始今天的學習之旅吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686XJs7hiUy5m.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686Ny81Bsl8eZ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/201596869FE512HetI.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686eo4O4Nqhdz.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/201596868gtRnmUjR0.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686YpNLLEgWNt.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686s29zJ3g71T.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686lFTiYEsmxw.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686VBzVRo9xog.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/201596867G3mATDSUu.png">
+<meta property="article:published_time" content="2024-10-02T01:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.165Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Nuxt3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20241002/20159686XJs7hiUy5m.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/10/02/2024it/d23/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY23 ] Nuxt3 開發必備：套件安裝懶人包 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/10/02/2024it/d23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY23 ] Nuxt3 開發必備：套件安裝懶人包
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-02 09:33:45" itemprop="dateCreated datePublished" datetime="2024-10-02T09:33:45+08:00">2024-10-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/02/2024it/d23/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/02/2024it/d23/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哈囉大家早安！昨天我們成功建立了 Nuxt3 的開發環境，今天我們要來認識幾個超級實用的開發工具和套件。<br>這些工具就像是我們的小幫手，不只能讓我們的程式碼變得更漂亮、更好讀，還能幫我們省下不少除錯的時間呢！<br>準備好了嗎？讓我們一起打開 VSCode，開始今天的學習之旅吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="1-Prettier：程式碼的美容師"><a href="#1-Prettier：程式碼的美容師" class="headerlink" title="1. Prettier：程式碼的美容師"></a>1. Prettier：程式碼的美容師</h2><p>首先登場的是 Prettier，它就像是程式碼的美容師。想像一下，如果程式碼是一個人，Prettier 就是那個幫你梳妝打扮的造型師，讓你的程式碼變得超級漂亮！</p>
+<h3 id="Prettier-的魔力："><a href="#Prettier-的魔力：" class="headerlink" title="Prettier 的魔力："></a>Prettier 的魔力：</h3><ul>
+<li>統一團隊的程式碼風格：再也不用為了要用單引號還是雙引號吵架啦！</li>
+<li>自動處理程式碼格式：你專心寫邏輯，排版的事就交給 Prettier 啦！</li>
+<li>支援超多程式語言：不管你是寫 JavaScript、TypeScript 還是 Vue，它都罩得住！</li>
+</ul>
+<h3 id="安裝步驟："><a href="#安裝步驟：" class="headerlink" title="安裝步驟："></a>安裝步驟：</h3><ol>
+<li><p>在終端機輸入以下指令安裝 Prettier：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D prettier prettier-plugin-tailwindcss</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在專案根目錄創建 <code>.prettierrc.cjs</code> 檔案：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> .prettierrc.cjs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>.prettierrc.cjs</code> 檔案中加入以下內容：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;prettier-plugin-tailwindcss&#x27;</span>], <span class="comment">// 支援 Tailwind CSS 的類別排序</span></span><br><span class="line">  <span class="attr">printWidth</span>: <span class="number">100</span>, <span class="comment">// 設定每行最大長度為 100 字元</span></span><br><span class="line">  <span class="attr">semi</span>: <span class="literal">false</span>, <span class="comment">// 不在語句末尾加分號</span></span><br><span class="line">  <span class="attr">singleQuote</span>: <span class="literal">true</span>, <span class="comment">// 使用單引號而不是雙引號</span></span><br><span class="line">  <span class="attr">trailingComma</span>: <span class="string">&#x27;none&#x27;</span> <span class="comment">// 不在物件或陣列的最後一個元素後加逗號</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686XJs7hiUy5m.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686XJs7hiUy5m.png"></p>
+</li>
+</ol>
+<blockquote>
+<p>小提醒：安裝完 Prettier 後，你的程式碼就會自動變得超級整齊喔！就像是幫你的房間請了一個專業整理師一樣，一切都會變得井井有條。</p>
+</blockquote>
+<h2 id="2-ESLint：程式碼的糾察隊"><a href="#2-ESLint：程式碼的糾察隊" class="headerlink" title="2. ESLint：程式碼的糾察隊"></a>2. ESLint：程式碼的糾察隊</h2><p>接下來是 ESLint，它就像是程式碼的糾察隊。如果 Prettier 是美容師，那 ESLint 就是那個幫你檢查儀容的嚴格老師，確保你的程式碼不只好看，還要有內涵！</p>
+<h3 id="ESLint-的超能力："><a href="#ESLint-的超能力：" class="headerlink" title="ESLint 的超能力："></a>ESLint 的超能力：</h3><ul>
+<li>強制執行程式碼風格規則：讓團隊的程式碼風格一致，就像大家都穿制服一樣整齊！</li>
+<li>發現並修復常見的程式設計問題：它會幫你指出可能的 bug，就像是幫你檢查作業的好朋友。</li>
+<li>提高程式碼品質：讓你的程式碼不只漂亮，還很聰明！</li>
+</ul>
+<h3 id="安裝步驟：-1"><a href="#安裝步驟：-1" class="headerlink" title="安裝步驟："></a>安裝步驟：</h3><ol>
+<li><p>安裝 ESLint 和相關套件：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D eslint @nuxtjs/eslint-config eslint-config-prettier eslint-plugin-prettier</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>創建 <code>.eslintrc.js</code> 檔案：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> .eslintrc.js</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>.eslintrc.js</code> 檔案中加入以下內容：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="attr">browser</span>: <span class="literal">true</span>, <span class="comment">// 允許使用瀏覽器全域變數</span></span><br><span class="line">    <span class="attr">es2023</span>: <span class="literal">true</span> <span class="comment">// 使用 ECMAScript 2023 特性</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">extends</span>: [<span class="string">&#x27;@nuxtjs&#x27;</span>, <span class="string">&#x27;prettier&#x27;</span>], <span class="comment">// 使用 Nuxt.js 和 Prettier 推薦的規則</span></span><br><span class="line">  <span class="attr">parserOptions</span>: &#123;</span><br><span class="line">    <span class="attr">ecmaVersion</span>: <span class="number">2023</span>, <span class="comment">// 指定 ECMAScript 版本</span></span><br><span class="line">    <span class="attr">sourceType</span>: <span class="string">&#x27;module&#x27;</span> <span class="comment">// 使用 ES 模組語法</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;prettier&#x27;</span>], <span class="comment">// 使用 Prettier 插件</span></span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;no-undef&#x27;</span>: <span class="string">&#x27;off&#x27;</span>, <span class="comment">// 關閉未定義變數的警告（Nuxt 3 會自動處理）</span></span><br><span class="line">    <span class="string">&#x27;prettier/prettier&#x27;</span>: <span class="string">&#x27;error&#x27;</span> <span class="comment">// 將不符合 Prettier 規則的地方標記為錯誤</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">overrides</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">files</span>: [<span class="string">&#x27;**/*.js&#x27;</span>, <span class="string">&#x27;**/*.ts&#x27;</span>, <span class="string">&#x27;**/*.vue&#x27;</span>] <span class="comment">// 這些規則適用於所有 .js、.ts 和 .vue 文件</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>小提醒：安裝 ESLint 後，你可能會看到一些紅色的波浪線。別擔心，這些就像是 ESLint 給你的小紙條，提醒你哪裡可以改得更好喔！</p>
+</blockquote>
+<h2 id="VS-Code-設定-儲存時同步整理程式碼"><a href="#VS-Code-設定-儲存時同步整理程式碼" class="headerlink" title="VS Code 設定 &gt; 儲存時同步整理程式碼"></a>VS Code 設定 &gt; 儲存時同步整理程式碼</h2><p>為了讓 Prettier 和 ESLint 這兩個好朋友在 VS Code 中發揮最大功效，我們需要做一些設定。這就像是幫它們倆安排一個最佳的工作環境，讓它們能夠完美合作！</p>
+<ol>
+<li><p>首先，先安裝 VS Code 的 Prettier 和 ESLint 擴充套件：</p>
+<ol>
+<li>點擊左側邊欄的擴充套件圖示（看起來像四個小方塊）。</li>
+<li>在搜尋欄中輸入 “Prettier”。</li>
+<li>找到 “Prettier - Code formatter”，點擊安裝。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686Ny81Bsl8eZ.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686Ny81Bsl8eZ.png"></li>
+<li>接著在搜尋欄中輸入 “ESLint”。</li>
+<li>找到由 Microsoft 發布的 “ESLint”，點擊安裝。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/201596869FE512HetI.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/201596869FE512HetI.png"></li>
+</ol>
+</li>
+<li><p>接下來，我們要在專案根目錄創建一個 <code>.vscode</code> 資料夾，並在其中新增一個 <code>settings.json</code> 文件。這個文件會包含專案特定的 VS Code 設定。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> .vscode</span><br><span class="line"><span class="built_in">touch</span> .vscode/settings.json</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>.vscode/settings.json</code> 文件中，添加以下設定：</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;editor.formatOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.defaultFormatter&quot;</span><span class="punctuation">:</span> <span class="string">&quot;esbenp.prettier-vscode&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;prettier.requireConfig&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p> 這些設定的含義如下：</p>
+<ul>
+<li><code>&quot;editor.formatOnSave&quot;: true</code>：每次儲存文件時自動格式化程式碼。</li>
+<li><code>&quot;editor.defaultFormatter&quot;: &quot;esbenp.prettier-vscode&quot;</code>：使用 Prettier 作為默認的程式碼格式化工具。</li>
+<li><code>&quot;prettier.requireConfig&quot;: true</code>：要求必須有 Prettier 的配置文件才會執行格式化，這可以確保只在有 Prettier 配置的專案中使用 Prettier。</li>
+</ul>
+</li>
+</ol>
+<p>這樣設定後，每次你在 VS Code 中儲存文件時，它就會自動使用 Prettier 來格式化你的程式碼，並且使用 ESLint 來檢查和修復可能的問題。這可以大大提高你的開發效率，並確保程式碼風格的一致性。</p>
+<blockquote>
+<p>注意：這些設定是專案特定的，只會影響當前專案。如果你想要這些設定在所有專案中生效，你可以將它們加入到 VS Code 的全域設定中。</p>
+</blockquote>
+<blockquote>
+<p>小提醒：完成這些設定後，每次你儲存檔案時，VS Code 就會自動幫你整理程式碼。就像是有一個小精靈，在你打完程式碼後，自動幫你整理好一切！</p>
+</blockquote>
+<h2 id="3-Tailwind-CSS：CSS-的魔法師"><a href="#3-Tailwind-CSS：CSS-的魔法師" class="headerlink" title="3. Tailwind CSS：CSS 的魔法師"></a>3. Tailwind CSS：CSS 的魔法師</h2><p>再來是 Tailwind CSS，它可以說是 CSS 界的魔法師。想像一下，如果寫 CSS 是畫畫，那 Tailwind 就是給你一盒現成的顏料，讓你可以快速完成一幅美麗的畫作！</p>
+<h3 id="Tailwind-CSS-的神奇之處："><a href="#Tailwind-CSS-的神奇之處：" class="headerlink" title="Tailwind CSS 的神奇之處："></a>Tailwind CSS 的神奇之處：</h3><ul>
+<li>大幅提高開發速度：用預設的類別快速設計版面，就像是用積木堆疊一樣簡單！</li>
+<li>響應式設計變得超easy：不用寫一堆 media query，幾個類別就搞定。</li>
+<li>自動優化 CSS 大小：它會自動移除你沒用到的樣式，讓你的網站變得更輕盈。</li>
+</ul>
+<h3 id="安裝步驟：-2"><a href="#安裝步驟：-2" class="headerlink" title="安裝步驟："></a>安裝步驟：</h3><ol>
+<li><p>安裝 Tailwind CSS：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D @nuxtjs/tailwindcss</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>nuxt.config.ts</code> 中啟用 Tailwind CSS：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;@nuxtjs/tailwindcss&#x27;</span>] <span class="comment">// 啟用 Tailwind CSS 模組</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686eo4O4Nqhdz.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686eo4O4Nqhdz.png"></p>
+</li>
+<li><p>創建 <code>tailwind.config.ts</code> 檔案：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> tailwind.config.ts</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>tailwind.config.ts</code> 檔案中加入以下內容：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@type</span> &#123;<span class="type">import(&#x27;tailwindcss&#x27;).Config</span>&#125; */</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="string">&#x27;./components/**/*.&#123;vue,js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有 Vue 組件</span></span><br><span class="line">    <span class="string">&#x27;./layouts/**/*.vue&#x27;</span>, <span class="comment">// 掃描所有布局文件</span></span><br><span class="line">    <span class="string">&#x27;./pages/**/*.vue&#x27;</span>, <span class="comment">// 掃描所有頁面文件</span></span><br><span class="line">    <span class="string">&#x27;./composables/**/*.&#123;js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有可組合式函數</span></span><br><span class="line">    <span class="string">&#x27;./plugins/**/*.&#123;js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有插件</span></span><br><span class="line">    <span class="string">&#x27;./utils/**/*.&#123;js,ts&#125;&#x27;</span>, <span class="comment">// 掃描所有工具函數</span></span><br><span class="line">    <span class="string">&#x27;./&#123;App,app&#125;.&#123;js,ts,vue&#125;&#x27;</span>, <span class="comment">// 掃描主應用文件</span></span><br><span class="line">    <span class="string">&#x27;./&#123;Error,error&#125;.&#123;js,ts,vue&#125;&#x27;</span>, <span class="comment">// 掃描錯誤處理文件</span></span><br><span class="line">    <span class="string">&#x27;./app.config.&#123;js,ts&#125;&#x27;</span> <span class="comment">// 掃描應用配置文件</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">theme</span>: &#123;</span><br><span class="line">    <span class="attr">extend</span>: &#123;&#125; <span class="comment">// 在這裡可以擴展或覆蓋 Tailwind 的默認主題</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [] <span class="comment">// 可以添加 Tailwind 插件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/201596868gtRnmUjR0.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/201596868gtRnmUjR0.png"></p>
+</li>
+<li><p>完成設置後，可以打開 app.vue 測試是否成功</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 可以隱藏預設歡迎畫面，才不會找不到自己測試的文字 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;NuxtRouteAnnouncer /&gt; --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;NuxtWelcome /&gt; --&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 輸入這行做測試 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-5xl text-red-500&quot;</span>&gt;</span>測試文字<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>輸入指令執行專案</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>成功可以看到類似下面畫面，上面設定字體大小跟顏色，所以看到紅色文字就代表成功囉 ~<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686YpNLLEgWNt.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686YpNLLEgWNt.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="套件補充：Tailwind-CSS-IntelliSense"><a href="#套件補充：Tailwind-CSS-IntelliSense" class="headerlink" title="套件補充：Tailwind CSS IntelliSense"></a>套件補充：Tailwind CSS IntelliSense</h3><p>這個擴充套件可以為 Tailwind CSS 類別提供自動完成、語法高亮和 linting 功能。</p>
+<ul>
+<li>安裝這個擴充套件的步驟與前兩個相同，只需在搜尋欄中輸入 “Tailwind CSS” 即可找到。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686s29zJ3g71T.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686s29zJ3g71T.png"></li>
+<li>安裝後可以將鼠標懸浮在 tailwind css 的 class 標籤上，會看到該樣式說明：<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686lFTiYEsmxw.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686lFTiYEsmxw.png"></li>
+</ul>
+<h2 id="4-Axios：網路請求的超級英雄"><a href="#4-Axios：網路請求的超級英雄" class="headerlink" title="4. Axios：網路請求的超級英雄"></a>4. Axios：網路請求的超級英雄</h2><p>最後登場的是 Axios，它是處理 HTTP 請求的超級英雄，讓我們能輕鬆地與後端 API 溝通。</p>
+<h3 id="Axios-的超能力："><a href="#Axios-的超能力：" class="headerlink" title="Axios 的超能力："></a>Axios 的超能力：</h3><ul>
+<li>自動轉換 JSON 數據：不用自己解析 JSON 了，Axios 幫你搞定！</li>
+<li>幫你防禦壞人：它有內建的防護機制，讓你的 API 請求更安全。</li>
+<li>可以攔截請求和響應：就像是幫你的請求加上特效，讓你可以在送出前後做一些特別的處理。</li>
+</ul>
+<h3 id="安裝步驟：-3"><a href="#安裝步驟：-3" class="headerlink" title="安裝步驟："></a>安裝步驟：</h3><ol>
+<li><p>安裝 Axios：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>app.vue</code> 頁面中使用 Axios：</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 建立 script 區塊 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 創建一個自定義的 Axios 實例</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> api = axios.<span class="title function_">create</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">baseURL</span>: <span class="string">&#x27;https://two024it-test-app.onrender.com&#x27;</span> <span class="comment">// 設置基礎 URL，就不用一直重複修改</span></span></span><br><span class="line"><span class="language-javascript">&#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 測試取資料</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchData</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">try</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> response = <span class="keyword">await</span> api.<span class="title function_">get</span>(<span class="string">&#x27;/freshfoods/&#x27;</span>) <span class="comment">// 獲取食物列表</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(response.<span class="property">data</span>) <span class="comment">// 處理響應數據</span></span></span><br><span class="line"><span class="language-javascript">  &#125; <span class="keyword">catch</span> (error) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;發生錯誤:&#x27;</span>, error) <span class="comment">// 錯誤處理</span></span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">fetchData</span>()</span></span><br><span class="line"><span class="language-javascript">&#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>API 資料可以到 Postman 查看自己前幾天測試的 URL，直接取用。<br>  <img src="https://ithelp.ithome.com.tw/upload/images/20241002/20159686VBzVRo9xog.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/20159686VBzVRo9xog.png"></li>
+</ul>
+</li>
+<li><p>可以打開 F12 查看，若測試成功會看到類似以下畫面：<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241002/201596867G3mATDSUu.png" alt="https://ithelp.ithome.com.tw/upload/images/20241002/201596867G3mATDSUu.png"></p>
+<blockquote>
+<p>測試就先到這邊，之後會再詳細說明如何將資料顯示到畫面上 ~</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>哇！今天我們學了好多東西呢！我們認識了 Prettier 這個程式碼美容師、ESLint 這個嚴格的糾察隊、Tailwind CSS 這個 CSS 魔法師，還有 Axios 這個網路世界的超級英雄。這些工具就像是我們的得力助手，幫我們打造出更好的程式碼和更棒的網站。<br>別擔心如果現在還不太會用這些工具，就像學習任何新技能一樣，需要時間和練習。重要的是，我們已經認識了這些好朋友，接下來就是要多多和它們相處啦！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！讓我們一起在 Nuxt3 的世界中探險吧！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Nuxt3/" rel="tag"># Nuxt3</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/01/2024it/d22/" rel="prev" title="[ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/03/2024it/d24/" rel="next" title="[ 2024 IT 鐵人賽 DAY24 ] Nuxt3 魔法教室：Vue 語法速成班">
+      [ 2024 IT 鐵人賽 DAY24 ] Nuxt3 魔法教室：Vue 語法速成班 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Prettier%EF%BC%9A%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%9A%84%E7%BE%8E%E5%AE%B9%E5%B8%AB"><span class="nav-number">2.</span> <span class="nav-text">1. Prettier：程式碼的美容師</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Prettier-%E7%9A%84%E9%AD%94%E5%8A%9B%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">Prettier 的魔力：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">安裝步驟：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-ESLint%EF%BC%9A%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%9A%84%E7%B3%BE%E5%AF%9F%E9%9A%8A"><span class="nav-number">3.</span> <span class="nav-text">2. ESLint：程式碼的糾察隊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ESLint-%E7%9A%84%E8%B6%85%E8%83%BD%E5%8A%9B%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">ESLint 的超能力：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F%EF%BC%9A-1"><span class="nav-number">3.2.</span> <span class="nav-text">安裝步驟：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VS-Code-%E8%A8%AD%E5%AE%9A-%E5%84%B2%E5%AD%98%E6%99%82%E5%90%8C%E6%AD%A5%E6%95%B4%E7%90%86%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="nav-number">4.</span> <span class="nav-text">VS Code 設定 &gt; 儲存時同步整理程式碼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Tailwind-CSS%EF%BC%9ACSS-%E7%9A%84%E9%AD%94%E6%B3%95%E5%B8%AB"><span class="nav-number">5.</span> <span class="nav-text">3. Tailwind CSS：CSS 的魔法師</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tailwind-CSS-%E7%9A%84%E7%A5%9E%E5%A5%87%E4%B9%8B%E8%99%95%EF%BC%9A"><span class="nav-number">5.1.</span> <span class="nav-text">Tailwind CSS 的神奇之處：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F%EF%BC%9A-2"><span class="nav-number">5.2.</span> <span class="nav-text">安裝步驟：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E4%BB%B6%E8%A3%9C%E5%85%85%EF%BC%9ATailwind-CSS-IntelliSense"><span class="nav-number">5.3.</span> <span class="nav-text">套件補充：Tailwind CSS IntelliSense</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Axios%EF%BC%9A%E7%B6%B2%E8%B7%AF%E8%AB%8B%E6%B1%82%E7%9A%84%E8%B6%85%E7%B4%9A%E8%8B%B1%E9%9B%84"><span class="nav-number">6.</span> <span class="nav-text">4. Axios：網路請求的超級英雄</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Axios-%E7%9A%84%E8%B6%85%E8%83%BD%E5%8A%9B%EF%BC%9A"><span class="nav-number">6.1.</span> <span class="nav-text">Axios 的超能力：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F%EF%BC%9A-3"><span class="nav-number">6.2.</span> <span class="nav-text">安裝步驟：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">7.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/10/02/2024it/d23/";
+    this.page.identifier = "2024/10/02/2024it/d23/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY23 ] Nuxt3 開發必備：套件安裝懶人包";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="嗨！今天要跟大家分享的是如何在 Nuxt 3 專案中運用 Pinia 這個強大的狀態管理工具，並且實作一個客製化的 Loading 元件。無論你是剛接觸 Vue 生態系的新手，還是想要更新技能的資深開發者，這篇文章都會帶給你滿滿的收穫！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY26 ] Nuxt 3 進階技巧：Pinia、API 整合、Loading 元件">
+<meta property="og:url" content="https://blog.2fishs.com/2024/10/05/2024it/d26/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="嗨！今天要跟大家分享的是如何在 Nuxt 3 專案中運用 Pinia 這個強大的狀態管理工具，並且實作一個客製化的 Loading 元件。無論你是剛接觸 Vue 生態系的新手，還是想要更新技能的資深開發者，這篇文章都會帶給你滿滿的收穫！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241005/201596865lSlyP9sN0.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241005/20159686RZ02NBZAdZ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241005/20159686DaeucTPtFv.png">
+<meta property="article:published_time" content="2024-10-05T01:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.166Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Nuxt3">
+<meta property="article:tag" content="Vue3">
+<meta property="article:tag" content="Pinia">
+<meta property="article:tag" content="Component">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20241005/201596865lSlyP9sN0.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/10/05/2024it/d26/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY26 ] Nuxt 3 進階技巧：Pinia、API 整合、Loading 元件 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/10/05/2024it/d26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY26 ] Nuxt 3 進階技巧：Pinia、API 整合、Loading 元件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-05 09:33:45" itemprop="dateCreated datePublished" datetime="2024-10-05T09:33:45+08:00">2024-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/05/2024it/d26/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/05/2024it/d26/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>嗨！今天要跟大家分享的是如何在 Nuxt 3 專案中運用 Pinia 這個強大的狀態管理工具，並且實作一個客製化的 Loading 元件。無論你是剛接觸 Vue 生態系的新手，還是想要更新技能的資深開發者，這篇文章都會帶給你滿滿的收穫！</p>
+<span id="more"></span>
+
+<p>我們會從最基礎的 Pinia 介紹開始，一步步帶你實作到最後的成品。準備好你的開發環境，讓我們一起來深入探索 Nuxt 3 和 Pinia 的奧妙吧！</p>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="Pinia-簡介"><a href="#Pinia-簡介" class="headerlink" title="Pinia 簡介"></a>Pinia 簡介</h2><p>Pinia 是 Vue 生態系統中的新一代狀態管理庫。它提供了一種簡單、直觀的方式來管理應用程序的狀態。Pinia 的主要特點包括：</p>
+<ol>
+<li>輕量級：比 Vuex 更小、更快。</li>
+<li>類型安全：完全支援 TypeScript。</li>
+<li>開發者工具支援：可以輕鬆追蹤狀態變化。</li>
+<li>模塊化設計：無需創建複雜的模塊樹。</li>
+<li>無需額外的樣板代碼：使用簡單的 API 設計。<br>現在，讓我們一起來看看如何在 Nuxt 3 專案中使用 Pinia 吧！</li>
+</ol>
+<h2 id="在-Nuxt-3-中使用-Pinia-的步驟"><a href="#在-Nuxt-3-中使用-Pinia-的步驟" class="headerlink" title="在 Nuxt 3 中使用 Pinia 的步驟"></a>在 Nuxt 3 中使用 Pinia 的步驟</h2><h3 id="1-安裝-Pinia"><a href="#1-安裝-Pinia" class="headerlink" title="1. 安裝 Pinia"></a>1. 安裝 Pinia</h3><p>首先，我們要在專案目錄中執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pinia @pinia/nuxt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 小提醒：如果你跟我一樣遇到安裝問題，別擔心！試試看到 <code>package.json</code> 檔案中，將 <code>&quot;vue&quot;: &quot;latest&quot;</code> 改成 <code>&quot;vue&quot;: &quot;^3.4.0&quot;</code>，這個小撇步通常能解決問題喔！</p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;vue&quot;</span>: <span class="string">&quot;^3.4.0&quot;</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置-Pinia"><a href="#2-配置-Pinia" class="headerlink" title="2. 配置 Pinia"></a>2. 配置 Pinia</h3><p>接下來，我們要在 <code>nuxt.config.ts</code> 中把 Pinia 加進去：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;@pinia/nuxt&#x27;</span>],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>這個設定就像是在告訴 Nuxt：「欸，我要用 Pinia 喔！」這樣 Nuxt 就會幫我們把 Pinia 整合到專案中，讓我們可以盡情使用它的所有功能。</p>
+<h3 id="3-創建-Store"><a href="#3-創建-Store" class="headerlink" title="3. 創建 Store"></a>3. 創建 Store</h3><p>現在，讓我們來創建一個 store 吧！我們要在 <code>stores</code> 目錄下創建一個 <code>api.ts</code> 檔案。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/api.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 從 Pinia 中匯入 defineStore 函數,這是我們創建 store 的關鍵工具</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匯入 axios,這是一個用來發送 HTTP 請求的工具</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定義我們 API 的基礎網址</span></span><br><span class="line"><span class="keyword">const</span> baseURL = <span class="string">&#x27;&lt;https://two024it-test-app.onrender.com&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 創建一個 axios 實例,設定好基礎網址</span></span><br><span class="line"><span class="keyword">const</span> api = axios.<span class="title function_">create</span>(&#123;</span><br><span class="line">  baseURL</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定義一個名為 &#x27;api-store&#x27; 的 store</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useApiStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;api-store&#x27;</span>, &#123;</span><br><span class="line">  <span class="comment">// 在這裡定義可以執行的動作</span></span><br><span class="line">  <span class="attr">actions</span>: &#123;      </span><br><span class="line">    <span class="comment">// 這是一個用來獲取食物列表的函數</span></span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">fetchFoodList</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// 發送 GET 請求到 &#x27;/freshfoods/&#x27; 路徑</span></span><br><span class="line">      <span class="keyword">const</span> response = <span class="keyword">await</span> api.<span class="title function_">get</span>(<span class="string">&#x27;/freshfoods/&#x27;</span>)</span><br><span class="line">      <span class="keyword">return</span> response <span class="comment">// 返回收到的回應</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 你可以在這裡添加更多的 API 操作</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>讓我們來解釋一下這段程式碼：</p>
+<ol>
+<li><strong>defineStore</strong>: 這是 Pinia 提供的函數，用來創建一個 store。你可以把 store 想像成一個專門儲存和管理某些特定資料的地方。</li>
+<li><strong>axios</strong>: 這是一個非常受歡迎的 JavaScript 庫，用來發送 HTTP 請求。簡單來說，它就是幫我們跟伺服器溝通的工具。</li>
+<li><strong>baseURL</strong>: 這是我們 API 的基本網址。設定好這個之後,我們後續發送請求時就不需要每次都寫完整的網址了。</li>
+<li><strong>actions</strong>: 在 Pinia 中，actions 是用來定義可以改變 store 狀態的方法。這裡我們定義了一個 <code>fetchFoodList</code> 方法，用來從伺服器獲取食物列表。</li>
+<li><strong>async&#x2F;await</strong>: 這兩個關鍵字用於處理非同步操作。你可以把它想像成：「這個操作可能需要一點時間，但不用擔心，我會等它完成的！」</li>
+</ol>
+<h3 id="4-在元件中使用"><a href="#4-在元件中使用" class="headerlink" title="4. 在元件中使用"></a>4. 在元件中使用</h3><p>最後，讓我們來看看如何在元件中使用我們剛剛創建的 store。我們將在 <code>pages/calculator.vue</code> 中使用它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">// 匯入在 stores/api.ts 中定義的 API store</span><br><span class="line">import &#123; useApiStore &#125; from &#x27;~/stores/api&#x27;</span><br><span class="line"></span><br><span class="line">// 初始化 API store，使其在此元件中可用</span><br><span class="line">const apiStore = useApiStore()</span><br><span class="line"></span><br><span class="line">// 創建一個響應式變數來儲存食物列表</span><br><span class="line">// ref 函數使得 Vue 可以追蹤這個變數的變化</span><br><span class="line">const foodList = ref([])</span><br><span class="line"></span><br><span class="line">// 定義一個非同步函數來獲取食物列表</span><br><span class="line">async function fetchFoods() &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    // 調用 store 中的方法來獲取食物列表</span><br><span class="line">    const res = await apiStore.fetchFoodList()</span><br><span class="line">    </span><br><span class="line">    // 從響應中提取數據</span><br><span class="line">    const result = res.data</span><br><span class="line">    </span><br><span class="line">    // 在控制台輸出結果以便調試</span><br><span class="line">    console.log(result)</span><br><span class="line"></span><br><span class="line">    // 檢查是否成功獲取數據</span><br><span class="line">    if (result &amp;&amp; result.status === &#x27;success&#x27;) &#123;</span><br><span class="line">      // 將獲取的數據存入響應式變數</span><br><span class="line">      foodList.value = result.data</span><br><span class="line">      </span><br><span class="line">      // 再次在控制台輸出，確認數據已正確存儲</span><br><span class="line">      console.log(foodList.value)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; catch (e) &#123;</span><br><span class="line">    // 如果發生錯誤，在控制台輸出錯誤信息</span><br><span class="line">    console.log(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 當元件被掛載到頁面上時，自動調用 fetchFoods 函數</span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  fetchFoods()</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;食品列表&lt;/h1&gt;</span><br><span class="line">    &lt;pre&gt;</span><br><span class="line">      &lt;!-- 使用雙大括號語法將 foodList 的內容顯示在頁面上 --&gt;</span><br><span class="line">      &#123;&#123; foodList &#125;&#125;</span><br><span class="line">    &lt;/pre&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>讓我們來解釋一下這個元件：</p>
+<ol>
+<li><strong>useApiStore</strong>: 這是我們用來獲取 store 實例的函數。通過調用它,我們就可以使用 store 中定義的所有方法和資料。</li>
+<li><strong>ref</strong>: 這是 Vue 3 中用來創建響應式變數的函數。當 <code>foodList</code> 的值改變時,Vue 會自動更新相關的畫面。</li>
+<li><strong>async function</strong>: 這表示 <code>fetchFoods</code> 是一個非同步函數。它可能需要一些時間來完成,但不會阻塞其他程式碼的執行。</li>
+<li><strong>try&#x2F;catch</strong>: 這是用來處理錯誤的結構。如果在 <code>try</code> 區塊中的程式碼出錯,就會執行 <code>catch</code> 區塊中的程式碼。</li>
+<li><strong>onMounted</strong>: 這是一個生命週期鉤子,它會在元件被掛載到頁面上後立即執行。我們用它來確保一旦頁面準備好,就立即獲取食物列表。</li>
+<li><strong>template</strong>: 這部分定義了元件的 HTML 結構。<code>&#123;&#123; foodList &#125;&#125;</code> 會將 <code>foodList</code> 的內容直接顯示在頁面上。<br>通過這種方式,我們實現了一個簡單但功能完整的食品列表頁面。當頁面載入時,它會自動從伺服器獲取食品資料,並將其顯示出來。如果獲取過程中出現任何錯誤,我們也會在控制台中看到相關信息,方便進行除錯。</li>
+</ol>
+<h3 id="目前頁面截圖"><a href="#目前頁面截圖" class="headerlink" title="目前頁面截圖"></a>目前頁面截圖</h3><p>畫面上印出的就是我們取回來的食物資料<br><img src="https://ithelp.ithome.com.tw/upload/images/20241005/201596865lSlyP9sN0.png" alt="https://ithelp.ithome.com.tw/upload/images/20241005/201596865lSlyP9sN0.png"></p>
+<h2 id="在-Nuxt-3-中添加自定義-Loading-元件的步驟指南"><a href="#在-Nuxt-3-中添加自定義-Loading-元件的步驟指南" class="headerlink" title="在 Nuxt 3 中添加自定義 Loading 元件的步驟指南"></a>在 Nuxt 3 中添加自定義 Loading 元件的步驟指南</h2><h3 id="1-準備-Loading-動畫"><a href="#1-準備-Loading-動畫" class="headerlink" title="1. 準備 Loading 動畫"></a>1. 準備 Loading 動畫</h3><ol>
+<li><p>前往 <a target="_blank" rel="noopener" href="https://lottiefiles.com/search?category=animations&utm_source=search&utm_medium=platform">Lottie 網站</a> 尋找喜歡的 GIF 動畫。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241005/20159686RZ02NBZAdZ.png" alt="https://ithelp.ithome.com.tw/upload/images/20241005/20159686RZ02NBZAdZ.png"></p>
+</li>
+<li><p>下載選中的 GIF 檔案。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241005/20159686DaeucTPtFv.png" alt="https://ithelp.ithome.com.tw/upload/images/20241005/20159686DaeucTPtFv.png"></p>
+<blockquote>
+<p>這是流程示範，可以選自己喜歡的下載，我也不是下載這個動畫 XD<br>注意免費的有下載數量限制！</p>
+</blockquote>
+</li>
+<li><p>將下載的 GIF 檔案放入 <code>assets/images/</code> 資料夾 (我的 GIF 檔案命名為 <code>birdGif.gif</code> )</p>
+</li>
+</ol>
+<h3 id="2-設置事件總線-stores-eventBus-ts"><a href="#2-設置事件總線-stores-eventBus-ts" class="headerlink" title="2. 設置事件總線 (stores&#x2F;eventBus.ts)"></a>2. 設置事件總線 (stores&#x2F;eventBus.ts)</h3><p>創建 <code>stores/eventBus.ts</code> 檔案：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/eventBus.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 創建一個響應式變數來控制 Loading 狀態</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> isLoading = <span class="title function_">ref</span>(<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 顯示 Loading 的函數</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">showLoading</span>(<span class="params"></span>) &#123;</span><br><span class="line">  isLoading.<span class="property">value</span> = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 隱藏 Loading 的函數</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">hideLoading</span>(<span class="params"></span>) &#123;</span><br><span class="line">  isLoading.<span class="property">value</span> = <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>詳細解釋：</p>
+<ul>
+<li><code>export const isLoading = ref(false)</code>:<ul>
+<li>這裡使用 Vue 3 的 <code>ref</code> 函數創建了一個響應式變數。</li>
+<li>初始值設為 <code>false</code>，表示一開始不顯示 loading。</li>
+<li>使用 <code>export</code> 使得這個變數可以在其他文件中被引入和使用。</li>
+</ul>
+</li>
+<li><code>export function showLoading()</code> 和 <code>export function hideLoading()</code>:<ul>
+<li>這兩個函數用於控制 <code>isLoading</code> 的值。</li>
+<li><code>showLoading()</code> 將 <code>isLoading</code> 設為 <code>true</code>，表示開始載入。</li>
+<li><code>hideLoading()</code> 將 <code>isLoading</code> 設為 <code>false</code>，表示載入結束。</li>
+<li>這種設計讓我們可以在應用的任何地方輕鬆控制 loading 狀態。<blockquote>
+<p>補充說明：事件總線（Event Bus）是一種常見的設計模式，用於在不同元件間進行通訊。在這裡，我們用它來管理全局的 Loading 狀態。這種方法特別適合處理跨元件的狀態，比如 Loading 狀態這種需要在整個應用中共享的資訊。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-創建-Loading-元件-components-LoadingTool-vue"><a href="#3-創建-Loading-元件-components-LoadingTool-vue" class="headerlink" title="3. 創建 Loading 元件 (components&#x2F;LoadingTool.vue)"></a>3. 創建 Loading 元件 (components&#x2F;LoadingTool.vue)</h3><p>創建 <code>components/LoadingTool.vue</code> 檔案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; isLoading &#125; from &#x27;~/stores/eventBus&#x27;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;div v-if=&quot;isLoading&quot; class=&quot;spinner-container&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;&quot;&gt;</span><br><span class="line">        &lt;img src=&quot;~/assets/images/birdGif.gif&quot; alt=&quot;birdGif&quot; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.spinner-container &#123;</span><br><span class="line">  @apply bg-bg bg-opacity-70;</span><br><span class="line">  position: fixed;</span><br><span class="line">  inset: 0;</span><br><span class="line">  z-index: 1300;</span><br><span class="line">  display: flex;</span><br><span class="line">  justify-content: center;</span><br><span class="line">  align-items: center;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>詳細解釋：</p>
+<ul>
+<li><code>&lt;script setup lang=&quot;ts&quot;&gt;</code>:<ul>
+<li>這是 Vue 3 的組合式 API 寫法，<code>setup</code> 表示這個腳本區塊會在組件創建時自動執行。</li>
+<li><code>lang=&quot;ts&quot;</code> 表示使用 TypeScript。</li>
+</ul>
+</li>
+<li><code>import &#123; isLoading &#125; from &#39;~/stores/eventBus&#39;</code>:<ul>
+<li>從事件總線中引入 <code>isLoading</code> 變數，使得這個組件可以根據全局狀態來顯示或隱藏。</li>
+</ul>
+</li>
+<li><code>&lt;template&gt;</code> 部分：<ul>
+<li><code>v-if=&quot;isLoading&quot;</code>: 這是一個 Vue 指令，當 <code>isLoading</code> 為 true 時，才會顯示這個 div。</li>
+<li><code>&lt;img src=&quot;~/assets/images/birdGif.gif&quot; alt=&quot;birdGif&quot; /&gt;</code>: 顯示 loading 動畫。</li>
+</ul>
+</li>
+<li><code>&lt;style scoped&gt;</code>:<ul>
+<li><code>scoped</code> 表示這些樣式只應用於這個組件。</li>
+<li><code>.spinner-container</code> 的樣式設置：<ul>
+<li><code>@apply bg-bg bg-opacity-70;</code>: 這是 Tailwind CSS 的語法，設置背景和透明度。</li>
+<li><code>position: fixed; inset: 0;</code>: 使 loading 覆蓋整個螢幕。</li>
+<li><code>z-index: 1300;</code>: 確保 loading 顯示在其他元素之上。</li>
+<li><code>display: flex; justify-content: center; align-items: center;</code>: 使 loading 動畫居中顯示。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>補充說明：Vue 3 的組合式 API（Composition API）是一種新的程式碼組織方式，它讓我們能更靈活地組織和重用程式碼。<code>&lt;script setup&gt;</code> 是其中一個語法糖，它簡化了組合式 API 的使用方式。使用 <code>&lt;script setup&gt;</code> 讓我們的程式碼更簡潔，同時保持了強大的功能性。</p>
+</blockquote>
+<h3 id="4-在主應用元件中使用-Loading-元件-app-vue"><a href="#4-在主應用元件中使用-Loading-元件-app-vue" class="headerlink" title="4. 在主應用元件中使用 Loading 元件 (app.vue)"></a>4. 在主應用元件中使用 Loading 元件 (app.vue)</h3><p>修改 <code>app.vue</code> 檔案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;relative flex min-h-screen w-full flex-col&quot;&gt;</span><br><span class="line">    &lt;!-- navbar --&gt;</span><br><span class="line">    &lt;header class=&quot;z-20&quot;&gt;</span><br><span class="line">      &lt;Header /&gt;</span><br><span class="line">    &lt;/header&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- pages --&gt;</span><br><span class="line">    &lt;main class=&quot;page-wrapper&quot;&gt;</span><br><span class="line">      &lt;NuxtPage /&gt;</span><br><span class="line">    &lt;/main&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 將做好的 Loading 元件放這 --&gt;</span><br><span class="line">    &lt;LoadingTool /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>詳細解釋：</p>
+<ul>
+<li>這是 Nuxt 3 的主應用組件，它包裝了整個應用。</li>
+<li><code>&lt;Header /&gt;</code>: 這是導航欄組件，放在頁面頂部。</li>
+<li><code>&lt;NuxtPage /&gt;</code>: 這是 Nuxt 3 的特殊組件，用於顯示當前路由對應的頁面內容。</li>
+<li><code>&lt;LoadingTool /&gt;</code>: 這裡引入了我們剛才創建的 Loading 組件。<ul>
+<li>將它放在這裡意味著 Loading 效果可以覆蓋整個應用，在任何頁面都能顯示。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-在頁面中使用-Loading-效果-pages-calculator-vue"><a href="#5-在頁面中使用-Loading-效果-pages-calculator-vue" class="headerlink" title="5. 在頁面中使用 Loading 效果 (pages&#x2F;calculator.vue)"></a>5. 在頁面中使用 Loading 效果 (pages&#x2F;calculator.vue)</h3><p>修改 <code>pages/calculator.vue</code> 檔案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; useApiStore &#125; from &#x27;~/stores/api&#x27;</span><br><span class="line">import &#123; showLoading, hideLoading &#125; from &#x27;~/stores/eventBus&#x27; // 引入函數</span><br><span class="line"></span><br><span class="line">const apiStore = useApiStore()</span><br><span class="line">const foodList = ref([])</span><br><span class="line"></span><br><span class="line">async function fetchFoods() &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    showLoading() // 顯示 Loading</span><br><span class="line">    const res = await apiStore.fetchFoodList()</span><br><span class="line">    const result = res.data</span><br><span class="line"></span><br><span class="line">    console.log(result)</span><br><span class="line"></span><br><span class="line">    if (result &amp;&amp; result.status === &#x27;success&#x27;) &#123;</span><br><span class="line">      foodList.value = result.data</span><br><span class="line">      console.log(foodList.value)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; catch (e) &#123;</span><br><span class="line">    console.log(e)</span><br><span class="line">  &#125; finally &#123;</span><br><span class="line">    hideLoading() // 隱藏 Loading</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  fetchFoods()</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;食品列表&lt;/h1&gt;</span><br><span class="line">    &lt;pre&gt;</span><br><span class="line">      &#123;&#123; foodList &#125;&#125;</span><br><span class="line">    &lt;/pre&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>詳細解釋：</p>
+<ul>
+<li>引入 <code>showLoading</code> 和 <code>hideLoading</code>: 用於控制 loading 狀態的函數。</li>
+<li><code>async function fetchFoods()</code>:<ul>
+<li>這是一個非同步函數，用於獲取食品列表數據。</li>
+<li><code>showLoading()</code>: 在開始獲取數據前顯示 loading。</li>
+<li><code>await apiStore.fetchFoodList()</code>: 調用 API 獲取數據。</li>
+<li>如果成功獲取數據，將其存儲在 <code>foodList</code> 中。</li>
+<li><code>hideLoading()</code>: 在 <code>finally</code> 區塊中調用，確保無論成功與否都會隱藏 loading。<blockquote>
+<p>補充說明：非同步函數（Async Function）和 <code>try-catch-finally</code> 結構是處理非同步操作的重要工具。非同步函數允許我們以同步的寫法處理非同步操作，大大提高了程式碼的可讀性。而 <code>try-catch-finally</code> 結構則幫助我們優雅地處理可能發生的錯誤，確保無論操作成功與否，都能執行必要的清理工作（在這裡是隱藏 Loading）。<br>這種設計允許我們在數據加載過程中顯示 loading 效果，提升用戶體驗。同時，由於 loading 狀態是全局管理的，我們可以在應用的任何部分輕鬆地控制它的顯示和隱藏。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>哇！恭喜你完成了這趟 Nuxt 3 和 Pinia 的學習之旅！我們不僅學會了如何使用 Pinia 進行狀態管理，還成功實作了一個超酷的自定義 Loading 元件。這些技能絕對會讓你的前端開發功力大幅提升！<br>記住，程式開發就像是在玩樂高積木，我們今天學到的每個概念都是一塊重要的積木。Pinia 是管理狀態的積木，自定義 Loading 元件則是提升使用者體驗的積木。隨著你不斷學習和實踐，你會發現自己能夠搭建出越來越複雜、越來越酷炫的應用程式。<br>最後，別忘了實際動手做做看！理論學習很重要，但真正的進步來自於實踐。嘗試在自己的專案中運用這些技巧，你會發現更多有趣的應用方式。<br>繼續保持學習的熱情，相信不久的將來，你一定會成為一位出色的前端工程師！加油！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！讓我們一起在 Nuxt3 的世界中探險吧！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Nuxt3/" rel="tag"># Nuxt3</a>
+              <a href="/tags/Vue3/" rel="tag"># Vue3</a>
+              <a href="/tags/Pinia/" rel="tag"># Pinia</a>
+              <a href="/tags/Component/" rel="tag"># Component</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/04/2024it/d25/" rel="prev" title="[ 2024 IT 鐵人賽 DAY25 ] Nuxt 3 開發之旅：顏色、圖示、導航欄到動畫效果">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY25 ] Nuxt 3 開發之旅：顏色、圖示、導航欄到動畫效果
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/06/2024it/d27/" rel="next" title="[ 2024 IT 鐵人賽 DAY27 ] Nuxt 3 專案實戰：打造互動式鮮食計算機">
+      [ 2024 IT 鐵人賽 DAY27 ] Nuxt 3 專案實戰：打造互動式鮮食計算機 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pinia-%E7%B0%A1%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">Pinia 簡介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Nuxt-3-%E4%B8%AD%E4%BD%BF%E7%94%A8-Pinia-%E7%9A%84%E6%AD%A5%E9%A9%9F"><span class="nav-number">3.</span> <span class="nav-text">在 Nuxt 3 中使用 Pinia 的步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%9D-Pinia"><span class="nav-number">3.1.</span> <span class="nav-text">1. 安裝 Pinia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE-Pinia"><span class="nav-number">3.2.</span> <span class="nav-text">2. 配置 Pinia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%89%B5%E5%BB%BA-Store"><span class="nav-number">3.3.</span> <span class="nav-text">3. 創建 Store</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9C%A8%E5%85%83%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">3.4.</span> <span class="nav-text">4. 在元件中使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E9%A0%81%E9%9D%A2%E6%88%AA%E5%9C%96"><span class="nav-number">3.5.</span> <span class="nav-text">目前頁面截圖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Nuxt-3-%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E7%BE%A9-Loading-%E5%85%83%E4%BB%B6%E7%9A%84%E6%AD%A5%E9%A9%9F%E6%8C%87%E5%8D%97"><span class="nav-number">4.</span> <span class="nav-text">在 Nuxt 3 中添加自定義 Loading 元件的步驟指南</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%BA%96%E5%82%99-Loading-%E5%8B%95%E7%95%AB"><span class="nav-number">4.1.</span> <span class="nav-text">1. 準備 Loading 動畫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A8%AD%E7%BD%AE%E4%BA%8B%E4%BB%B6%E7%B8%BD%E7%B7%9A-stores-eventBus-ts"><span class="nav-number">4.2.</span> <span class="nav-text">2. 設置事件總線 (stores&#x2F;eventBus.ts)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%89%B5%E5%BB%BA-Loading-%E5%85%83%E4%BB%B6-components-LoadingTool-vue"><span class="nav-number">4.3.</span> <span class="nav-text">3. 創建 Loading 元件 (components&#x2F;LoadingTool.vue)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9C%A8%E4%B8%BB%E6%87%89%E7%94%A8%E5%85%83%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8-Loading-%E5%85%83%E4%BB%B6-app-vue"><span class="nav-number">4.4.</span> <span class="nav-text">4. 在主應用元件中使用 Loading 元件 (app.vue)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%9C%A8%E9%A0%81%E9%9D%A2%E4%B8%AD%E4%BD%BF%E7%94%A8-Loading-%E6%95%88%E6%9E%9C-pages-calculator-vue"><span class="nav-number">4.5.</span> <span class="nav-text">5. 在頁面中使用 Loading 效果 (pages&#x2F;calculator.vue)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/10/05/2024it/d26/";
+    this.page.identifier = "2024/10/05/2024it/d26/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY26 ] Nuxt 3 進階技巧：Pinia、API 整合、Loading 元件";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈囉大家好！今天要來分享如何將我們辛苦製作的 Nuxt 3 專案部署到雲端。是不是聽起來很厲害？別擔心，跟著我一步一步來，保證你也能輕鬆搞定！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略">
+<meta property="og:url" content="https://blog.2fishs.com/2024/10/08/2024it/d29/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哈囉大家好！今天要來分享如何將我們辛苦製作的 Nuxt 3 專案部署到雲端。是不是聽起來很厲害？別擔心，跟著我一步一步來，保證你也能輕鬆搞定！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/201596868pKAWzSoBG.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686ORanLMWJ1w.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/201596868PnWaAyEgw.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686Co3fdi6y9G.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686GxwcfhYkFP.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686jLZ1xfo6Y4.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686WvTGISyRe0.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686VNg8CERJpk.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686g741jpVmne.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686L5vilBFDXN.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686GIWU8ZrH7p.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686jYJcVTa33k.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/20159686P9KPCcdGe5.png">
+<meta property="article:published_time" content="2024-10-08T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.167Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="Nuxt3">
+<meta property="article:tag" content="Vercel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20241008/201596868pKAWzSoBG.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/10/08/2024it/d29/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/10/08/2024it/d29/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-08 20:33:45" itemprop="dateCreated datePublished" datetime="2024-10-08T20:33:45+08:00">2024-10-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/08/2024it/d29/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/08/2024it/d29/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哈囉大家好！今天要來分享如何將我們辛苦製作的 Nuxt 3 專案部署到雲端。是不是聽起來很厲害？別擔心，跟著我一步一步來，保證你也能輕鬆搞定！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h3 id="Vercel-簡介"><a href="#Vercel-簡介" class="headerlink" title="Vercel 簡介"></a>Vercel 簡介</h3><p>首先，讓我來介紹一下我們今天的主角——Vercel。Vercel 是一個超級好用的雲端平台，特別適合部署前端專案。它不只免費，還能自動幫我們處理很多複雜的設定。簡直就是前端開發者的好朋友啊！</p>
+<h2 id="部署流程"><a href="#部署流程" class="headerlink" title="部署流程"></a>部署流程</h2><h3 id="1-確定更新都已推送到-Github"><a href="#1-確定更新都已推送到-Github" class="headerlink" title="1. 確定更新都已推送到 Github"></a>1. 確定更新都已推送到 Github</h3><p>首先，請確保你的專案都已經更新到 Github 囉。這個步驟超級重要！因為 Vercel 會直接從你的 Github 倉庫拉取程式碼。如果忘記推送最新的修改，那部署出來的網站就不是最新版本了，那就糗大了！<br><img src="https://ithelp.ithome.com.tw/upload/images/20241008/201596868pKAWzSoBG.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/201596868pKAWzSoBG.png"></p>
+<h3 id="2-註冊-Vercel"><a href="#2-註冊-Vercel" class="headerlink" title="2. 註冊 Vercel"></a>2. 註冊 Vercel</h3><p>接下來，我們要註冊 Vercel 帳號。建議直接用 Github 帳號登入，這樣不只省時間，還可以省去一些權限設定的麻煩。</p>
+<ol>
+<li>前往 <a target="_blank" rel="noopener" href="https://vercel.com/">Vercel 官網</a></li>
+<li>點選「Sign Up」，然後選擇「Continue with Github」</li>
+<li>授權 Vercel 存取你的 Github 帳號</li>
+</ol>
+<h3 id="3-新增部署專案"><a href="#3-新增部署專案" class="headerlink" title="3. 新增部署專案"></a>3. 新增部署專案</h3><p>好啦，現在來到重頭戲了！讓我們一步步來部署我們的專案：</p>
+<ol>
+<li><p>在 Vercel 儀表板中，點擊「Add New」，然後選擇「Project」<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686ORanLMWJ1w.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686ORanLMWJ1w.png"></p>
+</li>
+<li><p>你會看到一列 Github 倉庫，找到你要部署的專案，點擊「Import」<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/201596868PnWaAyEgw.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/201596868PnWaAyEgw.png"></p>
+</li>
+<li><p>進入設置頁面後，大部分的設定都可以保持預設。Vercel 超聰明的，它會自動識別這是一個 Nuxt 3 專案，並做好相應的設定。</p>
+</li>
+<li><p>確認無誤後，點擊「Deploy」開始部署<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686Co3fdi6y9G.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686Co3fdi6y9G.png"></p>
+</li>
+<li><p>接下來就是見證奇蹟的時刻！Vercel 會開始構建和部署你的專案。這時候你可以去泡杯咖啡，或是跟隔壁座位的同事聊個天。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686GxwcfhYkFP.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686GxwcfhYkFP.png"></p>
+</li>
+<li><p>耶！部署成功了！你會看到一個預覽圖，點擊它就可以打開你的網站了。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686jLZ1xfo6Y4.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686jLZ1xfo6Y4.png"></p>
+</li>
+</ol>
+<h3 id="4-分享你的作品"><a href="#4-分享你的作品" class="headerlink" title="4. 分享你的作品"></a>4. 分享你的作品</h3><p>想要跟朋友炫耀你的新網站嗎？在 Vercel 的專案頁面上，你可以找到一個「Domains」部分，那裡有你網站的網址。複製它，然後到處分享吧！<br><img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686WvTGISyRe0.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686WvTGISyRe0.png"></p>
+<h2 id="bonus：自訂網站名稱和圖示"><a href="#bonus：自訂網站名稱和圖示" class="headerlink" title="bonus：自訂網站名稱和圖示"></a>bonus：自訂網站名稱和圖示</h2><p>既然都做到這裡了，我們來為網站加點個人風格如何？</p>
+<ol>
+<li><p>首先，挑一張你喜歡的圖片作為網站圖示。我們把它命名為 <code>icon.png</code>，然後放到專案的 <code>public</code> 資料夾裡。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686VNg8CERJpk.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686VNg8CERJpk.png"></p>
+</li>
+<li><p>接著，打開 <code>nuxt.config.ts</code>，加入以下程式碼：</p>
+ <figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">typescript</span><br><span class="line"><span class="title class_">Copy</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line"><span class="comment">// ... 其他設定 ...</span></span><br><span class="line">  <span class="attr">app</span>: &#123;</span><br><span class="line">    <span class="attr">head</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;鸚鸚食堂 Parrot Bistro&#x27;</span>,<span class="comment">// 你的網站名稱</span></span><br><span class="line">      <span class="attr">link</span>: [&#123; <span class="attr">rel</span>: <span class="string">&#x27;icon&#x27;</span>, <span class="attr">type</span>: <span class="string">&#x27;image/x-icon&#x27;</span>, <span class="attr">href</span>: <span class="string">&#x27;/icon.png&#x27;</span> &#125;]<span class="comment">// 網站圖示</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>儲存檔案，然後在本地運行專案，確認一下修改是否生效。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686g741jpVmne.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686g741jpVmne.png"></p>
+</li>
+<li><p>確認沒問題後，記得把修改推送到 Github 喔！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686L5vilBFDXN.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686L5vilBFDXN.png"></p>
+</li>
+<li><p>神奇的事情發生了！當你推送更新後，Vercel 會自動檢測到變更，並重新部署你的網站。是不是很方便？<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686GIWU8ZrH7p.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686GIWU8ZrH7p.png"></p>
+</li>
+<li><p>等待片刻，再次打開你的網站。瞧！你的網站現在有了新的名字和圖示，是不是看起來更有專業感了呢？<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686jYJcVTa33k.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686jYJcVTa33k.png"><br> <img src="https://ithelp.ithome.com.tw/upload/images/20241008/20159686P9KPCcdGe5.png" alt="https://ithelp.ithome.com.tw/upload/images/20241008/20159686P9KPCcdGe5.png"></p>
+</li>
+</ol>
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>哇！我們終於完成整個專案了！從本地開發到雲端部署，你現在已經掌握了一個完整的網站開發流程。感覺自己是不是也變得很厲害了呢？<br>記住，每天推送更新到 Github 是個好習慣。不只是為了備份，也是為了讓你的網站隨時保持最新狀態。<br>最後，我知道你們一定迫不及待想看到完整的專案連結。別著急，我明天就會分享給大家。（畢竟還有最後一篇文章要寫嘛，嘿嘿）<br>繼續保持學習的熱情，相信不久的將來，你也能成為一位出色的工程師！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！讓我們一起在 Nuxt3 的世界中探險吧！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+              <a href="/tags/Nuxt3/" rel="tag"># Nuxt3</a>
+              <a href="/tags/Vercel/" rel="tag"># Vercel</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/07/2024it/d28/" rel="prev" title="[ 2024 IT 鐵人賽 DAY28 ] Nuxt 3 專案實戰：打造互動式聯絡表單">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY28 ] Nuxt 3 專案實戰：打造互動式聯絡表單
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/09/2024it/d30/" rel="next" title="[ 2024 IT 鐵人賽 DAY30 ] 鐵人賽尾聲：回顧、感想與未來展望">
+      [ 2024 IT 鐵人賽 DAY30 ] 鐵人賽尾聲：回顧、感想與未來展望 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vercel-%E7%B0%A1%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Vercel 簡介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">部署流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A2%BA%E5%AE%9A%E6%9B%B4%E6%96%B0%E9%83%BD%E5%B7%B2%E6%8E%A8%E9%80%81%E5%88%B0-Github"><span class="nav-number">2.1.</span> <span class="nav-text">1. 確定更新都已推送到 Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A8%BB%E5%86%8A-Vercel"><span class="nav-number">2.2.</span> <span class="nav-text">2. 註冊 Vercel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%96%B0%E5%A2%9E%E9%83%A8%E7%BD%B2%E5%B0%88%E6%A1%88"><span class="nav-number">2.3.</span> <span class="nav-text">3. 新增部署專案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%86%E4%BA%AB%E4%BD%A0%E7%9A%84%E4%BD%9C%E5%93%81"><span class="nav-number">2.4.</span> <span class="nav-text">4. 分享你的作品</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bonus%EF%BC%9A%E8%87%AA%E8%A8%82%E7%B6%B2%E7%AB%99%E5%90%8D%E7%A8%B1%E5%92%8C%E5%9C%96%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">bonus：自訂網站名稱和圖示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.1.</span> <span class="nav-text">結語</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/10/08/2024it/d29/";
+    this.page.identifier = "2024/10/08/2024it/d29/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

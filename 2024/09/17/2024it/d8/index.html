@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈囉大家好！我是 2魚，歡迎來到鐵人賽第八天的資料庫冒險！昨天我們學習了如何規劃資料表，今天我們要更進一步，實際動手把我們的鸚鵡食堂搬進雲端啦！我們將使用 MongoDB Atlas 和 Compass 這兩個超級好用的工具，來建立我們的資料管理系統。不用擔心，即使你是資料庫新手，跟著我的步驟來，也能輕鬆駕馭這些強大的工具。準備好要讓你的鸚鵡食堂起飛了嗎？Let’s go！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY8 ] 資料庫新手的雲端之旅：Atlas 部署與 Compass 探索">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/17/2024it/d8/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哈囉大家好！我是 2魚，歡迎來到鐵人賽第八天的資料庫冒險！昨天我們學習了如何規劃資料表，今天我們要更進一步，實際動手把我們的鸚鵡食堂搬進雲端啦！我們將使用 MongoDB Atlas 和 Compass 這兩個超級好用的工具，來建立我們的資料管理系統。不用擔心，即使你是資料庫新手，跟著我的步驟來，也能輕鬆駕馭這些強大的工具。準備好要讓你的鸚鵡食堂起飛了嗎？Let’s go！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686zWlT5cI5U9.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686tg78JYhof2.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686pf1M4aD9jO.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686lzuZmbvJUF.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/201596865G1jPCyZ3R.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686Lc07Ogb1xl.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686JJzxsonUPY.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686xnNji1jJ6N.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/201596861SSZaFTAGV.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686v1AJx4OoR8.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686XcUVZbsjHL.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686wIILz1mHrz.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686Khe4Y6izcW.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686qSOgrzjD5x.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686exAuMdrPVR.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/201596861zlcdKpPUV.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686ITGrFDDhm0.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/2015968680omq1AI4v.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/2015968653LBsMpBbV.png">
+<meta property="article:published_time" content="2024-09-17T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.168Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240917/20159686zWlT5cI5U9.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/17/2024it/d8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY8 ] 資料庫新手的雲端之旅：Atlas 部署與 Compass 探索 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/17/2024it/d8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY8 ] 資料庫新手的雲端之旅：Atlas 部署與 Compass 探索
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-17 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-17T20:33:45+08:00">2024-09-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/17/2024it/d8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/17/2024it/d8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哈囉大家好！我是 2魚，歡迎來到鐵人賽第八天的資料庫冒險！昨天我們學習了如何規劃資料表，今天我們要更進一步，實際動手把我們的鸚鵡食堂搬進雲端啦！我們將使用 MongoDB Atlas 和 Compass 這兩個超級好用的工具，來建立我們的資料管理系統。不用擔心，即使你是資料庫新手，跟著我的步驟來，也能輕鬆駕馭這些強大的工具。準備好要讓你的鸚鵡食堂起飛了嗎？Let’s go！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<p>在上一篇文章中，我們學習了如何規劃資料表。</p>
+<p>附上昨天的實踐練習答案：</p>
+<table>
+<thead>
+<tr>
+<th>KEY</th>
+<th>英文欄位名稱</th>
+<th>中文欄位名稱</th>
+<th>型態</th>
+<th>必填</th>
+<th>預設值</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PK</td>
+<td>_id</td>
+<td>ID</td>
+<td>ObjectID</td>
+<td>v</td>
+<td></td>
+<td>MongoDB自動生成</td>
+</tr>
+<tr>
+<td></td>
+<td>name</td>
+<td>食物名稱</td>
+<td>String</td>
+<td>v</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>description</td>
+<td>說明</td>
+<td>String</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>calories</td>
+<td>卡路里</td>
+<td>Number</td>
+<td>v</td>
+<td></td>
+<td>每100克</td>
+</tr>
+<tr>
+<td></td>
+<td>fat</td>
+<td>脂肪</td>
+<td>Number</td>
+<td>v</td>
+<td></td>
+<td>克&#x2F;100克</td>
+</tr>
+<tr>
+<td></td>
+<td>protein</td>
+<td>蛋白質</td>
+<td>Number</td>
+<td>v</td>
+<td></td>
+<td>克&#x2F;100克</td>
+</tr>
+<tr>
+<td></td>
+<td>carbs</td>
+<td>碳水化合物</td>
+<td>Number</td>
+<td>v</td>
+<td></td>
+<td>克&#x2F;100克</td>
+</tr>
+<tr>
+<td></td>
+<td>maxDailyAmount</td>
+<td>每日最大食用量</td>
+<td>Number</td>
+<td>v</td>
+<td></td>
+<td>克&#x2F;天</td>
+</tr>
+<tr>
+<td></td>
+<td>createdAt</td>
+<td>創建時間</td>
+<td>Date</td>
+<td>v</td>
+<td>now</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>這個鸚鵡食物集合的設計考慮了以下幾個要素：</p>
+<ol>
+<li>基本資訊完整性：<ul>
+<li>包含了食物的名稱、描述等基本資訊，確保使用者能夠清楚識別每種食物。</li>
+<li>創建時間欄位有助於追蹤資料的新增時間。</li>
+</ul>
+</li>
+<li>營養資訊的標準化：<ul>
+<li>營養成分（卡路里、脂肪、蛋白質、碳水化合物）均以每100克為單位，這樣的標準化有助於不同食物間的比較。</li>
+<li>選擇了鸚鵡飼養中最關鍵的幾個營養指標，確保資訊既全面又不過於複雜。</li>
+</ul>
+</li>
+<li>安全性考量：<ul>
+<li>加入了每日最大食用量欄位，這對於鸚鵡的健康飲食極為重要，可以幫助飼主避免過量餵食。</li>
+</ul>
+</li>
+<li>資料完整性：<ul>
+<li>將重要欄位（如名稱、營養成分、每日最大食用量）設為必填，確保核心資訊的完整性。</li>
+</ul>
+</li>
+<li>擴展性：<ul>
+<li>雖然目前欄位相對簡單，但這個結構為將來可能的擴展（如添加更多營養成分、適用鸚鵡品種等）預留了空間。</li>
+</ul>
+</li>
+<li>MongoDB特性應用：<ul>
+<li>利用MongoDB的自動生成ID特性，簡化了主鍵的管理。</li>
+<li>使用了多種MongoDB支援的資料類型，如String、Number、Date等，充分利用了MongoDB的靈活性。</li>
+</ul>
+</li>
+</ol>
+<p>接著進入正題囉 ~</p>
+<hr>
+<p>今天，我們要用 MongoDB Atlas 和 Compass 來建立鸚鵡食堂的資料管理系統。這兩個工具會讓我們的資料管理變得更簡單。<br>注意：在這個教學中，我們不會涉及本地端 MongoDB 的安裝和操作。我們直接使用雲端服務，這樣可以省去配置本地環境的複雜步驟。</p>
+<h2 id="MongoDB-Atlas：雲端資料庫服務"><a href="#MongoDB-Atlas：雲端資料庫服務" class="headerlink" title="MongoDB Atlas：雲端資料庫服務"></a>MongoDB Atlas：雲端資料庫服務</h2><p>MongoDB Atlas 是 MongoDB 官方的雲端服務。選擇 Atlas 有幾個好處：</p>
+<ol>
+<li>不用自己管理伺服器</li>
+<li>可以隨著需求增加或減少資源</li>
+<li>有免費方案可以使用</li>
+</ol>
+<h3 id="部署步驟："><a href="#部署步驟：" class="headerlink" title="部署步驟："></a>部署步驟：</h3><ol>
+<li><p>註冊 MongoDB Atlas 帳號（可以使用 Google 帳號快速註冊）<br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686zWlT5cI5U9.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686zWlT5cI5U9.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686tg78JYhof2.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686tg78JYhof2.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686pf1M4aD9jO.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686pf1M4aD9jO.png"></p>
+</li>
+<li><p>創建一個新的集群（Cluster）<br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686lzuZmbvJUF.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686lzuZmbvJUF.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/201596865G1jPCyZ3R.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/201596865G1jPCyZ3R.png"></p>
+</li>
+<li><p>設置資料庫用戶和網路訪問權限<br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686Lc07Ogb1xl.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686Lc07Ogb1xl.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686JJzxsonUPY.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686JJzxsonUPY.png"></p>
+</li>
+<li><p>使用 Compass 連接 MongoDB Atlas</p>
+<ol>
+<li><p>下載並安裝 <a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/compass">MongoDB Compass</a> </p>
+</li>
+<li><p>在 Cluster0 中點擊 “Connect” 按鈕<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686xnNji1jJ6N.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686xnNji1jJ6N.png"></p>
+</li>
+<li><p>選擇 Compass 連接方式<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240917/201596861SSZaFTAGV.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/201596861SSZaFTAGV.png"><br> <img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686v1AJx4OoR8.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686v1AJx4OoR8.png"></p>
+</li>
+</ol>
+</li>
+<li><p>打開 MongoDB Compass，進行連接<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686XcUVZbsjHL.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686XcUVZbsjHL.png"></p>
+</li>
+<li><p>連接成功（今天的教學到此為止，之後的實戰中我們會繼續使用）<br> <img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686wIILz1mHrz.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686wIILz1mHrz.png"></p>
+</li>
+</ol>
+<h3 id="MongoDB-Compass：資料庫管理工具"><a href="#MongoDB-Compass：資料庫管理工具" class="headerlink" title="MongoDB Compass：資料庫管理工具"></a>MongoDB Compass：資料庫管理工具</h3><p>MongoDB Compass 是一個圖形化的管理工具，就像是我們資料庫的儀表板。它讓我們可以直觀地操作和管理資料，不需要寫複雜的指令。</p>
+<p>主要功能：</p>
+<ol>
+<li>瀏覽和編輯資料：<ul>
+<li>點擊集合名稱，就能看到裡面所有的文檔。</li>
+<li>雙擊任何文檔，可以直接修改內容。</li>
+</ul>
+</li>
+<li>執行查詢：<ul>
+<li>使用 Compass 的查詢編輯器，可以輕鬆寫出複雜的查詢。</li>
+</ul>
+</li>
+<li>分析資料庫性能：<ul>
+<li>在 “Performance” 標籤頁可以看到資料庫的運行狀況。</li>
+<li>觀察查詢時間，找出需要優化的地方。</li>
+</ul>
+</li>
+<li>管理索引和用戶：<ul>
+<li>在 “Indexes” 標籤頁可以創建和管理索引，加速查詢。</li>
+<li>“Users” 部分允許我們管理資料庫用戶，控制訪問權限。</li>
+</ul>
+</li>
+<li>資料可視化：<ul>
+<li>使用 “Charts” 功能，可以將數據轉換成圖表，直觀地看出數據趨勢。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>接下來動手玩玩看 Compass 吧</p>
+<h3 id="新增資料表"><a href="#新增資料表" class="headerlink" title="新增資料表"></a>新增資料表</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686Khe4Y6izcW.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686Khe4Y6izcW.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686qSOgrzjD5x.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686qSOgrzjD5x.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686exAuMdrPVR.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686exAuMdrPVR.png"></p>
+<h3 id="新增一筆資料"><a href="#新增一筆資料" class="headerlink" title="新增一筆資料"></a>新增一筆資料</h3><p><img src="https://ithelp.ithome.com.tw/upload/images/20240917/201596861zlcdKpPUV.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/201596861zlcdKpPUV.png"><br>範例是手 key 新增資料，<br>當然也有提供匯入資料 (import JSON or CSV file)</p>
+<p>這邊使用昨天我們設計的食物結構作為範例資料：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;$oid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;66bf8246f3acda432feda6b8&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;向日葵籽&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;營養豐富的鸚鵡零食&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;calories&quot;</span><span class="punctuation">:</span> <span class="number">584</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;fat&quot;</span><span class="punctuation">:</span> <span class="number">51</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;protein&quot;</span><span class="punctuation">:</span> <span class="number">21</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;carbs&quot;</span><span class="punctuation">:</span> <span class="number">20</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;maxDailyAmount&quot;</span><span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240917/20159686ITGrFDDhm0.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/20159686ITGrFDDhm0.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240917/2015968680omq1AI4v.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/2015968680omq1AI4v.png"></p>
+<h3 id="編輯-刪除資料"><a href="#編輯-刪除資料" class="headerlink" title="編輯&#x2F;刪除資料"></a>編輯&#x2F;刪除資料</h3><p>滑鼠懸浮在資料上時會顯示功能按鈕，都可以動手玩玩看哦<br><img src="https://ithelp.ithome.com.tw/upload/images/20240917/2015968653LBsMpBbV.png" alt="https://ithelp.ithome.com.tw/upload/images/20240917/2015968653LBsMpBbV.png"></p>
+<hr>
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>哇，今天我們真的完成了一件大事呢！我們不僅成功地將鸚鵡食堂的資料庫部署到了雲端，還學會了使用 MongoDB Compass 這個超級好用的工具。有了它，管理我們的資料就像是在照顧一群快樂的鸚鵡一樣輕鬆愉快。<br>回顧一下，我們學會了如何設置 MongoDB Atlas，如何連接 Compass，還親手新增了我們的第一筆資料。這些技能不只適用於這個專案，在未來的開發工作中也一定會派上大用場！<br>準備好開始下一階段的學習了嗎？讓我們一起繼續這段有趣的資料庫冒險吧！如果你對今天的內容有任何疑問，或是想分享你的資料庫使用經驗，歡迎在下方留言喔！我們明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/16/2024it/d7/" rel="prev" title="[ 2024 IT 鐵人賽 DAY7 ] 資料管理新手村：MongoDB 結構設計初體驗">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY7 ] 資料管理新手村：MongoDB 結構設計初體驗
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/18/2024it/d9/" rel="next" title="[ 2024 IT 鐵人賽 DAY9 ] 資料庫填充秘笈：AI 助手、JSON 轉換與 Compass 完美配合">
+      [ 2024 IT 鐵人賽 DAY9 ] 資料庫填充秘笈：AI 助手、JSON 轉換與 Compass 完美配合 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-Atlas%EF%BC%9A%E9%9B%B2%E7%AB%AF%E8%B3%87%E6%96%99%E5%BA%AB%E6%9C%8D%E5%8B%99"><span class="nav-number">2.</span> <span class="nav-text">MongoDB Atlas：雲端資料庫服務</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%A9%9F%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">部署步驟：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-Compass%EF%BC%9A%E8%B3%87%E6%96%99%E5%BA%AB%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">2.2.</span> <span class="nav-text">MongoDB Compass：資料庫管理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E8%B3%87%E6%96%99%E8%A1%A8"><span class="nav-number">2.3.</span> <span class="nav-text">新增資料表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E4%B8%80%E7%AD%86%E8%B3%87%E6%96%99"><span class="nav-number">2.4.</span> <span class="nav-text">新增一筆資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B7%A8%E8%BC%AF-%E5%88%AA%E9%99%A4%E8%B3%87%E6%96%99"><span class="nav-number">2.5.</span> <span class="nav-text">編輯&#x2F;刪除資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">2.6.</span> <span class="nav-text">結語</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/17/2024it/d8/";
+    this.page.identifier = "2024/09/17/2024it/d8/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY8 ] 資料庫新手的雲端之旅：Atlas 部署與 Compass 探索";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

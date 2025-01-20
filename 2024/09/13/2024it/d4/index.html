@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈囉大家好！2魚又來啦～今天是鐵人賽的第四天，我們要來聊聊使用者故事和流程圖這兩個超級實用的工具！別擔心，雖然聽起來很專業，但我會用最簡單的方式解釋給大家聽喔！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY4 ] 翱翔於需求與設計之間：鸚鵡網站的使用者故事與流程圖">
+<meta property="og:url" content="https://blog.2fishs.com/2024/09/13/2024it/d4/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哈囉大家好！2魚又來啦～今天是鐵人賽的第四天，我們要來聊聊使用者故事和流程圖這兩個超級實用的工具！別擔心，雖然聽起來很專業，但我會用最簡單的方式解釋給大家聽喔！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png">
+<meta property="article:published_time" content="2024-09-13T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.167Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/09/13/2024it/d4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY4 ] 翱翔於需求與設計之間：鸚鵡網站的使用者故事與流程圖 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/09/13/2024it/d4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY4 ] 翱翔於需求與設計之間：鸚鵡網站的使用者故事與流程圖
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-09-13 20:33:45" itemprop="dateCreated datePublished" datetime="2024-09-13T20:33:45+08:00">2024-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/09/13/2024it/d4/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/09/13/2024it/d4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哈囉大家好！2魚又來啦～今天是鐵人賽的第四天，我們要來聊聊使用者故事和流程圖這兩個超級實用的工具！別擔心，雖然聽起來很專業，但我會用最簡單的方式解釋給大家聽喔！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="使用者故事：站在使用者的角度思考"><a href="#使用者故事：站在使用者的角度思考" class="headerlink" title="使用者故事：站在使用者的角度思考"></a>使用者故事：站在使用者的角度思考</h2><p>首先，讓我們來認識一下「使用者故事」吧！<br>使用者故事是什麼呢？簡單來說，就是用一句話來描述「誰」要做「什麼事」，以及「為什麼」要這麼做。聽起來很簡單吧？但正是這種簡單的方式，讓我們能夠更容易地理解使用者的需求呢！</p>
+<p>使用者故事通常長這樣：<br>「作為一個【角色】，我想要【行動】，以便【達到某個目的】。」</p>
+<p>舉個例子：<br>「作為一位鸚鵡飼主，我想要使用食物計算機，以便準確計算我的鸚鵡每天應攝取的食物量。」<br>是不是一看就懂啦？這就是使用者故事的魔力！它簡單直接，讓我們能夠快速抓住重點，知道我們要為誰設計、設計什麼功能、以及這個功能的目的是什麼。<br>對了，使用者故事還有一個超厲害的地方！它能幫助我們專注在真正重要的事情上。畢竟，我們的目標是讓使用者開心，而不是堆砌一堆沒人要用的功能，對吧？<br>好啦，既然知道使用者故事這麼棒，那我們就來看看我們的「鸚鸚食堂」網站有哪些使用者故事吧！</p>
+<p>💡 鸚鸚食堂網站的使用者故事：</p>
+<ul>
+<li>作為一位網站訪客，我希望能夠瀏覽首頁，以快速了解網站的主要功能和內容。</li>
+<li>作為一位鸚鵡飼主，我想要使用食物計算機，以計算我的鸚鵡每天應攝取的食物量。</li>
+<li>作為一位關心鸚鵡健康的飼主，我希望能夠瀏覽營養指南頁面，以了解鸚鵡可食用和不可食用的食物。</li>
+<li>作為一位鸚鵡愛好者，我想要瀏覽百科全書頁面，以認識更多不同品種的鸚鵡。</li>
+<li>作為一位需要尋找獸醫的飼主，我希望能在醫護站頁面篩選我所在地區的醫院資訊。</li>
+<li>作為一位網站使用者，我想要通過聯絡我們頁面填寫表單，以提供使用網站的反饋和建議。<br>看完這些使用者故事，是不是對我們的網站要做什麼更清楚了呢？每一個故事都代表了一個重要的功能或頁面，這些都是我們接下來要努力實現的目標喔！</li>
+</ul>
+<h2 id="流程圖：讓想法變得更清晰"><a href="#流程圖：讓想法變得更清晰" class="headerlink" title="流程圖：讓想法變得更清晰"></a>流程圖：讓想法變得更清晰</h2><p>接下來，讓我們來認識另一個超級好用的工具：流程圖！</p>
+<p>流程圖聽起來很高深，但其實就是用一些簡單的圖形和箭頭，把一個過程或系統畫出來啦！它就像是我們思考的地圖，幫助我們整理腦中的想法，讓複雜的事情變得簡單明瞭。</p>
+<p>在流程圖中，我們會看到一些特定的圖形符號：</p>
+<ol>
+<li>橢圓形：就像是起跑線和終點線，標誌著流程的開始和結束。</li>
+<li>矩形：這是我們的主角！代表具體的處理步驟或行動。</li>
+<li>菱形：遇到它就要做選擇啦！表示需要做出決策的判斷點。</li>
+<li>平行四邊形：負責資料的進出，代表數據的輸入或輸出。</li>
+<li>箭頭：指引方向的小幫手，告訴我們下一步該往哪走。</li>
+</ol>
+<p>流程圖在網站開發中特別有用，它可以幫助我們：</p>
+<ol>
+<li>設計用戶體驗：規劃使用者怎麼跟網站互動。</li>
+<li>設計功能：詳細規劃每個功能要怎麼運作。</li>
+<li>規劃後端邏輯：思考資料要怎麼處理。</li>
+<li>規劃測試：設計全面的測試方案。</li>
+<li>處理錯誤：預想可能出錯的地方，並想出解決方法。</li>
+</ol>
+<p>畫流程圖就像是在為我們的網站畫設計圖，讓我們能夠更清楚地看到整個網站的結構和運作方式。這樣不只能幫助我們做出更好的設計，還能讓團隊的溝通更順暢呢！</p>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png" alt="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png"></p>
+<p>如果你對流程圖的製作技巧感興趣，可以參考這篇超詳細的教學文章：<a target="_blank" rel="noopener" href="https://projectmanager.com.tw/%e5%b0%88%e6%a1%88%e7%ae%a1%e7%90%86/%e6%b5%81%e7%a8%8b%e5%9c%96-%e6%b5%81%e7%a8%8b%e5%9c%96%e8%a3%bd%e4%bd%9c-flow-chart/">【流程圖製作教學】流程圖符號規範+圖示說明 | Flow Chart範例 - ProjectManager</a>。裡面有更多關於流程圖的小技巧喔！</p>
+<h2 id="結語：用故事和圖畫，打造夢想中的網站！"><a href="#結語：用故事和圖畫，打造夢想中的網站！" class="headerlink" title="結語：用故事和圖畫，打造夢想中的網站！"></a>結語：用故事和圖畫，打造夢想中的網站！</h2><p>今天我們學到了使用者故事和流程圖這兩個超強工具！使用者故事幫助我們站在使用者的角度思考，而流程圖則讓我們的想法變得更加清晰。<br>接下來，我會為每個使用者故事畫一張流程圖，這樣不只能幫助我更好地理解每個功能該怎麼實現，也能讓大家更清楚地看到我的想法。期待之後能和大家分享這些流程圖喔！<br>記住，無論是寫程式還是規劃專案，最重要的就是把複雜的事情變簡單。使用者故事和流程圖就是幫助我們做到這一點的好幫手！<br>好啦，今天的分享就到這裡。如果你對使用者故事或流程圖有什麼想法，或是有什麼不懂的地方，歡迎在下面留言跟我討論喔！我們明天見～掰掰！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/12/2024it/d3/" rel="prev" title="[ 2024 IT 鐵人賽 DAY3 ] 網站規劃三部曲：發想、收斂、畫網站地圖">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY3 ] 網站規劃三部曲：發想、收斂、畫網站地圖
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/14/2024it/d5/" rel="next" title="[ 2024 IT 鐵人賽 DAY5 ] 當線條開始敘事：用線稿圖探索網站設計的起點">
+      [ 2024 IT 鐵人賽 DAY5 ] 當線條開始敘事：用線稿圖探索網站設計的起點 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%80%85%E6%95%85%E4%BA%8B%EF%BC%9A%E7%AB%99%E5%9C%A8%E4%BD%BF%E7%94%A8%E8%80%85%E7%9A%84%E8%A7%92%E5%BA%A6%E6%80%9D%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">使用者故事：站在使用者的角度思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9C%96%EF%BC%9A%E8%AE%93%E6%83%B3%E6%B3%95%E8%AE%8A%E5%BE%97%E6%9B%B4%E6%B8%85%E6%99%B0"><span class="nav-number">3.</span> <span class="nav-text">流程圖：讓想法變得更清晰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E%EF%BC%9A%E7%94%A8%E6%95%85%E4%BA%8B%E5%92%8C%E5%9C%96%E7%95%AB%EF%BC%8C%E6%89%93%E9%80%A0%E5%A4%A2%E6%83%B3%E4%B8%AD%E7%9A%84%E7%B6%B2%E7%AB%99%EF%BC%81"><span class="nav-number">4.</span> <span class="nav-text">結語：用故事和圖畫，打造夢想中的網站！</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/09/13/2024it/d4/";
+    this.page.identifier = "2024/09/13/2024it/d4/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY4 ] 翱翔於需求與設計之間：鸚鵡網站的使用者故事與流程圖";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.2fishs.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈囉大家好！今天要帶大家一起探索 Nuxt3 的奧秘。不知道大家有沒有遇過這種情況：明明已經學會 Vue，但是在開發大型專案時卻總覺得少了點什麼？那個「少了點什麼」，很可能就是 Nuxt3！哇，時間過得真快！一眨眼，我們的鐵人賽已經進行到第 21 天了，剩下不到 10 天就要完賽了。說實在的，我的心情有點緊張又興奮。緊張的是時間真的不多了，興奮的是我們終於要進入前端專案的世界啦！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知">
+<meta property="og:url" content="https://blog.2fishs.com/2024/10/01/2024it/d22/index.html">
+<meta property="og:site_name" content="2fish 的部落格">
+<meta property="og:description" content="哈囉大家好！今天要帶大家一起探索 Nuxt3 的奧秘。不知道大家有沒有遇過這種情況：明明已經學會 Vue，但是在開發大型專案時卻總覺得少了點什麼？那個「少了點什麼」，很可能就是 Nuxt3！哇，時間過得真快！一眨眼，我們的鐵人賽已經進行到第 21 天了，剩下不到 10 天就要完賽了。說實在的，我的心情有點緊張又興奮。緊張的是時間真的不多了，興奮的是我們終於要進入前端專案的世界啦！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686K7NSwvI5xJ.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686mxK3cqgPgq.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686uObJjvKMzd.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686i5sRn2vSQi.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686Q2LtfyY054.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/201596865s6uvh1Lrv.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686dLyGkwQhvu.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686xLNVnbHf7G.png">
+<meta property="article:published_time" content="2024-10-01T12:33:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:28:16.165Z">
+<meta property="article:author" content="余誼姍 (2fish)">
+<meta property="article:tag" content="2024IT鐵人賽">
+<meta property="article:tag" content="Nuxt3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ithelp.ithome.com.tw/upload/images/20241001/20159686K7NSwvI5xJ.png">
+
+<link rel="canonical" href="https://blog.2fishs.com/2024/10/01/2024it/d22/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知 | 2fish 的部落格</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">2fish 的部落格</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">歡迎來到我的部落格！這裡是我記錄開發點滴的地方，希望你會喜歡😌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.2fishs.com/2024/10/01/2024it/d22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mug_shot_1118.jpg">
+      <meta itemprop="name" content="余誼姍 (2fish)">
+      <meta itemprop="description" content="2fish 記錄開發旅程的部落格">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2fish 的部落格">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-01 20:33:45" itemprop="dateCreated datePublished" datetime="2024-10-01T20:33:45+08:00">2024-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-01-20 15:28:16" itemprop="dateModified" datetime="2025-01-20T15:28:16+08:00">2025-01-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="閱讀次數" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">閱讀次數：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/01/2024it/d22/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/01/2024it/d22/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>哈囉大家好！今天要帶大家一起探索 Nuxt3 的奧秘。不知道大家有沒有遇過這種情況：明明已經學會 Vue，但是在開發大型專案時卻總覺得少了點什麼？那個「少了點什麼」，很可能就是 Nuxt3！<br>哇，時間過得真快！一眨眼，我們的鐵人賽已經進行到第 21 天了，剩下不到 10 天就要完賽了。說實在的，我的心情有點緊張又興奮。緊張的是時間真的不多了，興奮的是我們終於要進入前端專案的世界啦！</p>
+<span id="more"></span>
+
+<p>沒錯，各位親愛的同學們，我們花了整整 20 天的時間，打造了一個堅實的後端基礎。現在，是時候把我們的注意力轉移到前端了。畢竟，再厲害的後端，如果沒有一個好看又好用的前端介面，使用者也不會喜歡，對吧？<br>所以，接下來的幾天，我們要一起挑戰的就是 Nuxt3！這可是 Vue 的超級加強版，不僅繼承了 Vue 的所有優點，還為我們解決了許多在開發大型專案時常遇到的問題。雖然時間緊迫，但我相信只要我們一起努力，一定可以在短時間內掌握 Nuxt3 的精髓，為我們的專案畫下完美的句點！</p>
+<p>準備好了嗎？讓我們一起踏上這段刺激又充實的 Nuxt3 學習之旅吧！衝啊！</p>
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="Nuxt3-vs-Vue：前端開發的超級助手"><a href="#Nuxt3-vs-Vue：前端開發的超級助手" class="headerlink" title="Nuxt3 vs Vue：前端開發的超級助手"></a>Nuxt3 vs Vue：前端開發的超級助手</h2><p>Nuxt3 確實是 Vue 的加強版，但它的強大之處遠不止於此。讓我們來看看 Nuxt3 如何在多個方面超越了 Vue：</p>
+<ol>
+<li>自動路由：<ul>
+<li>Vue 需要手動設定路由。</li>
+<li>Nuxt3 根據 <code>pages</code> 資料夾的結構自動生成路由，省去了大量配置時間。</li>
+<li>支援動態路由、嵌套路由，甚至是自定義的參數化路由。</li>
+</ul>
+</li>
+<li>服務器端渲染（SSR）：<ul>
+<li>Vue 主要是客戶端渲染，需要額外設定才能實現 SSR。</li>
+<li>Nuxt3 內建 SSR 支援，大幅提升首次載入速度和 SEO 表現。</li>
+<li>還提供了混合渲染模式，可以針對不同頁面選擇最適合的渲染方式。</li>
+</ul>
+</li>
+<li>靜態網站生成（Static Site Generation, SSG）：<ul>
+<li>Vue 需要額外的工具如 VuePress 來實現。</li>
+<li>Nuxt3 內建 SSG 功能，可以輕鬆生成高效能的靜態網站。</li>
+<li>支援增量式靜態生成（ISR），兼顧了靜態網站的效能和動態內容的即時性。</li>
+</ul>
+</li>
+<li>檔案系統 API：<ul>
+<li>Vue 需要額外設定後端框架如 Express 來處理 API。</li>
+<li>Nuxt3 的 server 資料夾可以直接寫 API，實現真正的全端開發。</li>
+<li>支援 API 路由的自動生成，大幅簡化了後端開發流程。</li>
+</ul>
+</li>
+<li>模組系統：<ul>
+<li>Nuxt3 提供了強大的模組系統，可以輕鬆擴展功能。</li>
+<li>豐富的社群模組生態，幾乎覆蓋了所有常見的開發需求。</li>
+</ul>
+</li>
+<li>優化效能：<ul>
+<li>自動代碼分割：Nuxt3 會自動將代碼分割成更小的塊，提升載入速度。</li>
+<li>自動導入：組件和組合式函數無需手動導入，減少樣板代碼。</li>
+<li>圖片優化：內建的圖片元件可以自動進行圖片優化。</li>
+</ul>
+</li>
+<li>TypeScript 支援：<ul>
+<li>Nuxt3 從底層就支援 TypeScript，無需額外配置。</li>
+<li>提供了更好的型別推斷和自動補全。</li>
+</ul>
+</li>
+<li>開發體驗：<ul>
+<li>熱模組替換（HMR）更快速、更可靠。</li>
+<li>錯誤處理更友善，提供清晰的錯誤訊息和錯誤頁面。</li>
+</ul>
+</li>
+<li>部署靈活性：<ul>
+<li>可以部署為 SSR 應用、靜態網站，甚至是 Serverless 函數。</li>
+<li>支援多種主流的雲平台，如 Vercel、Netlify 等。</li>
+</ul>
+</li>
+<li>SEO 友好：<ul>
+<li>內建的 <code>useHead</code> 組合式函數，輕鬆管理 meta 標籤。</li>
+<li>自動生成 sitemap，有利於搜尋引擎爬蟲。<br>Nuxt3 不僅簡化了開發流程，還提供了一個完整的生態系統來處理常見的 Web 開發需求。它讓開發者可以專注於業務邏輯，而不是被繁瑣的配置和優化工作所困擾。無論你是要開發一個小型的個人網站，還是大型的企業應用，Nuxt3 都能提供強大的支援，讓你的開發之路更加順暢。</li>
+</ul>
+</li>
+</ol>
+<h2 id="建立前端-Nuxt3-專案"><a href="#建立前端-Nuxt3-專案" class="headerlink" title="建立前端 Nuxt3 專案"></a>建立前端 Nuxt3 專案</h2><p>好啦，說了這麼多，我們來實際操作看看吧！</p>
+<ol>
+<li><p>首先，用 VSCode 打開你想要放專案的資料夾。我自己是選「文件」資料夾，你們可以選自己喜歡的地方。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686K7NSwvI5xJ.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686K7NSwvI5xJ.png"></p>
+</li>
+<li><p>接著，打開終端機，輸入以下指令來建立專案：<br> 這裡的 <code>&lt;project-name&gt;</code> 要替換成你想要的專案名稱喔！<br> 更詳細也可以查閱 <a target="_blank" rel="noopener" href="https://nuxt.com/docs/getting-started/installation#new-project">官方文件</a></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx nuxi@latest init &lt;project-name&gt;</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686mxK3cqgPgq.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686mxK3cqgPgq.png"><br> 部分 mac 才需要加 sudo</p>
+</li>
+<li><p>接下來會問你一些問題，這樣回答就可以了：</p>
+<ul>
+<li>是否安裝依賴套件？ → 當然是 <code>y</code> 啦！</li>
+<li>用哪種套件管理器？ → 我們就選最常見的 <code>npm</code></li>
+<li>要不要初始化 git？ → 當然是 <code>yes</code>，版本控制很重要der！<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686uObJjvKMzd.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686uObJjvKMzd.png"><br> <img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686i5sRn2vSQi.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686i5sRn2vSQi.png"></li>
+</ul>
+</li>
+<li><p>等它跑完之後，我們就可以進入剛剛建立好的專案了。你可以用指令：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;project-name&gt;</span><br></pre></td></tr></table></figure>
+<p> 或者是重新開啟資料夾。我自己比較喜歡重開，這樣左邊的工作區看起來比較整齊。<br> <img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686Q2LtfyY054.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686Q2LtfyY054.png"></p>
+</li>
+</ol>
+<h2 id="認識-Nuxt3-專案基本架構"><a href="#認識-Nuxt3-專案基本架構" class="headerlink" title="認識 Nuxt3 專案基本架構"></a>認識 Nuxt3 專案基本架構</h2><p>現在，讓我們來看看 Nuxt3 專案的基本架構。別擔心，看起來檔案很多，但其實每個都有它的用途：</p>
+<ol>
+<li><code>app.vue</code>：這就是我們網站的大家長，所有頁面都會在這裡面呈現。</li>
+<li><code>nuxt.config.ts</code>：這是 Nuxt 的設定檔，你可以在這裡設定網站的基本資訊、引入 CSS、設定插件等。</li>
+<li><code>.nuxt</code> 資料夾：這裡面是 Nuxt 自己產生的檔案，我們通常不會去動它。</li>
+<li><code>components</code> 資料夾：這裡放的是可以重複使用的 Vue 元件。</li>
+<li><code>pages</code> 資料夾：這裡放的是網頁的各個頁面，Nuxt 會根據這裡的檔案自動產生網址路徑。</li>
+<li><code>public</code> 資料夾：這裡放的是靜態檔案，像是圖片、字型檔之類的。</li>
+<li><code>server</code> 資料夾：這裡放的是伺服器端的程式碼，比如說 API 的設定。</li>
+<li><code>package.json</code>：這個檔案記錄了專案需要用到的套件和一些常用的指令。</li>
+<li><code>tsconfig.json</code>：這是 TypeScript 的設定檔。</li>
+<li><code>node_modules</code> 資料夾：這裡面放的是專案用到的所有套件。</li>
+<li><code>.gitignore</code>：這個檔案告訴 Git 哪些檔案不需要被版本控制。</li>
+<li><code>README.md</code>：這是專案的說明書，通常會寫一些專案的介紹和使用方法。<br><img src="https://ithelp.ithome.com.tw/upload/images/20241001/201596865s6uvh1Lrv.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/201596865s6uvh1Lrv.png"></li>
+</ol>
+<h2 id="嘗試執行專案"><a href="#嘗試執行專案" class="headerlink" title="嘗試執行專案"></a>嘗試執行專案</h2><p>好啦，現在我們來把專案跑起來看看吧！</p>
+<ol>
+<li><p>如果你在建立專案時沒有下載依賴套件，先在終端機輸入：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接著，輸入以下指令來啟動專案：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然後打開瀏覽器，輸入 <code>http://localhost:3000/</code><br> <img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686dLyGkwQhvu.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686dLyGkwQhvu.png"></p>
+</li>
+</ol>
+<p>如果你看到了 Nuxt 的歡迎頁面，恭喜你！你的 Nuxt3 專案已經成功運行了！<br><img src="https://ithelp.ithome.com.tw/upload/images/20241001/20159686xLNVnbHf7G.png" alt="https://ithelp.ithome.com.tw/upload/images/20241001/20159686xLNVnbHf7G.png"></p>
+<h2 id="Nuxt-專案資料夾結構說明"><a href="#Nuxt-專案資料夾結構說明" class="headerlink" title="Nuxt 專案資料夾結構說明"></a>Nuxt 專案資料夾結構說明</h2><p>Nuxt 給我們的是一個極簡版本，有些資料夾是需要我們自己建立的。這裡再詳細說明一下每個資料夾的用途：</p>
+<ol>
+<li><code>pages/</code>：這裡放的是網頁的各個頁面。</li>
+<li><code>components/</code>：這裡放可重複使用的 Vue 元件。</li>
+<li><code>layouts/</code>：這裡放網站的布局元件，像是共用的頁首頁尾。</li>
+<li><code>public/</code>：靜態檔案放這裡，像是網站 logo 之類的。</li>
+<li><code>server/</code>：伺服器端的程式碼放這裡。</li>
+<li><code>assets/</code>：需要經過處理的資源放這裡，像是 SASS 檔案。</li>
+<li><code>composables/</code>：可重複使用的組合式函數放這裡。</li>
+<li><code>plugins/</code>：需要在應用程式啟動前執行的 JavaScript 插件放這裡。</li>
+<li><code>middleware/</code>：中間件檔案放這裡，用來在頁面渲染前執行一些程式碼。</li>
+<li><code>stores/</code>：如果你用 Pinia 來管理狀態，相關的檔案就放這裡。</li>
+</ol>
+<blockquote>
+<p>我們後面有需要使用時會再做示範 &amp; 詳細說明 ~</p>
+</blockquote>
+<h2 id="別忘了版控！讓我們把專案上傳到-GitHub"><a href="#別忘了版控！讓我們把專案上傳到-GitHub" class="headerlink" title="別忘了版控！讓我們把專案上傳到 GitHub"></a>別忘了版控！讓我們把專案上傳到 GitHub</h2><p>寫程式時，版本控制超重要的！來，跟著我一起把專案上傳到 GitHub：</p>
+<ol>
+<li><p>先在專案資料夾中打開終端機，輸入這些指令：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;初始化 Nuxt3 專案&#x27;</span></span><br></pre></td></tr></table></figure>
+<p> 這幾行指令會初始化 Git、將所有檔案加入追蹤，然後提交第一個版本。</p>
+</li>
+<li><p>接著，到 GitHub 建立一個新的儲存庫，複製它給你的連接指令。通常長這樣：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin [你的 GitHub 儲存庫網址]</span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+<p> 這些指令會將你的本地專案連接到 GitHub，並把程式碼推上去。<br> 搞定！這樣你的 Nuxt3 專案就成功上傳到 GitHub 了。之後要更新的話，記得常常 commit 和 push 喔！<br> 版本控制不僅可以幫你記錄每次的修改，還能方便與他人協作。養成好習慣，程式人生會順暢很多！</p>
+</li>
+</ol>
+<blockquote>
+<p>如果這些指令無法幫助你完成的話，可以回去看 DAY13 Github 新手村 ~</p>
+</blockquote>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>哇，我們今天學了好多東西！從認識 Nuxt3，到建立專案，再到了解專案結構，相信大家對 Nuxt3 已經有了初步的認識。別擔心如果有些地方還不太懂，這很正常！學習新技術就像爬山一樣，要一步一步來。重要的是，我們已經邁出了第一步！<br>接下來，我們會慢慢深入 Nuxt3 的各個功能，一起打造出厲害的網站。記得，程式開發最重要的就是動手做，所以大家一定要跟著教學實際操作喔！<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！讓我們一起在 Nuxt3 的世界中探險吧！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024IT%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 2024IT鐵人賽</a>
+              <a href="/tags/Nuxt3/" rel="tag"># Nuxt3</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/30/2024it/d21/" rel="prev" title="[ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略">
+      <i class="fa fa-chevron-left"></i> [ 2024 IT 鐵人賽 DAY21 ] 後端專案最終章：Render 部署全攻略
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/02/2024it/d23/" rel="next" title="[ 2024 IT 鐵人賽 DAY23 ] Nuxt3 開發必備：套件安裝懶人包">
+      [ 2024 IT 鐵人賽 DAY23 ] Nuxt3 開發必備：套件安裝懶人包 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nuxt3-vs-Vue%EF%BC%9A%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC%E7%9A%84%E8%B6%85%E7%B4%9A%E5%8A%A9%E6%89%8B"><span class="nav-number">2.</span> <span class="nav-text">Nuxt3 vs Vue：前端開發的超級助手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%89%8D%E7%AB%AF-Nuxt3-%E5%B0%88%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">建立前端 Nuxt3 專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%8D%E8%AD%98-Nuxt3-%E5%B0%88%E6%A1%88%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%A7%8B"><span class="nav-number">4.</span> <span class="nav-text">認識 Nuxt3 專案基本架構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%98%97%E8%A9%A6%E5%9F%B7%E8%A1%8C%E5%B0%88%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">嘗試執行專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nuxt-%E5%B0%88%E6%A1%88%E8%B3%87%E6%96%99%E5%A4%BE%E7%B5%90%E6%A7%8B%E8%AA%AA%E6%98%8E"><span class="nav-number">6.</span> <span class="nav-text">Nuxt 專案資料夾結構說明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A5%E5%BF%98%E4%BA%86%E7%89%88%E6%8E%A7%EF%BC%81%E8%AE%93%E6%88%91%E5%80%91%E6%8A%8A%E5%B0%88%E6%A1%88%E4%B8%8A%E5%82%B3%E5%88%B0-GitHub"><span class="nav-number">7.</span> <span class="nav-text">別忘了版控！讓我們把專案上傳到 GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">7.1.</span> <span class="nav-text">總結</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余誼姍 (2fish)"
+      src="/images/mug_shot_1118.jpg">
+  <p class="site-author-name" itemprop="name">余誼姍 (2fish)</p>
+  <div class="site-description" itemprop="description">2fish 記錄開發旅程的部落格</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fas fa-book"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">若要轉載文章，麻煩請保留原作者名稱與原始連結。</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="訪客總數">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="總瀏覽次數">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://2fish.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.2fishs.com/2024/10/01/2024it/d22/";
+    this.page.identifier = "2024/10/01/2024it/d22/";
+    this.page.title = "[ 2024 IT 鐵人賽 DAY22 ] Nuxt3 前端開發起手式：環境建立與基礎認知";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://2fish.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+</html>
