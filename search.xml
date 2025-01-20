@@ -227,42 +227,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 進階 - part 1</title>
-    <url>/2024/05/17/hexo-replenish-1/</url>
-    <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
-<span id="more"></span>
-
-<h2 id="🔹-更換-Landscape-主題的網站圖示"><a href="#🔹-更換-Landscape-主題的網站圖示" class="headerlink" title="🔹 更換 Landscape 主題的網站圖示"></a>🔹 更換 Landscape 主題的網站圖示</h2><h4 id="1-先找一張圖示"><a href="#1-先找一張圖示" class="headerlink" title="1. 先找一張圖示"></a>1. 先找一張圖示</h4><p>可以到 <a href="https://www.flaticon.com/">flaticon</a> 下載免費圖示</p>
-<h4 id="2-把圖示放進專案裡"><a href="#2-把圖示放進專案裡" class="headerlink" title="2. 把圖示放進專案裡"></a>2. 把圖示放進專案裡</h4><p>我這邊圖示取做 favicon.png，放在以下路徑：<br><code>themes/landscape/source/css/images</code></p>
-<h4 id="3-修改-config-yml"><a href="#3-修改-config-yml" class="headerlink" title="3. 修改 _config.yml"></a>3. 修改 <code>_config.yml</code></h4><p>到 <code>themes/landscape/_config.yml</code> 修改 favicon 路徑：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Favicon path -&gt; 如果照著我上面放的話會跟範例路徑相同</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/css/images/favicon.png</span></span><br></pre></td></tr></table></figure>
-
-<br />
-<hr />
-<br />
-
-<h2 id="🔹-好不容易改完的樣式被吃掉"><a href="#🔹-好不容易改完的樣式被吃掉" class="headerlink" title="🔹 好不容易改完的樣式被吃掉"></a>🔹 好不容易改完的樣式被吃掉</h2><h4 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h4><p>若你是使用 <code>style.css</code> 修改樣式，那就把舊的樣式檔案 <code>style.styl</code> 刪掉，路徑如下：<br><code>themes/landscape/source/css</code></p>
-<h4 id="清除快取並重新生成靜態文件"><a href="#清除快取並重新生成靜態文件" class="headerlink" title="清除快取並重新生成靜態文件"></a>清除快取並重新生成靜態文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<p>我這樣執行後樣式就會吃到我的 <code>style.css</code> 文件了</p>
-<br />
-<hr />
-<br />
-
-<h2 id="🔹-在文章摘要下方顯示-“Read-More”-連結"><a href="#🔹-在文章摘要下方顯示-“Read-More”-連結" class="headerlink" title="🔹 在文章摘要下方顯示 “Read More” 連結"></a>🔹 在文章摘要下方顯示 “Read More” 連結</h2><h4 id="設定-config-yml"><a href="#設定-config-yml" class="headerlink" title="設定 _config.yml"></a>設定 <code>_config.yml</code></h4><p>在主題裡面的 <code>_config.yml</code> 文件中，設定 <code>excerpt_link</code> 的值來控制是否在文章摘要下方顯示 “Read More” 連結。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &quot;Read More&quot; link at the bottom of excerpted articles. `false` to hide the link.</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;Read More&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果您希望將 &quot;Read More&quot; 更改為其他文字，例如 &quot;觀看更多&quot;，可以這樣設置：</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;觀看更多&quot;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="設定完後，在文章內需要這樣使用"><a href="#設定完後，在文章內需要這樣使用" class="headerlink" title="設定完後，在文章內需要這樣使用"></a>設定完後，在文章內需要這樣使用</h4><p>在 Hexo 中，您可以使用 <code>&lt;!-- more --&gt;</code> 分隔符來定義哪些內容要在列表顯示或隱藏。</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">title: 我的文章標題</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">這是摘要段落，會顯示在文章列表。</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">這邊開始是我只想在文章內頁顯示的內容，列表不會出現！</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="自訂按鈕樣式-修改-CSS"><a href="#自訂按鈕樣式-修改-CSS" class="headerlink" title="自訂按鈕樣式 - 修改 CSS"></a>自訂按鈕樣式 - 修改 CSS</h3><p>在 <code>themes/landscape/source/css/style.css</code> 中自訂樣式：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以開啟 f12 查看按鈕屬於哪個 class 控制 */</span></span><br><span class="line"><span class="comment">/* 按鈕預設樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 按鈕預設 hover 樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#258fb8</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#1e7293</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>六角學院 2024 後端工程師資料庫體驗營 - 小節作業：家具店的菜雞銷售奇遇記</title>
     <url>/2024/10/25/hexschool-sql2024-section-homework-1/</url>
     <content><![CDATA[<!-- 簡介 -->
@@ -532,6 +496,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo 進階 - part 1</title>
+    <url>/2024/05/17/hexo-replenish-1/</url>
+    <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
+<span id="more"></span>
+
+<h2 id="🔹-更換-Landscape-主題的網站圖示"><a href="#🔹-更換-Landscape-主題的網站圖示" class="headerlink" title="🔹 更換 Landscape 主題的網站圖示"></a>🔹 更換 Landscape 主題的網站圖示</h2><h4 id="1-先找一張圖示"><a href="#1-先找一張圖示" class="headerlink" title="1. 先找一張圖示"></a>1. 先找一張圖示</h4><p>可以到 <a href="https://www.flaticon.com/">flaticon</a> 下載免費圖示</p>
+<h4 id="2-把圖示放進專案裡"><a href="#2-把圖示放進專案裡" class="headerlink" title="2. 把圖示放進專案裡"></a>2. 把圖示放進專案裡</h4><p>我這邊圖示取做 favicon.png，放在以下路徑：<br><code>themes/landscape/source/css/images</code></p>
+<h4 id="3-修改-config-yml"><a href="#3-修改-config-yml" class="headerlink" title="3. 修改 _config.yml"></a>3. 修改 <code>_config.yml</code></h4><p>到 <code>themes/landscape/_config.yml</code> 修改 favicon 路徑：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Favicon path -&gt; 如果照著我上面放的話會跟範例路徑相同</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/css/images/favicon.png</span></span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-好不容易改完的樣式被吃掉"><a href="#🔹-好不容易改完的樣式被吃掉" class="headerlink" title="🔹 好不容易改完的樣式被吃掉"></a>🔹 好不容易改完的樣式被吃掉</h2><h4 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h4><p>若你是使用 <code>style.css</code> 修改樣式，那就把舊的樣式檔案 <code>style.styl</code> 刪掉，路徑如下：<br><code>themes/landscape/source/css</code></p>
+<h4 id="清除快取並重新生成靜態文件"><a href="#清除快取並重新生成靜態文件" class="headerlink" title="清除快取並重新生成靜態文件"></a>清除快取並重新生成靜態文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+<p>我這樣執行後樣式就會吃到我的 <code>style.css</code> 文件了</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-在文章摘要下方顯示-“Read-More”-連結"><a href="#🔹-在文章摘要下方顯示-“Read-More”-連結" class="headerlink" title="🔹 在文章摘要下方顯示 “Read More” 連結"></a>🔹 在文章摘要下方顯示 “Read More” 連結</h2><h4 id="設定-config-yml"><a href="#設定-config-yml" class="headerlink" title="設定 _config.yml"></a>設定 <code>_config.yml</code></h4><p>在主題裡面的 <code>_config.yml</code> 文件中，設定 <code>excerpt_link</code> 的值來控制是否在文章摘要下方顯示 “Read More” 連結。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &quot;Read More&quot; link at the bottom of excerpted articles. `false` to hide the link.</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;Read More&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果您希望將 &quot;Read More&quot; 更改為其他文字，例如 &quot;觀看更多&quot;，可以這樣設置：</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">&quot;觀看更多&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="設定完後，在文章內需要這樣使用"><a href="#設定完後，在文章內需要這樣使用" class="headerlink" title="設定完後，在文章內需要這樣使用"></a>設定完後，在文章內需要這樣使用</h4><p>在 Hexo 中，您可以使用 <code>&lt;!-- more --&gt;</code> 分隔符來定義哪些內容要在列表顯示或隱藏。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">title: 我的文章標題</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">這是摘要段落，會顯示在文章列表。</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">這邊開始是我只想在文章內頁顯示的內容，列表不會出現！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="自訂按鈕樣式-修改-CSS"><a href="#自訂按鈕樣式-修改-CSS" class="headerlink" title="自訂按鈕樣式 - 修改 CSS"></a>自訂按鈕樣式 - 修改 CSS</h3><p>在 <code>themes/landscape/source/css/style.css</code> 中自訂樣式：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以開啟 f12 查看按鈕屬於哪個 class 控制 */</span></span><br><span class="line"><span class="comment">/* 按鈕預設樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 按鈕預設 hover 樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#258fb8</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#1e7293</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在 Nuxt.js 導入 phosphor-icons</title>
     <url>/2024/06/07/nuxt-icon-phosphor/</url>
     <content><![CDATA[<p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
@@ -797,91 +797,6 @@
       </tags>
   </entry>
   <entry>
-    <title>[ 2024 IT 鐵人賽 DAY12 ] 後端開發好幫手：四大套件使用指南</title>
-    <url>/2024/09/21/2024it/d12/</url>
-    <content><![CDATA[<p>嗨大家好！今天我們要來認識幾個在後端開發中超級實用的套件。這些套件就像是我們的得力助手，能讓我們的開發過程變得更加順暢。讓我們一起來看看吧！</p>
-<span id="more"></span>
-
-<div class="cus-intro-box">
-    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
-    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
-    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
-</div>
-
-<h2 id="1-cors：跨來源資源共用的守門員"><a href="#1-cors：跨來源資源共用的守門員" class="headerlink" title="1. cors：跨來源資源共用的守門員"></a>1. cors：跨來源資源共用的守門員</h2><h3 id="什麼是-cors？"><a href="#什麼是-cors？" class="headerlink" title="什麼是 cors？"></a>什麼是 cors？</h3><p>CORS（Cross-Origin Resource Sharing）是一種安全機制，用於控制網頁從不同源（網域）存取資源的權限。想像一下，CORS 就像是一個精明的門衛，決定哪些訪客可以進入你的網站後院。</p>
-<h3 id="為什麼需要它？"><a href="#為什麼需要它？" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>在現代網頁開發中，前端和後端經常部署在不同的網域上。如果沒有 CORS，瀏覽器會出於安全考慮，阻止前端向不同網域的後端發送請求。這就像是兩個不同國家的人想要通話，但是沒有國際電話服務一樣。CORS 就是那個讓我們能夠進行「國際通話」的服務。</p>
-<h3 id="如何使用："><a href="#如何使用：" class="headerlink" title="如何使用："></a>如何使用：</h3><p>使用 CORS 非常簡單，讓我們一步步來：</p>
-<ol>
-<li>首先，我們需要安裝 CORS 套件： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install cors</span><br></pre></td></tr></table></figure></li>
-<li>然後，在我們的 <code>app.js</code> 檔案中設定：<br>這樣設定後，所有來源的請求都會被允許，就像是給了所有人進入你後院的通行證。 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&#x27;cors&#x27;</span>);<span class="comment">// 引入 CORS 套件</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>());<span class="comment">// 允許所有來源的請求</span></span><br></pre></td></tr></table></figure></li>
-<li>如果你想要更嚴格的控制，可以這樣設定：<br>這樣就像是你告訴門衛：「只有來自 ‘<a href="http://yourfrontend.com/">http://yourfrontend.com</a>‘ 的訪客可以進來，而且他們只能用走的或跑的方式進入（GET 和 POST）。」 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>(&#123;</span><br><span class="line">  <span class="attr">origin</span>: <span class="string">&#x27;http://yourfrontend.com&#x27;</span>,<span class="comment">// 只允許這個網域的請求</span></span><br><span class="line">  <span class="attr">methods</span>: [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]<span class="comment">// 只允許 GET 和 POST 請求</span></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>💡 註解說明：<br>     - <strong>origin:</strong><br>         這個參數用來設置允許的前端來源。只有來自這個指定來源的請求才會通過 CORS 檢查。如果你想限制只有特定的網站或應用程序能夠訪問你的 API，這裡就可以指定該網站的 URL。<br>     - <strong>methods:</strong><br>         這個參數指定了允許的 HTTP 方法。例如，這裡的配置僅允許 GET 和 POST 請求。如果你的 API 僅支持這兩種方法，其他方法的請求將被拒絕。這樣可以防止其他類型的請求（如 PUT、DELETE）被不正當使用。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="2-dotenv：環境變數的管家"><a href="#2-dotenv：環境變數的管家" class="headerlink" title="2. dotenv：環境變數的管家"></a>2. dotenv：環境變數的管家</h2><h3 id="什麼是-dotenv？"><a href="#什麼是-dotenv？" class="headerlink" title="什麼是 dotenv？"></a>什麼是 dotenv？</h3><p>dotenv 就像是一個神奇的保險箱，可以安全地存放我們的秘密（環境變數），並在需要時輕鬆取用。它能夠將存儲在 <code>.env</code> 檔案中的環境變數載入到 <code>process.env</code> 中。</p>
-<h3 id="為什麼需要它？-1"><a href="#為什麼需要它？-1" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>在開發過程中，我們經常需要使用一些敏感資訊，比如資料庫密碼或 API 金鑰。把這些直接寫在程式碼裡是很危險的，尤其是當你的程式碼會被分享或公開時。dotenv 讓我們可以把這些敏感資訊安全地存放在 <code>.env</code> 檔案中，既方便管理又安全。</p>
-<h3 id="如何使用：-1"><a href="#如何使用：-1" class="headerlink" title="如何使用："></a>如何使用：</h3><p>讓我們一步步來設定 dotenv：</p>
-<ol>
-<li><p>首先安裝 dotenv：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install dotenv</span><br></pre></td></tr></table></figure></li>
-<li><p>在專案根目錄創建一個 <code>config.env</code> 檔案：<br> 這就像是在保險箱裡放入我們的秘密。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DB_HOST=localhost</span><br><span class="line">DB_USER=root</span><br><span class="line">DB_PASS=s1mpl3</span><br></pre></td></tr></table></figure>
-<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/20159686ab47g8lt4T.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/20159686ab47g8lt4T.png"></p>
-<blockquote>
-<p>💡 說明：環境變數檔案中的 Key-Value Pair（鍵值對）<br>     在環境變數檔案（例如 <code>.env</code> 或 <code>config.env</code>）中，變數是以 <strong>Key-Value Pair（鍵值對）</strong> 的形式表示的。這種格式幫助我們輕鬆管理和使用配置數據。<br>     ### Key-Value Pair 結構<br>     <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DB_HOST=localhost</span><br></pre></td></tr></table></figure><br>     - <strong>Key（鍵）:</strong><br>         - <code>DB_HOST</code> 是這個環境變數的 <strong>key</strong>，它是變數的名稱，告訴我們這個變數代表什麼。通常，key 使用全大寫字母並用 <code>_</code> 來分隔單詞。<br>     - <strong>Value（值）:</strong><br>         - <code>localhost</code> 是這個變數的 <strong>value</strong>，它是這個變數的具體內容。在這個例子中，<code>localhost</code> 指的是資料庫的主機位置。<br>     ### 為什麼使用 Key-Value Pair？<br>     - <strong>Key</strong> 是變數的名稱，你可以在程式中通過這個名稱來引用這個變數。<br>     - <strong>Value</strong> 是變數的實際值，代表這個變數的具體內容，比如地址、密碼、或其他配置資料。<br>     這樣的結構讓我們可以在程式中靈活使用不同的配置數據，並且能夠在不同環境中輕鬆切換配置，而不必改動程式碼。
- </p>
-</blockquote>
-</li>
-<li><p>在 <code>app.js</code> 中使用和測試 (記得要將專案 <code>npm start</code> 執行起來)：<br>這樣，我們就可以安全地在程式中使用這些環境變數了。</p>
- <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 將 .env 檔案中的變數載入到 process.env 中</span></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(process.<span class="property">env</span>.<span class="property">DB_HOST</span>); <span class="comment">// 從 process.env 中讀取並打印 DB_HOST 變數的值 // 這邊會得到 localhost</span></span><br></pre></td></tr></table></figure>
-<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/201596864mzj84h0Rr.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/201596864mzj84h0Rr.png"></p>
-</li>
-<li><p>別忘了保護你的秘密！將 <code>.env</code> 檔案加入 <code>.gitignore</code>：<br> 這樣可以確保你的秘密不會被不小心上傳到版本控制系統中。<br> 在專案根目錄新增一個 <code>.gitignore</code> 檔案，貼上範例程式碼：</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不要上傳套件包</span></span><br><span class="line">node_modules/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不要上傳 config.env</span></span><br><span class="line">config.env</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不要上傳所有 .env</span></span><br><span class="line">*.<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
-<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/20159686AFSrydiu0w.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/20159686AFSrydiu0w.png"></p>
-<blockquote>
-<p>💡 說明<br>     1. <strong>忽略特定檔案 <code>config.env</code></strong><br>         如果你有一個特定的環境變數檔案，如 <code>config.env</code>，可以通過在 <code>.gitignore</code> 中添加以下一行來忽略它：<br>         <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config.env</span><br></pre></td></tr></table></figure><br>     2. <strong>忽略所有 <code>.env</code> 結尾的檔案</strong><br>         若要忽略所有副檔名為 <code>.env</code> 的檔案（例如 <code>production.env</code> 或 <code>development.env</code>），可以添加：<br>         <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*.env</span><br></pre></td></tr></table></figure><br>     這樣設置後，無論是特定的 <code>config.env</code> 還是其他 <code>.env</code> 檔案，都將被 Git 忽略，保護你的敏感資訊不會被推送到遠端版本庫。</p>
-</blockquote>
-<blockquote>
-<p>版本控制 (github) 會在下一篇詳細教學歐</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="3-mongoose：MongoDB-的最佳拍檔"><a href="#3-mongoose：MongoDB-的最佳拍檔" class="headerlink" title="3. mongoose：MongoDB 的最佳拍檔"></a>3. mongoose：MongoDB 的最佳拍檔</h2><h3 id="什麼是-mongoose？"><a href="#什麼是-mongoose？" class="headerlink" title="什麼是 mongoose？"></a>什麼是 mongoose？</h3><p>Mongoose 是一個 ODM（Object Data Modeling）庫，它就像是 MongoDB 的私人翻譯官。它幫助我們用 JavaScript 對象的方式來操作 MongoDB 的文檔。</p>
-<h3 id="為什麼需要它？-2"><a href="#為什麼需要它？-2" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>MongoDB 本身就很強大，但 Mongoose 讓它變得更加易用。它提供了模式驗證、查詢構建等功能，讓我們可以更直觀、更安全地操作數據。使用 Mongoose，我們可以定義數據的結構，這樣就能確保存入數據庫的數據都是符合預期的。</p>
-<h3 id="安裝："><a href="#安裝：" class="headerlink" title="安裝："></a>安裝：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install mongoose</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>我們會在後續的課程中深入探討如何使用 Mongoose，敬請期待！</p>
-</blockquote>
-<h2 id="4-uuid：唯一識別碼生成器"><a href="#4-uuid：唯一識別碼生成器" class="headerlink" title="4. uuid：唯一識別碼生成器"></a>4. uuid：唯一識別碼生成器</h2><h3 id="什麼是-uuid？"><a href="#什麼是-uuid？" class="headerlink" title="什麼是 uuid？"></a>什麼是 uuid？</h3><p>UUID（Universally Unique Identifier）是一個 128 位元的數字，用於在網路中唯一地標識資訊。想像它是一個超級長的，幾乎不可能重複的序號。</p>
-<h3 id="為什麼需要它？-3"><a href="#為什麼需要它？-3" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>在開發中，我們經常需要生成唯一的標識符，比如用戶 ID、訂單編號等。UUID 保證了即使在不同的系統或時間點生成的 ID 也不會重複，這在分布式系統中特別有用。</p>
-<h3 id="如何使用：-2"><a href="#如何使用：-2" class="headerlink" title="如何使用："></a>如何使用：</h3><ol>
-<li><p>安裝 uuid：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install uuid</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在程式中使用：<br>每次調用 <code>uuidv4()</code> 都會生成一個新的、唯一的 ID。</p>
- <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&#x27;uuid&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">uuidv4</span>()); <span class="comment">// 輸出類似：&#x27;1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed&#x27;</span></span><br></pre></td></tr></table></figure>
-<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/201596864o9K0EGdZB.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/201596864o9K0EGdZB.png"></p>
-</li>
-</ol>
-<h2 id="今日範例程式碼-app-js"><a href="#今日範例程式碼-app-js" class="headerlink" title="今日範例程式碼 app.js"></a>今日範例程式碼 <code>app.js</code></h2><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> createError = <span class="built_in">require</span>(<span class="string">&#x27;http-errors&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">&#x27;cookie-parser&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">&#x27;morgan&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>); <span class="comment">// 引入允許跨網域套件 cors</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 .env 檔案中的變數載入到 process.env 中</span></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(process.<span class="property">env</span>.<span class="property">DB_HOST</span>); <span class="comment">// 從 process.env 中讀取並打印 DB_HOST 變數的值 // 這邊會得到 localhost</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&#x27;uuid&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">uuidv4</span>()); <span class="comment">// 輸出類似：&#x27;1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indexRouter = <span class="built_in">require</span>(<span class="string">&#x27;./routes/index&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> usersRouter = <span class="built_in">require</span>(<span class="string">&#x27;./routes/users&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>()); <span class="comment">// 全部放行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// view engine setup</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;views&#x27;</span>, path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;views&#x27;</span>));</span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">logger</span>(<span class="string">&#x27;dev&#x27;</span>));</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;public&#x27;</span>)));</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/&#x27;</span>, indexRouter);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/users&#x27;</span>, usersRouter);</span><br><span class="line"></span><br><span class="line"><span class="comment">// catch 404 and forward to error handler</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title function_">next</span>(<span class="title function_">createError</span>(<span class="number">404</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// error handler</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">err, req, res, next</span>) &#123;</span><br><span class="line">  <span class="comment">// set locals, only providing error in development</span></span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">message</span> = err.<span class="property">message</span>;</span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">error</span> = req.<span class="property">app</span>.<span class="title function_">get</span>(<span class="string">&#x27;env&#x27;</span>) === <span class="string">&#x27;development&#x27;</span> ? err : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// render the error page</span></span><br><span class="line">  res.<span class="title function_">status</span>(err.<span class="property">status</span> || <span class="number">500</span>);</span><br><span class="line">  res.<span class="title function_">render</span>(<span class="string">&#x27;error&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = app;</span><br></pre></td></tr></table></figure>
-
-<p>這些套件就像是我們的超級英雄團隊，各自有著獨特的本領，幫助我們構建更安全、更有效率的後端應用。透過正確使用它們，我們可以專注於開發應用的核心功能，而不必過多擔心底層的實現細節。<br>下次我們將深入探討如何使用這些工具構建更複雜的後端功能！記住，學習編程就像是一場冒險，每一步都充滿了新的發現。保持好奇心，勇於嘗試，你一定會成為出色的開發者！加油！💪✨<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
-<br />
-<hr />
-<br />
-
-<blockquote>
-<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>2024IT鐵人賽</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[ 2024 IT 鐵人賽 DAY11 ] Express 基礎：輕鬆進入後端世界</title>
     <url>/2024/09/20/2024it/d11/</url>
     <content><![CDATA[<p>嗨大家好！我是2魚，一個主攻前端的工程師。說實話，我也是今年初才在六角學院開始接觸後端的新手呢 🥹<br>還記得剛看到 Node.js 和 Express 時，真的是一頭霧水。不過現在，我已經能搭建簡單的後端應用了。今天想和大家分享一下我的學習心得，一起來探索後端開發的世界吧！<br>別被「後端」這個詞嚇到，我會用簡單的方式一步步解釋。畢竟，我也是剛從前端轉過來的，完全懂得入門時的各種困惑。準備好了嗎？我們開始吧！</p>
@@ -977,6 +892,91 @@
 <p>這段程式碼設定了應用的端口。如果沒有指定環境變數 PORT，它就會使用 3000。這解釋了為什麼我們的應用預設在 3000 端口啟動。<br>接著，這兩行程式碼創建並啟動了 HTTP 伺服器：</p>
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> server = http.<span class="title function_">createServer</span>(app);</span><br><span class="line">server.<span class="title function_">listen</span>(port);</span><br></pre></td></tr></table></figure>
 <p>其他還有一些錯誤處理的函數，比如 <code>onError</code>，用來處理啟動時可能遇到的問題。<code>onListening</code> 函數則在伺服器成功啟動時被調用。<br>總之，這個文件負責了伺服器的啟動過程。它設定端口，創建伺服器，然後開始監聽請求。<br>當運行 <code>npm start</code> 時，這個文件被執行，在 3000 端口（除非另有指定）啟動應用。這就是為什麼我們可以通過 <a href="http://localhost:3000/">http://localhost:3000/</a> 訪問應用。<br>理解這些背後的機制很有意思。雖然這些程式碼不是我寫的，但通過閱讀和理解它們，我對後端開發有了更深入的認識。<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>2024IT鐵人賽</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[ 2024 IT 鐵人賽 DAY12 ] 後端開發好幫手：四大套件使用指南</title>
+    <url>/2024/09/21/2024it/d12/</url>
+    <content><![CDATA[<p>嗨大家好！今天我們要來認識幾個在後端開發中超級實用的套件。這些套件就像是我們的得力助手，能讓我們的開發過程變得更加順暢。讓我們一起來看看吧！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="1-cors：跨來源資源共用的守門員"><a href="#1-cors：跨來源資源共用的守門員" class="headerlink" title="1. cors：跨來源資源共用的守門員"></a>1. cors：跨來源資源共用的守門員</h2><h3 id="什麼是-cors？"><a href="#什麼是-cors？" class="headerlink" title="什麼是 cors？"></a>什麼是 cors？</h3><p>CORS（Cross-Origin Resource Sharing）是一種安全機制，用於控制網頁從不同源（網域）存取資源的權限。想像一下，CORS 就像是一個精明的門衛，決定哪些訪客可以進入你的網站後院。</p>
+<h3 id="為什麼需要它？"><a href="#為什麼需要它？" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>在現代網頁開發中，前端和後端經常部署在不同的網域上。如果沒有 CORS，瀏覽器會出於安全考慮，阻止前端向不同網域的後端發送請求。這就像是兩個不同國家的人想要通話，但是沒有國際電話服務一樣。CORS 就是那個讓我們能夠進行「國際通話」的服務。</p>
+<h3 id="如何使用："><a href="#如何使用：" class="headerlink" title="如何使用："></a>如何使用：</h3><p>使用 CORS 非常簡單，讓我們一步步來：</p>
+<ol>
+<li>首先，我們需要安裝 CORS 套件： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install cors</span><br></pre></td></tr></table></figure></li>
+<li>然後，在我們的 <code>app.js</code> 檔案中設定：<br>這樣設定後，所有來源的請求都會被允許，就像是給了所有人進入你後院的通行證。 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&#x27;cors&#x27;</span>);<span class="comment">// 引入 CORS 套件</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>());<span class="comment">// 允許所有來源的請求</span></span><br></pre></td></tr></table></figure></li>
+<li>如果你想要更嚴格的控制，可以這樣設定：<br>這樣就像是你告訴門衛：「只有來自 ‘<a href="http://yourfrontend.com/">http://yourfrontend.com</a>‘ 的訪客可以進來，而且他們只能用走的或跑的方式進入（GET 和 POST）。」 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>(&#123;</span><br><span class="line">  <span class="attr">origin</span>: <span class="string">&#x27;http://yourfrontend.com&#x27;</span>,<span class="comment">// 只允許這個網域的請求</span></span><br><span class="line">  <span class="attr">methods</span>: [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]<span class="comment">// 只允許 GET 和 POST 請求</span></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 註解說明：<br>     - <strong>origin:</strong><br>         這個參數用來設置允許的前端來源。只有來自這個指定來源的請求才會通過 CORS 檢查。如果你想限制只有特定的網站或應用程序能夠訪問你的 API，這裡就可以指定該網站的 URL。<br>     - <strong>methods:</strong><br>         這個參數指定了允許的 HTTP 方法。例如，這裡的配置僅允許 GET 和 POST 請求。如果你的 API 僅支持這兩種方法，其他方法的請求將被拒絕。這樣可以防止其他類型的請求（如 PUT、DELETE）被不正當使用。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="2-dotenv：環境變數的管家"><a href="#2-dotenv：環境變數的管家" class="headerlink" title="2. dotenv：環境變數的管家"></a>2. dotenv：環境變數的管家</h2><h3 id="什麼是-dotenv？"><a href="#什麼是-dotenv？" class="headerlink" title="什麼是 dotenv？"></a>什麼是 dotenv？</h3><p>dotenv 就像是一個神奇的保險箱，可以安全地存放我們的秘密（環境變數），並在需要時輕鬆取用。它能夠將存儲在 <code>.env</code> 檔案中的環境變數載入到 <code>process.env</code> 中。</p>
+<h3 id="為什麼需要它？-1"><a href="#為什麼需要它？-1" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>在開發過程中，我們經常需要使用一些敏感資訊，比如資料庫密碼或 API 金鑰。把這些直接寫在程式碼裡是很危險的，尤其是當你的程式碼會被分享或公開時。dotenv 讓我們可以把這些敏感資訊安全地存放在 <code>.env</code> 檔案中，既方便管理又安全。</p>
+<h3 id="如何使用：-1"><a href="#如何使用：-1" class="headerlink" title="如何使用："></a>如何使用：</h3><p>讓我們一步步來設定 dotenv：</p>
+<ol>
+<li><p>首先安裝 dotenv：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install dotenv</span><br></pre></td></tr></table></figure></li>
+<li><p>在專案根目錄創建一個 <code>config.env</code> 檔案：<br> 這就像是在保險箱裡放入我們的秘密。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DB_HOST=localhost</span><br><span class="line">DB_USER=root</span><br><span class="line">DB_PASS=s1mpl3</span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/20159686ab47g8lt4T.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/20159686ab47g8lt4T.png"></p>
+<blockquote>
+<p>💡 說明：環境變數檔案中的 Key-Value Pair（鍵值對）<br>     在環境變數檔案（例如 <code>.env</code> 或 <code>config.env</code>）中，變數是以 <strong>Key-Value Pair（鍵值對）</strong> 的形式表示的。這種格式幫助我們輕鬆管理和使用配置數據。<br>     ### Key-Value Pair 結構<br>     <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DB_HOST=localhost</span><br></pre></td></tr></table></figure><br>     - <strong>Key（鍵）:</strong><br>         - <code>DB_HOST</code> 是這個環境變數的 <strong>key</strong>，它是變數的名稱，告訴我們這個變數代表什麼。通常，key 使用全大寫字母並用 <code>_</code> 來分隔單詞。<br>     - <strong>Value（值）:</strong><br>         - <code>localhost</code> 是這個變數的 <strong>value</strong>，它是這個變數的具體內容。在這個例子中，<code>localhost</code> 指的是資料庫的主機位置。<br>     ### 為什麼使用 Key-Value Pair？<br>     - <strong>Key</strong> 是變數的名稱，你可以在程式中通過這個名稱來引用這個變數。<br>     - <strong>Value</strong> 是變數的實際值，代表這個變數的具體內容，比如地址、密碼、或其他配置資料。<br>     這樣的結構讓我們可以在程式中靈活使用不同的配置數據，並且能夠在不同環境中輕鬆切換配置，而不必改動程式碼。
+ </p>
+</blockquote>
+</li>
+<li><p>在 <code>app.js</code> 中使用和測試 (記得要將專案 <code>npm start</code> 執行起來)：<br>這樣，我們就可以安全地在程式中使用這些環境變數了。</p>
+ <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 將 .env 檔案中的變數載入到 process.env 中</span></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(process.<span class="property">env</span>.<span class="property">DB_HOST</span>); <span class="comment">// 從 process.env 中讀取並打印 DB_HOST 變數的值 // 這邊會得到 localhost</span></span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/201596864mzj84h0Rr.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/201596864mzj84h0Rr.png"></p>
+</li>
+<li><p>別忘了保護你的秘密！將 <code>.env</code> 檔案加入 <code>.gitignore</code>：<br> 這樣可以確保你的秘密不會被不小心上傳到版本控制系統中。<br> 在專案根目錄新增一個 <code>.gitignore</code> 檔案，貼上範例程式碼：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不要上傳套件包</span></span><br><span class="line">node_modules/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不要上傳 config.env</span></span><br><span class="line">config.env</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不要上傳所有 .env</span></span><br><span class="line">*.<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/20159686AFSrydiu0w.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/20159686AFSrydiu0w.png"></p>
+<blockquote>
+<p>💡 說明<br>     1. <strong>忽略特定檔案 <code>config.env</code></strong><br>         如果你有一個特定的環境變數檔案，如 <code>config.env</code>，可以通過在 <code>.gitignore</code> 中添加以下一行來忽略它：<br>         <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config.env</span><br></pre></td></tr></table></figure><br>     2. <strong>忽略所有 <code>.env</code> 結尾的檔案</strong><br>         若要忽略所有副檔名為 <code>.env</code> 的檔案（例如 <code>production.env</code> 或 <code>development.env</code>），可以添加：<br>         <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*.env</span><br></pre></td></tr></table></figure><br>     這樣設置後，無論是特定的 <code>config.env</code> 還是其他 <code>.env</code> 檔案，都將被 Git 忽略，保護你的敏感資訊不會被推送到遠端版本庫。</p>
+</blockquote>
+<blockquote>
+<p>版本控制 (github) 會在下一篇詳細教學歐</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="3-mongoose：MongoDB-的最佳拍檔"><a href="#3-mongoose：MongoDB-的最佳拍檔" class="headerlink" title="3. mongoose：MongoDB 的最佳拍檔"></a>3. mongoose：MongoDB 的最佳拍檔</h2><h3 id="什麼是-mongoose？"><a href="#什麼是-mongoose？" class="headerlink" title="什麼是 mongoose？"></a>什麼是 mongoose？</h3><p>Mongoose 是一個 ODM（Object Data Modeling）庫，它就像是 MongoDB 的私人翻譯官。它幫助我們用 JavaScript 對象的方式來操作 MongoDB 的文檔。</p>
+<h3 id="為什麼需要它？-2"><a href="#為什麼需要它？-2" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>MongoDB 本身就很強大，但 Mongoose 讓它變得更加易用。它提供了模式驗證、查詢構建等功能，讓我們可以更直觀、更安全地操作數據。使用 Mongoose，我們可以定義數據的結構，這樣就能確保存入數據庫的數據都是符合預期的。</p>
+<h3 id="安裝："><a href="#安裝：" class="headerlink" title="安裝："></a>安裝：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install mongoose</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我們會在後續的課程中深入探討如何使用 Mongoose，敬請期待！</p>
+</blockquote>
+<h2 id="4-uuid：唯一識別碼生成器"><a href="#4-uuid：唯一識別碼生成器" class="headerlink" title="4. uuid：唯一識別碼生成器"></a>4. uuid：唯一識別碼生成器</h2><h3 id="什麼是-uuid？"><a href="#什麼是-uuid？" class="headerlink" title="什麼是 uuid？"></a>什麼是 uuid？</h3><p>UUID（Universally Unique Identifier）是一個 128 位元的數字，用於在網路中唯一地標識資訊。想像它是一個超級長的，幾乎不可能重複的序號。</p>
+<h3 id="為什麼需要它？-3"><a href="#為什麼需要它？-3" class="headerlink" title="為什麼需要它？"></a>為什麼需要它？</h3><p>在開發中，我們經常需要生成唯一的標識符，比如用戶 ID、訂單編號等。UUID 保證了即使在不同的系統或時間點生成的 ID 也不會重複，這在分布式系統中特別有用。</p>
+<h3 id="如何使用：-2"><a href="#如何使用：-2" class="headerlink" title="如何使用："></a>如何使用：</h3><ol>
+<li><p>安裝 uuid：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install uuid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在程式中使用：<br>每次調用 <code>uuidv4()</code> 都會生成一個新的、唯一的 ID。</p>
+ <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&#x27;uuid&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">uuidv4</span>()); <span class="comment">// 輸出類似：&#x27;1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed&#x27;</span></span><br></pre></td></tr></table></figure>
+<p> <img src="https://ithelp.ithome.com.tw/upload/images/20240921/201596864o9K0EGdZB.png" alt="https://ithelp.ithome.com.tw/upload/images/20240921/201596864o9K0EGdZB.png"></p>
+</li>
+</ol>
+<h2 id="今日範例程式碼-app-js"><a href="#今日範例程式碼-app-js" class="headerlink" title="今日範例程式碼 app.js"></a>今日範例程式碼 <code>app.js</code></h2><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> createError = <span class="built_in">require</span>(<span class="string">&#x27;http-errors&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">&#x27;cookie-parser&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">&#x27;morgan&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>); <span class="comment">// 引入允許跨網域套件 cors</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 .env 檔案中的變數載入到 process.env 中</span></span><br><span class="line"><span class="keyword">const</span> dotenv = <span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>);</span><br><span class="line">dotenv.<span class="title function_">config</span>(&#123; <span class="attr">path</span>: <span class="string">&quot;./config.env&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(process.<span class="property">env</span>.<span class="property">DB_HOST</span>); <span class="comment">// 從 process.env 中讀取並打印 DB_HOST 變數的值 // 這邊會得到 localhost</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&#x27;uuid&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">uuidv4</span>()); <span class="comment">// 輸出類似：&#x27;1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indexRouter = <span class="built_in">require</span>(<span class="string">&#x27;./routes/index&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> usersRouter = <span class="built_in">require</span>(<span class="string">&#x27;./routes/users&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>()); <span class="comment">// 全部放行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// view engine setup</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;views&#x27;</span>, path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;views&#x27;</span>));</span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">logger</span>(<span class="string">&#x27;dev&#x27;</span>));</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>());</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;public&#x27;</span>)));</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/&#x27;</span>, indexRouter);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/users&#x27;</span>, usersRouter);</span><br><span class="line"></span><br><span class="line"><span class="comment">// catch 404 and forward to error handler</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title function_">next</span>(<span class="title function_">createError</span>(<span class="number">404</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// error handler</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">err, req, res, next</span>) &#123;</span><br><span class="line">  <span class="comment">// set locals, only providing error in development</span></span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">message</span> = err.<span class="property">message</span>;</span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">error</span> = req.<span class="property">app</span>.<span class="title function_">get</span>(<span class="string">&#x27;env&#x27;</span>) === <span class="string">&#x27;development&#x27;</span> ? err : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// render the error page</span></span><br><span class="line">  res.<span class="title function_">status</span>(err.<span class="property">status</span> || <span class="number">500</span>);</span><br><span class="line">  res.<span class="title function_">render</span>(<span class="string">&#x27;error&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = app;</span><br></pre></td></tr></table></figure>
+
+<p>這些套件就像是我們的超級英雄團隊，各自有著獨特的本領，幫助我們構建更安全、更有效率的後端應用。透過正確使用它們，我們可以專注於開發應用的核心功能，而不必過多擔心底層的實現細節。<br>下次我們將深入探討如何使用這些工具構建更複雜的後端功能！記住，學習編程就像是一場冒險，每一步都充滿了新的發現。保持好奇心，勇於嘗試，你一定會成為出色的開發者！加油！💪✨<br>大家有沒有想要更詳細補充的部分呢？歡迎在下方留言分享喔！我們一起學習、一起成長。明天見啦，掰掰～</p>
 <br />
 <hr />
 <br />
@@ -3359,54 +3359,6 @@
       </tags>
   </entry>
   <entry>
-    <title>[ 2024 IT 鐵人賽 DAY3 ] 網站規劃三部曲：發想、收斂、畫網站地圖</title>
-    <url>/2024/09/12/2024it/d3/</url>
-    <content><![CDATA[<p>哈囉大家好！我是 2魚，今天是第三天鐵人賽，我們要來聊聊這個專案的規劃過程，從腦中的靈光一閃到具體的網站地圖，一起來看看這段有趣的歷程吧！</p>
-<span id="more"></span>
-
-<div class="cus-intro-box">
-    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
-    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
-    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
-</div>
-
-<h2 id="網站功能發想：從零到無限大！"><a href="#網站功能發想：從零到無限大！" class="headerlink" title="網站功能發想：從零到無限大！"></a>網站功能發想：從零到無限大！</h2><p>最一開始我只是想做個鸚鵡食物計算機而已，就是那種可以幫鸚鵡主人計算出每天要餵食多少的小工具。有了這個想法之後，我第一件事當然是先去 Google 一下啦！畢竟重複造輪子就不好玩了嘛！（而且身為工程師，我們都知道，先 Google 一下可以省下超多時間）<br>結果發現，大家做的都是知識分享、資料整理、買賣、訓練等等的網站… 欸？好像沒有人專門做食物計算機耶！這下我可興奮了，看來我找到一個小小的藍海市場了呢！<br>於是我就帶著我的主要功能，去找我的 AI 好朋友 GPT，跟他分享我的想法，順便問問他有沒有更多好意見。你們知道嗎？這位 AI 朋友超級大方，給了我一個超～長～的功能清單！真的是又驚又喜，我都不知道該說謝謝還是該說「欸欸冷靜一點」了啦！<br>（這邊省略 GPT 給的功能清單，因為太長了XD）</p>
-<h2 id="收斂專案-MVP-功能：Reality-Check-時間到！"><a href="#收斂專案-MVP-功能：Reality-Check-時間到！" class="headerlink" title="收斂專案 MVP 功能：Reality Check 時間到！"></a>收斂專案 MVP 功能：Reality Check 時間到！</h2><p>雖然 GPT 的想法讓人感動到要落淚，但現實總是殘酷的，對吧？身為一個剛出社會沒多久的菜鳥工程師，又是一人開發團隊（欸，等等，這樣說好像有點慘？），我們需要收斂自己最想做的功能，也就是所謂的最小可行產品（Minimum Viable Product，MVP）。</p>
-<blockquote>
-<p>小知識時間！MVP 是什麼咧？<br>MVP 就是一個產品的最早期版本，包含足夠的核心功能來滿足早期使用者，並且能夠收集使用者回饋以指導未來的開發。這個概念幫助開發者快速驗證產品想法，避免過度開發可能沒人要用的功能。簡單說，就是「先求有，再求好」的概念啦！</p>
-</blockquote>
-<p>經歷了一番激烈的思想鬥爭後（其實就是我左腦右腦吵了一架），我最後決定還是以食物計算機為主軸，再加上以下頁面作為第一版網站的 MVP：</p>
-<ol>
-<li>功能介紹的首頁：就是告訴大家這個網站在幹嘛的啦！</li>
-<li>醫療資訊頁面：因為健康很重要，對吧？</li>
-<li>鸚鵡資訊頁面：讓大家更了解這些可愛的小傢伙！</li>
-<li>食物資訊頁面：這可是我們的主角啊！</li>
-<li>回饋表單：畢竟要聽聽使用者的心聲嘛！</li>
-</ol>
-<p>這樣既能實現核心功能，又能提供足夠的附加價值，讓使用者對網站有更全面的了解。而且，這樣的規模對我來說也比較容易駕馭，不會還沒開始就先把自己嚇跑了（笑）。</p>
-<h2 id="網站地圖繪製：視覺化我們的藍圖！"><a href="#網站地圖繪製：視覺化我們的藍圖！" class="headerlink" title="網站地圖繪製：視覺化我們的藍圖！"></a>網站地圖繪製：視覺化我們的藍圖！</h2><p>說到網站地圖，很多人可能會覺得有點陌生，沒關係！讓我來簡單解釋一下：</p>
-<blockquote>
-<p>又來了！小知識時間～<br>網站地圖（Sitemap）是一個網站的結構示意圖，顯示了網站的所有頁面如何組織和連結。它不僅幫助開發者規劃網站結構，也能協助搜尋引擎更好地理解和索引網站內容。簡單說，就是畫出網站的骨架啦！</p>
-</blockquote>
-<p>製作網站地圖時，我們的 AI 好朋友 GPT 又派上用場了！這次我使用了 GPT 的擴充套件 Whimsical Diagrams。它能夠產出一個可以連結到 Whimsical（一個超好用的線上繪圖工具）的檔案。跳轉到 Whimsical 頁面後，我就可以根據需求進行修改調整，簡直是懶人救星啊！<br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/20159686xxUvfA8xis.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/20159686xxUvfA8xis.png"></p>
-<blockquote>
-<p>製作流程範例<br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/20159686ZducsLueuT.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/20159686ZducsLueuT.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/201596864Xv66QMpY4.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/201596864Xv66QMpY4.png"></p>
-</blockquote>
-<p>經過一番沉思和修改後（其實就是我邊喝咖啡邊戳戳點點啦），最終的網站地圖就暫定長這樣了：<br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/20159686fmtJbozSab.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/20159686fmtJbozSab.png"><br>看起來是不是很有模有樣啊？這個網站地圖清楚地展示了我們的 MVP 結構，讓整個開發過程更有方向感。有了這個藍圖，我就可以更有信心地開始實際的開發工作了！</p>
-<h2 id="結語：從想法到藍圖，我們的旅程才正要開始！"><a href="#結語：從想法到藍圖，我們的旅程才正要開始！" class="headerlink" title="結語：從想法到藍圖，我們的旅程才正要開始！"></a>結語：從想法到藍圖，我們的旅程才正要開始！</h2><p>好啦，今天就跟大家分享到這裡。從最初的「欸，來做個鸚鵡食物計算機好了」，到現在有了清晰的 MVP 功能和網站地圖，這個過程真的超有趣的！雖然還沒開始實際寫程式，但感覺我們的小專案已經開始有雛形了呢！<br>接下來的日子，我會繼續分享開發的過程，包括遇到的困難、學到的新知識，還有那些讓人又愛又恨的 Debug 時光（工程師的日常啊）。希望我的經驗能夠幫助到同樣在學習路上的你們！<br>如果你對這個專案有什麼想法或建議，歡迎在下面留言告訴我喔！我們一起討論、一起成長！明天見啦，掰掰～</p>
-<br />
-<hr />
-<br />
-
-<blockquote>
-<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>2024IT鐵人賽</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[ 2024 IT 鐵人賽 DAY29 ] Nuxt 3 專案最終章：Vercel 部署全攻略</title>
     <url>/2024/10/08/2024it/d29/</url>
     <content><![CDATA[<p>哈囉大家好！今天要來分享如何將我們辛苦製作的 Nuxt 3 專案部署到雲端。是不是聽起來很厲害？別擔心，跟著我一步一步來，保證你也能輕鬆搞定！</p>
@@ -3475,9 +3427,9 @@
       </tags>
   </entry>
   <entry>
-    <title>[ 2024 IT 鐵人賽 DAY4 ] 翱翔於需求與設計之間：鸚鵡網站的使用者故事與流程圖</title>
-    <url>/2024/09/13/2024it/d4/</url>
-    <content><![CDATA[<p>哈囉大家好！2魚又來啦～今天是鐵人賽的第四天，我們要來聊聊使用者故事和流程圖這兩個超級實用的工具！別擔心，雖然聽起來很專業，但我會用最簡單的方式解釋給大家聽喔！</p>
+    <title>[ 2024 IT 鐵人賽 DAY3 ] 網站規劃三部曲：發想、收斂、畫網站地圖</title>
+    <url>/2024/09/12/2024it/d3/</url>
+    <content><![CDATA[<p>哈囉大家好！我是 2魚，今天是第三天鐵人賽，我們要來聊聊這個專案的規劃過程，從腦中的靈光一閃到具體的網站地圖，一起來看看這段有趣的歷程吧！</p>
 <span id="more"></span>
 
 <div class="cus-intro-box">
@@ -3486,40 +3438,30 @@
     <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
 </div>
 
-<h2 id="使用者故事：站在使用者的角度思考"><a href="#使用者故事：站在使用者的角度思考" class="headerlink" title="使用者故事：站在使用者的角度思考"></a>使用者故事：站在使用者的角度思考</h2><p>首先，讓我們來認識一下「使用者故事」吧！<br>使用者故事是什麼呢？簡單來說，就是用一句話來描述「誰」要做「什麼事」，以及「為什麼」要這麼做。聽起來很簡單吧？但正是這種簡單的方式，讓我們能夠更容易地理解使用者的需求呢！</p>
-<p>使用者故事通常長這樣：<br>「作為一個【角色】，我想要【行動】，以便【達到某個目的】。」</p>
-<p>舉個例子：<br>「作為一位鸚鵡飼主，我想要使用食物計算機，以便準確計算我的鸚鵡每天應攝取的食物量。」<br>是不是一看就懂啦？這就是使用者故事的魔力！它簡單直接，讓我們能夠快速抓住重點，知道我們要為誰設計、設計什麼功能、以及這個功能的目的是什麼。<br>對了，使用者故事還有一個超厲害的地方！它能幫助我們專注在真正重要的事情上。畢竟，我們的目標是讓使用者開心，而不是堆砌一堆沒人要用的功能，對吧？<br>好啦，既然知道使用者故事這麼棒，那我們就來看看我們的「鸚鸚食堂」網站有哪些使用者故事吧！</p>
-<p>💡 鸚鸚食堂網站的使用者故事：</p>
-<ul>
-<li>作為一位網站訪客，我希望能夠瀏覽首頁，以快速了解網站的主要功能和內容。</li>
-<li>作為一位鸚鵡飼主，我想要使用食物計算機，以計算我的鸚鵡每天應攝取的食物量。</li>
-<li>作為一位關心鸚鵡健康的飼主，我希望能夠瀏覽營養指南頁面，以了解鸚鵡可食用和不可食用的食物。</li>
-<li>作為一位鸚鵡愛好者，我想要瀏覽百科全書頁面，以認識更多不同品種的鸚鵡。</li>
-<li>作為一位需要尋找獸醫的飼主，我希望能在醫護站頁面篩選我所在地區的醫院資訊。</li>
-<li>作為一位網站使用者，我想要通過聯絡我們頁面填寫表單，以提供使用網站的反饋和建議。<br>看完這些使用者故事，是不是對我們的網站要做什麼更清楚了呢？每一個故事都代表了一個重要的功能或頁面，這些都是我們接下來要努力實現的目標喔！</li>
-</ul>
-<h2 id="流程圖：讓想法變得更清晰"><a href="#流程圖：讓想法變得更清晰" class="headerlink" title="流程圖：讓想法變得更清晰"></a>流程圖：讓想法變得更清晰</h2><p>接下來，讓我們來認識另一個超級好用的工具：流程圖！</p>
-<p>流程圖聽起來很高深，但其實就是用一些簡單的圖形和箭頭，把一個過程或系統畫出來啦！它就像是我們思考的地圖，幫助我們整理腦中的想法，讓複雜的事情變得簡單明瞭。</p>
-<p>在流程圖中，我們會看到一些特定的圖形符號：</p>
+<h2 id="網站功能發想：從零到無限大！"><a href="#網站功能發想：從零到無限大！" class="headerlink" title="網站功能發想：從零到無限大！"></a>網站功能發想：從零到無限大！</h2><p>最一開始我只是想做個鸚鵡食物計算機而已，就是那種可以幫鸚鵡主人計算出每天要餵食多少的小工具。有了這個想法之後，我第一件事當然是先去 Google 一下啦！畢竟重複造輪子就不好玩了嘛！（而且身為工程師，我們都知道，先 Google 一下可以省下超多時間）<br>結果發現，大家做的都是知識分享、資料整理、買賣、訓練等等的網站… 欸？好像沒有人專門做食物計算機耶！這下我可興奮了，看來我找到一個小小的藍海市場了呢！<br>於是我就帶著我的主要功能，去找我的 AI 好朋友 GPT，跟他分享我的想法，順便問問他有沒有更多好意見。你們知道嗎？這位 AI 朋友超級大方，給了我一個超～長～的功能清單！真的是又驚又喜，我都不知道該說謝謝還是該說「欸欸冷靜一點」了啦！<br>（這邊省略 GPT 給的功能清單，因為太長了XD）</p>
+<h2 id="收斂專案-MVP-功能：Reality-Check-時間到！"><a href="#收斂專案-MVP-功能：Reality-Check-時間到！" class="headerlink" title="收斂專案 MVP 功能：Reality Check 時間到！"></a>收斂專案 MVP 功能：Reality Check 時間到！</h2><p>雖然 GPT 的想法讓人感動到要落淚，但現實總是殘酷的，對吧？身為一個剛出社會沒多久的菜鳥工程師，又是一人開發團隊（欸，等等，這樣說好像有點慘？），我們需要收斂自己最想做的功能，也就是所謂的最小可行產品（Minimum Viable Product，MVP）。</p>
+<blockquote>
+<p>小知識時間！MVP 是什麼咧？<br>MVP 就是一個產品的最早期版本，包含足夠的核心功能來滿足早期使用者，並且能夠收集使用者回饋以指導未來的開發。這個概念幫助開發者快速驗證產品想法，避免過度開發可能沒人要用的功能。簡單說，就是「先求有，再求好」的概念啦！</p>
+</blockquote>
+<p>經歷了一番激烈的思想鬥爭後（其實就是我左腦右腦吵了一架），我最後決定還是以食物計算機為主軸，再加上以下頁面作為第一版網站的 MVP：</p>
 <ol>
-<li>橢圓形：就像是起跑線和終點線，標誌著流程的開始和結束。</li>
-<li>矩形：這是我們的主角！代表具體的處理步驟或行動。</li>
-<li>菱形：遇到它就要做選擇啦！表示需要做出決策的判斷點。</li>
-<li>平行四邊形：負責資料的進出，代表數據的輸入或輸出。</li>
-<li>箭頭：指引方向的小幫手，告訴我們下一步該往哪走。</li>
+<li>功能介紹的首頁：就是告訴大家這個網站在幹嘛的啦！</li>
+<li>醫療資訊頁面：因為健康很重要，對吧？</li>
+<li>鸚鵡資訊頁面：讓大家更了解這些可愛的小傢伙！</li>
+<li>食物資訊頁面：這可是我們的主角啊！</li>
+<li>回饋表單：畢竟要聽聽使用者的心聲嘛！</li>
 </ol>
-<p>流程圖在網站開發中特別有用，它可以幫助我們：</p>
-<ol>
-<li>設計用戶體驗：規劃使用者怎麼跟網站互動。</li>
-<li>設計功能：詳細規劃每個功能要怎麼運作。</li>
-<li>規劃後端邏輯：思考資料要怎麼處理。</li>
-<li>規劃測試：設計全面的測試方案。</li>
-<li>處理錯誤：預想可能出錯的地方，並想出解決方法。</li>
-</ol>
-<p>畫流程圖就像是在為我們的網站畫設計圖，讓我們能夠更清楚地看到整個網站的結構和運作方式。這樣不只能幫助我們做出更好的設計，還能讓團隊的溝通更順暢呢！</p>
-<p><img src="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png" alt="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png"></p>
-<p>如果你對流程圖的製作技巧感興趣，可以參考這篇超詳細的教學文章：<a href="https://projectmanager.com.tw/%e5%b0%88%e6%a1%88%e7%ae%a1%e7%90%86/%e6%b5%81%e7%a8%8b%e5%9c%96-%e6%b5%81%e7%a8%8b%e5%9c%96%e8%a3%bd%e4%bd%9c-flow-chart/">【流程圖製作教學】流程圖符號規範+圖示說明 | Flow Chart範例 - ProjectManager</a>。裡面有更多關於流程圖的小技巧喔！</p>
-<h2 id="結語：用故事和圖畫，打造夢想中的網站！"><a href="#結語：用故事和圖畫，打造夢想中的網站！" class="headerlink" title="結語：用故事和圖畫，打造夢想中的網站！"></a>結語：用故事和圖畫，打造夢想中的網站！</h2><p>今天我們學到了使用者故事和流程圖這兩個超強工具！使用者故事幫助我們站在使用者的角度思考，而流程圖則讓我們的想法變得更加清晰。<br>接下來，我會為每個使用者故事畫一張流程圖，這樣不只能幫助我更好地理解每個功能該怎麼實現，也能讓大家更清楚地看到我的想法。期待之後能和大家分享這些流程圖喔！<br>記住，無論是寫程式還是規劃專案，最重要的就是把複雜的事情變簡單。使用者故事和流程圖就是幫助我們做到這一點的好幫手！<br>好啦，今天的分享就到這裡。如果你對使用者故事或流程圖有什麼想法，或是有什麼不懂的地方，歡迎在下面留言跟我討論喔！我們明天見～掰掰！</p>
+<p>這樣既能實現核心功能，又能提供足夠的附加價值，讓使用者對網站有更全面的了解。而且，這樣的規模對我來說也比較容易駕馭，不會還沒開始就先把自己嚇跑了（笑）。</p>
+<h2 id="網站地圖繪製：視覺化我們的藍圖！"><a href="#網站地圖繪製：視覺化我們的藍圖！" class="headerlink" title="網站地圖繪製：視覺化我們的藍圖！"></a>網站地圖繪製：視覺化我們的藍圖！</h2><p>說到網站地圖，很多人可能會覺得有點陌生，沒關係！讓我來簡單解釋一下：</p>
+<blockquote>
+<p>又來了！小知識時間～<br>網站地圖（Sitemap）是一個網站的結構示意圖，顯示了網站的所有頁面如何組織和連結。它不僅幫助開發者規劃網站結構，也能協助搜尋引擎更好地理解和索引網站內容。簡單說，就是畫出網站的骨架啦！</p>
+</blockquote>
+<p>製作網站地圖時，我們的 AI 好朋友 GPT 又派上用場了！這次我使用了 GPT 的擴充套件 Whimsical Diagrams。它能夠產出一個可以連結到 Whimsical（一個超好用的線上繪圖工具）的檔案。跳轉到 Whimsical 頁面後，我就可以根據需求進行修改調整，簡直是懶人救星啊！<br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/20159686xxUvfA8xis.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/20159686xxUvfA8xis.png"></p>
+<blockquote>
+<p>製作流程範例<br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/20159686ZducsLueuT.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/20159686ZducsLueuT.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/201596864Xv66QMpY4.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/201596864Xv66QMpY4.png"></p>
+</blockquote>
+<p>經過一番沉思和修改後（其實就是我邊喝咖啡邊戳戳點點啦），最終的網站地圖就暫定長這樣了：<br><img src="https://ithelp.ithome.com.tw/upload/images/20240912/20159686fmtJbozSab.png" alt="https://ithelp.ithome.com.tw/upload/images/20240912/20159686fmtJbozSab.png"><br>看起來是不是很有模有樣啊？這個網站地圖清楚地展示了我們的 MVP 結構，讓整個開發過程更有方向感。有了這個藍圖，我就可以更有信心地開始實際的開發工作了！</p>
+<h2 id="結語：從想法到藍圖，我們的旅程才正要開始！"><a href="#結語：從想法到藍圖，我們的旅程才正要開始！" class="headerlink" title="結語：從想法到藍圖，我們的旅程才正要開始！"></a>結語：從想法到藍圖，我們的旅程才正要開始！</h2><p>好啦，今天就跟大家分享到這裡。從最初的「欸，來做個鸚鵡食物計算機好了」，到現在有了清晰的 MVP 功能和網站地圖，這個過程真的超有趣的！雖然還沒開始實際寫程式，但感覺我們的小專案已經開始有雛形了呢！<br>接下來的日子，我會繼續分享開發的過程，包括遇到的困難、學到的新知識，還有那些讓人又愛又恨的 Debug 時光（工程師的日常啊）。希望我的經驗能夠幫助到同樣在學習路上的你們！<br>如果你對這個專案有什麼想法或建議，歡迎在下面留言告訴我喔！我們一起討論、一起成長！明天見啦，掰掰～</p>
 <br />
 <hr />
 <br />
@@ -3583,6 +3525,129 @@
 <p>接著就是航校的日子了。去過航校的人都懂，沒去過的…嗯，不知道可能比較好。那裡真的不是人待的地方。<br>最後，我以不錯的成績畢業，自選到了空軍第一後勤指揮部。當時只能選擇專長名稱和地點，下部隊後才知道是做後勤文書類的工作。本來以為終於找到理想的工作環境，結果辦公室裡都是老學長姐，融入起來有點困難。<br>更糟的是，我來沒多久，一連走了三位比我早來的學長姐，他們的業務全都落到我一個人身上。工作量大得讓人喘不過氣，學長姐們不願意幫忙就算了，還一直找麻煩。最後，我決定當個「爛草莓」，直接申請退伍。</p>
 <p>轉職成為前端工程師的路並不平坦。我經歷了無數個日夜的苦惱和不知所措，常常感覺像是在迷霧中摸索前進。但我從未放棄，不斷地查資料、請教老師、諮詢 AI，努力找尋前進的方向。<br>最讓我感恩的是，我遇到了一群志同道合的同學。我們一起討論問題、合作專案，甚至還一起參加比賽寫文章！正是這些經歷，讓我在轉職的道路上不至於感到孤單。<br>如今，我不只成功轉職，還有機會帶領一群新手朋友們做專題（目前是個美食地圖項目）。雖然最近他們的學習熱情有點低落（也許是因為免費的東西總是缺乏動力？哈哈），但我仍然樂在其中。<br>我深知轉職路上的艱辛，所以現在的我希望能夠幫助更多人少走一些彎路。如果你正在考慮轉職，或是在學習路上感到迷茫，歡迎來跟我聊聊天！也許我能為你指點一二，或者只是單純地給你一些鼓勵。</p>
 <p>記住，每個人的轉職故事都是獨一無二的。無論你現在在哪個階段，只要保持熱情和毅力，終會找到屬於自己的一片天！加油！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>2024IT鐵人賽</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[ 2024 IT 鐵人賽 DAY4 ] 翱翔於需求與設計之間：鸚鵡網站的使用者故事與流程圖</title>
+    <url>/2024/09/13/2024it/d4/</url>
+    <content><![CDATA[<p>哈囉大家好！2魚又來啦～今天是鐵人賽的第四天，我們要來聊聊使用者故事和流程圖這兩個超級實用的工具！別擔心，雖然聽起來很專業，但我會用最簡單的方式解釋給大家聽喔！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="使用者故事：站在使用者的角度思考"><a href="#使用者故事：站在使用者的角度思考" class="headerlink" title="使用者故事：站在使用者的角度思考"></a>使用者故事：站在使用者的角度思考</h2><p>首先，讓我們來認識一下「使用者故事」吧！<br>使用者故事是什麼呢？簡單來說，就是用一句話來描述「誰」要做「什麼事」，以及「為什麼」要這麼做。聽起來很簡單吧？但正是這種簡單的方式，讓我們能夠更容易地理解使用者的需求呢！</p>
+<p>使用者故事通常長這樣：<br>「作為一個【角色】，我想要【行動】，以便【達到某個目的】。」</p>
+<p>舉個例子：<br>「作為一位鸚鵡飼主，我想要使用食物計算機，以便準確計算我的鸚鵡每天應攝取的食物量。」<br>是不是一看就懂啦？這就是使用者故事的魔力！它簡單直接，讓我們能夠快速抓住重點，知道我們要為誰設計、設計什麼功能、以及這個功能的目的是什麼。<br>對了，使用者故事還有一個超厲害的地方！它能幫助我們專注在真正重要的事情上。畢竟，我們的目標是讓使用者開心，而不是堆砌一堆沒人要用的功能，對吧？<br>好啦，既然知道使用者故事這麼棒，那我們就來看看我們的「鸚鸚食堂」網站有哪些使用者故事吧！</p>
+<p>💡 鸚鸚食堂網站的使用者故事：</p>
+<ul>
+<li>作為一位網站訪客，我希望能夠瀏覽首頁，以快速了解網站的主要功能和內容。</li>
+<li>作為一位鸚鵡飼主，我想要使用食物計算機，以計算我的鸚鵡每天應攝取的食物量。</li>
+<li>作為一位關心鸚鵡健康的飼主，我希望能夠瀏覽營養指南頁面，以了解鸚鵡可食用和不可食用的食物。</li>
+<li>作為一位鸚鵡愛好者，我想要瀏覽百科全書頁面，以認識更多不同品種的鸚鵡。</li>
+<li>作為一位需要尋找獸醫的飼主，我希望能在醫護站頁面篩選我所在地區的醫院資訊。</li>
+<li>作為一位網站使用者，我想要通過聯絡我們頁面填寫表單，以提供使用網站的反饋和建議。<br>看完這些使用者故事，是不是對我們的網站要做什麼更清楚了呢？每一個故事都代表了一個重要的功能或頁面，這些都是我們接下來要努力實現的目標喔！</li>
+</ul>
+<h2 id="流程圖：讓想法變得更清晰"><a href="#流程圖：讓想法變得更清晰" class="headerlink" title="流程圖：讓想法變得更清晰"></a>流程圖：讓想法變得更清晰</h2><p>接下來，讓我們來認識另一個超級好用的工具：流程圖！</p>
+<p>流程圖聽起來很高深，但其實就是用一些簡單的圖形和箭頭，把一個過程或系統畫出來啦！它就像是我們思考的地圖，幫助我們整理腦中的想法，讓複雜的事情變得簡單明瞭。</p>
+<p>在流程圖中，我們會看到一些特定的圖形符號：</p>
+<ol>
+<li>橢圓形：就像是起跑線和終點線，標誌著流程的開始和結束。</li>
+<li>矩形：這是我們的主角！代表具體的處理步驟或行動。</li>
+<li>菱形：遇到它就要做選擇啦！表示需要做出決策的判斷點。</li>
+<li>平行四邊形：負責資料的進出，代表數據的輸入或輸出。</li>
+<li>箭頭：指引方向的小幫手，告訴我們下一步該往哪走。</li>
+</ol>
+<p>流程圖在網站開發中特別有用，它可以幫助我們：</p>
+<ol>
+<li>設計用戶體驗：規劃使用者怎麼跟網站互動。</li>
+<li>設計功能：詳細規劃每個功能要怎麼運作。</li>
+<li>規劃後端邏輯：思考資料要怎麼處理。</li>
+<li>規劃測試：設計全面的測試方案。</li>
+<li>處理錯誤：預想可能出錯的地方，並想出解決方法。</li>
+</ol>
+<p>畫流程圖就像是在為我們的網站畫設計圖，讓我們能夠更清楚地看到整個網站的結構和運作方式。這樣不只能幫助我們做出更好的設計，還能讓團隊的溝通更順暢呢！</p>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png" alt="https://ithelp.ithome.com.tw/upload/images/20240913/20159686zZXF6BXWc5.png"></p>
+<p>如果你對流程圖的製作技巧感興趣，可以參考這篇超詳細的教學文章：<a href="https://projectmanager.com.tw/%e5%b0%88%e6%a1%88%e7%ae%a1%e7%90%86/%e6%b5%81%e7%a8%8b%e5%9c%96-%e6%b5%81%e7%a8%8b%e5%9c%96%e8%a3%bd%e4%bd%9c-flow-chart/">【流程圖製作教學】流程圖符號規範+圖示說明 | Flow Chart範例 - ProjectManager</a>。裡面有更多關於流程圖的小技巧喔！</p>
+<h2 id="結語：用故事和圖畫，打造夢想中的網站！"><a href="#結語：用故事和圖畫，打造夢想中的網站！" class="headerlink" title="結語：用故事和圖畫，打造夢想中的網站！"></a>結語：用故事和圖畫，打造夢想中的網站！</h2><p>今天我們學到了使用者故事和流程圖這兩個超強工具！使用者故事幫助我們站在使用者的角度思考，而流程圖則讓我們的想法變得更加清晰。<br>接下來，我會為每個使用者故事畫一張流程圖，這樣不只能幫助我更好地理解每個功能該怎麼實現，也能讓大家更清楚地看到我的想法。期待之後能和大家分享這些流程圖喔！<br>記住，無論是寫程式還是規劃專案，最重要的就是把複雜的事情變簡單。使用者故事和流程圖就是幫助我們做到這一點的好幫手！<br>好啦，今天的分享就到這裡。如果你對使用者故事或流程圖有什麼想法，或是有什麼不懂的地方，歡迎在下面留言跟我討論喔！我們明天見～掰掰！</p>
+<br />
+<hr />
+<br />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>2024IT鐵人賽</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[ 2024 IT 鐵人賽 DAY5 ] 當線條開始敘事：用線稿圖探索網站設計的起點</title>
+    <url>/2024/09/14/2024it/d5/</url>
+    <content><![CDATA[<p>哈囉大家好！我是 2魚，今天是鐵人賽的第五天啦！今天我們要來聊聊一個超級有趣又實用的東西：線稿圖（Wireframe）！沒錯，就是那個看起來像草稿，卻能讓你的網站設計事半功倍的神奇工具！</p>
+<span id="more"></span>
+
+<div class="cus-intro-box">
+    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
+    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
+    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
+</div>
+
+<h2 id="線稿圖：把腦中的想法變成圖！"><a href="#線稿圖：把腦中的想法變成圖！" class="headerlink" title="線稿圖：把腦中的想法變成圖！"></a>線稿圖：把腦中的想法變成圖！</h2><p>首先，讓我們來認識一下什麼是線稿圖吧！<br>線稿圖就像是網頁或 APP 的設計草圖。它用簡單的線條和方框展示頁面的結構、功能佈局和內容層次。簡單來說，就是把我們腦中的想法，用最簡單的方式畫出來啦！</p>
+<p>為什麼線稿圖這麼重要呢？讓我們來看看它的神奇之處：</p>
+<ol>
+<li>溝通神器：它能幫助設計師、工程師和老闆們達成共識，避免「你說你的，我做我的」的尷尬情況。</li>
+<li>快速修改：因為很簡單，所以很容易改。想到新點子？馬上就能畫出來！</li>
+<li>專注重點：不會被漂亮的顏色和花俏的設計分心，讓我們能專心思考功能和使用者體驗。</li>
+<li>省時省錢：在早期就發現問題，比等到做好才發現問題省下超多時間和金錢！</li>
+</ol>
+<h2 id="線稿圖的特色：簡單就是美！"><a href="#線稿圖的特色：簡單就是美！" class="headerlink" title="線稿圖的特色：簡單就是美！"></a>線稿圖的特色：簡單就是美！</h2><p>線稿圖有幾個重要的特點：</p>
+<ol>
+<li>簡潔：就像速寫一樣，用最簡單的線條和方框表達想法。</li>
+<li>快速：能迅速把腦中的想法變成圖，方便團隊討論和修改。</li>
+<li>重點突出：突顯頁面結構和功能，不被漂亮的視覺設計分散注意力。</li>
+<li>靈活：很容易調整和優化，隨時跟上設計需求的變化。</li>
+<li>清晰：清楚地展示內容的層次和重要性，讓人一目了然。</li>
+</ol>
+<h2 id="我的選擇：Whimsical"><a href="#我的選擇：Whimsical" class="headerlink" title="我的選擇：Whimsical"></a>我的選擇：Whimsical</h2><p>這次我選擇了 Whimsical 作為主要的線稿圖工具。為什麼選它呢？原因如下：</p>
+<ul>
+<li>超級簡單好上手：對我這種新手來說，學習曲線超平緩的！</li>
+<li>元素庫超豐富：各種現成的線稿圖元素，讓我畫圖速度飛快！</li>
+<li>支援團隊協作：雖然我是一人開發團隊啦，但想到以後可能會用到，就先學起來！</li>
+<li>免費版功能就很夠用：身為一個剛出社會的菜鳥工程師，錢包還是要精打細算的嘛！<br>當然，市面上還有其他不錯的工具，像是 Miro（適合大型專案）和 Figma（可以從線稿圖一路做到高保真原型）。不過對現在的我來說，Whimsical 已經很夠用啦！</li>
+</ul>
+<h2 id="實戰經驗：線稿圖繪製小撇步"><a href="#實戰經驗：線稿圖繪製小撇步" class="headerlink" title="實戰經驗：線稿圖繪製小撇步"></a>實戰經驗：線稿圖繪製小撇步</h2><p>在實際畫線稿圖的過程中，我整理了幾個小技巧，跟大家分享：</p>
+<ol>
+<li>對照流程圖：一定要時不時看看之前畫的流程圖，確保沒有漏掉重要的功能。</li>
+<li>別忘了「返回」：每個頁面都要有明確的返回選項，讓使用者不會迷路。</li>
+<li>用真實文案：儘量用真的文字內容，不要全部都是 Lorem Ipsum。這樣更能感受實際效果！</li>
+<li>重視結構不重視美觀：這時候不用在意美不美，重點是結構對不對！</li>
+<li>先畫電腦版：先把電腦版的頁面畫好，手機版可以之後再調整。</li>
+<li>標註互動行為：比如說點擊後會怎樣，這樣開發時就不會搞錯意思啦！</li>
+<li>考慮極端情況：想像一下如果內容超級多或超級少，頁面會變成什麼樣子。</li>
+</ol>
+<h2 id="意外收穫：鸚鵡食量計算公式"><a href="#意外收穫：鸚鵡食量計算公式" class="headerlink" title="意外收穫：鸚鵡食量計算公式"></a>意外收穫：鸚鵡食量計算公式</h2><p>在畫線稿圖的過程中，我遇到了一個有趣的小挑戰。身為一個沒養過鸚鵡的人，我突然發現我對鸚鵡的日常飲食需求一無所知！這可怎麼辦？<br>於是我開始了一段驚奇的網路衝浪之旅。在翻閱了無數鸚鵡飼養網站和論壇後，我終於找到了這個寶貴的公式：</p>
+<blockquote>
+<p>$BMR &#x3D; 70 * (體重) ^ 0.75 &#x3D; ＿＿ kcal&#x2F;日</p>
+</blockquote>
+<p>看到這個公式時，我真的鬆了一口氣！原來鸚鵡的食量計算也是有科學根據的呀！這次的小插曲不僅解決了我的設計難題，還讓我對鸚鵡的日常生活有了新的認識。<br>這次經歷讓我意識到，在設計過程中，我們有時候需要學習一些意料之外的知識。即使是看似不相關的資訊，也可能對我們的設計和規劃有意想不到的幫助呢！</p>
+<h2 id="我的線稿圖成果"><a href="#我的線稿圖成果" class="headerlink" title="我的線稿圖成果"></a>我的線稿圖成果</h2><p>經過一番努力，我終於完成了「鸚鸚食堂」的主要頁面線稿圖。雖然還沒有畫首頁（我打算等確定完整功能後再畫），但其他頁面已經有了大致的樣子。<br>至於我畫的長什麼樣子，獻醜了 qq</p>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686cDVWto1UoY.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686cDVWto1UoY.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686iHE9vCuCwG.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686iHE9vCuCwG.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686RuGaL3er4v.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686RuGaL3er4v.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686lHu1ZxYi47.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686lHu1ZxYi47.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686PvHoXz9mjg.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686PvHoXz9mjg.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686JQX6U5Odq3.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686JQX6U5Odq3.png"></p>
+<h2 id="結語：從腦中的想法到具體的圖"><a href="#結語：從腦中的想法到具體的圖" class="headerlink" title="結語：從腦中的想法到具體的圖"></a>結語：從腦中的想法到具體的圖</h2><p>今天我們學習了線稿圖這個超級實用的工具。它幫助我們把腦中模糊的想法變成具體的圖形，為後續的設計和開發鋪平了道路。<br>通過繪製線稿圖，我不僅更清楚地看到了「鸚鸚食堂」的樣子，還意外學到了鸚鵡的食量計算方法！這再次證明，在開發過程中，我們總是能學到意想不到的新知識。<br>記住，線稿圖的重點不在於美觀，而在於清晰地表達你的想法。所以不要怕畫得不夠漂亮，重要的是把你的構想表達出來！<br>好啦，今天的分享就到這裡。如果你對線稿圖有什麼想法，或是有什麼不懂的地方，歡迎在下面留言跟我討論喔！我們明天見～掰掰！</p>
 <br />
 <hr />
 <br />
@@ -3872,71 +3937,6 @@
 <li>如何表示食物的營養成分？</li>
 </ol>
 <h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>哇，今天我們真的學了超多東西呢！從關聯式資料庫和 NoSQL 的比較，到 MongoDB 的特性，再到實際的資料表設計，我們可說是來了一趟資料庫的小旅行。<br>回顧一下，我們了解了為什麼選擇 MongoDB 作為我們的資料庫，學會了如何設計基本的資料結構，還動手設計了「鸚鵡食堂」的第一個資料集合。這些知識不只適用於這個專案，在未來的開發工作中也一定會派上用場！<br>雖然資料庫設計看起來有點抽象，但它就像是在為我們的網站打地基。有了好的資料結構，我們後續的開發工作就能事半功倍了！<br>明天，我們將開始實際操作 MongoDB，把今天學到的概念真正應用到專案中。我已經迫不及待要開始實作了，你們呢？<br>如果你對今天的內容有任何疑問，或是想分享你的資料庫設計經驗，歡迎在下方留言喔！讓我們一起學習、一起成長。明天見啦，掰掰～</p>
-<br />
-<hr />
-<br />
-
-<blockquote>
-<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>2024IT鐵人賽</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[ 2024 IT 鐵人賽 DAY5 ] 當線條開始敘事：用線稿圖探索網站設計的起點</title>
-    <url>/2024/09/14/2024it/d5/</url>
-    <content><![CDATA[<p>哈囉大家好！我是 2魚，今天是鐵人賽的第五天啦！今天我們要來聊聊一個超級有趣又實用的東西：線稿圖（Wireframe）！沒錯，就是那個看起來像草稿，卻能讓你的網站設計事半功倍的神奇工具！</p>
-<span id="more"></span>
-
-<div class="cus-intro-box">
-    <h2>房東不給養鸚鵡 - 那就用 Nuxt + Express + MongoDB 30 天寫一個全端鸚鵡專案。</h2>
-    <p>挑戰人生第一次鐵人賽，就來個佛心分享 side project，從專案發想、規劃、設計、資料庫、開發到部署，技術使用 Nuxt 3、Tailwind CSS、Pinia、Axios、Express、MongoDB，製作一個前後端分離的鸚鵡專案，功能主要介紹食物計算機和聯絡我們，希望可以讓更多人瞭解專案的完整流程 ✨</p>
-    <a href="https://ithelp.ithome.com.tw/users/20159686/ironman/7564" target="_blank">IT 全文章連結</a>
-</div>
-
-<h2 id="線稿圖：把腦中的想法變成圖！"><a href="#線稿圖：把腦中的想法變成圖！" class="headerlink" title="線稿圖：把腦中的想法變成圖！"></a>線稿圖：把腦中的想法變成圖！</h2><p>首先，讓我們來認識一下什麼是線稿圖吧！<br>線稿圖就像是網頁或 APP 的設計草圖。它用簡單的線條和方框展示頁面的結構、功能佈局和內容層次。簡單來說，就是把我們腦中的想法，用最簡單的方式畫出來啦！</p>
-<p>為什麼線稿圖這麼重要呢？讓我們來看看它的神奇之處：</p>
-<ol>
-<li>溝通神器：它能幫助設計師、工程師和老闆們達成共識，避免「你說你的，我做我的」的尷尬情況。</li>
-<li>快速修改：因為很簡單，所以很容易改。想到新點子？馬上就能畫出來！</li>
-<li>專注重點：不會被漂亮的顏色和花俏的設計分心，讓我們能專心思考功能和使用者體驗。</li>
-<li>省時省錢：在早期就發現問題，比等到做好才發現問題省下超多時間和金錢！</li>
-</ol>
-<h2 id="線稿圖的特色：簡單就是美！"><a href="#線稿圖的特色：簡單就是美！" class="headerlink" title="線稿圖的特色：簡單就是美！"></a>線稿圖的特色：簡單就是美！</h2><p>線稿圖有幾個重要的特點：</p>
-<ol>
-<li>簡潔：就像速寫一樣，用最簡單的線條和方框表達想法。</li>
-<li>快速：能迅速把腦中的想法變成圖，方便團隊討論和修改。</li>
-<li>重點突出：突顯頁面結構和功能，不被漂亮的視覺設計分散注意力。</li>
-<li>靈活：很容易調整和優化，隨時跟上設計需求的變化。</li>
-<li>清晰：清楚地展示內容的層次和重要性，讓人一目了然。</li>
-</ol>
-<h2 id="我的選擇：Whimsical"><a href="#我的選擇：Whimsical" class="headerlink" title="我的選擇：Whimsical"></a>我的選擇：Whimsical</h2><p>這次我選擇了 Whimsical 作為主要的線稿圖工具。為什麼選它呢？原因如下：</p>
-<ul>
-<li>超級簡單好上手：對我這種新手來說，學習曲線超平緩的！</li>
-<li>元素庫超豐富：各種現成的線稿圖元素，讓我畫圖速度飛快！</li>
-<li>支援團隊協作：雖然我是一人開發團隊啦，但想到以後可能會用到，就先學起來！</li>
-<li>免費版功能就很夠用：身為一個剛出社會的菜鳥工程師，錢包還是要精打細算的嘛！<br>當然，市面上還有其他不錯的工具，像是 Miro（適合大型專案）和 Figma（可以從線稿圖一路做到高保真原型）。不過對現在的我來說，Whimsical 已經很夠用啦！</li>
-</ul>
-<h2 id="實戰經驗：線稿圖繪製小撇步"><a href="#實戰經驗：線稿圖繪製小撇步" class="headerlink" title="實戰經驗：線稿圖繪製小撇步"></a>實戰經驗：線稿圖繪製小撇步</h2><p>在實際畫線稿圖的過程中，我整理了幾個小技巧，跟大家分享：</p>
-<ol>
-<li>對照流程圖：一定要時不時看看之前畫的流程圖，確保沒有漏掉重要的功能。</li>
-<li>別忘了「返回」：每個頁面都要有明確的返回選項，讓使用者不會迷路。</li>
-<li>用真實文案：儘量用真的文字內容，不要全部都是 Lorem Ipsum。這樣更能感受實際效果！</li>
-<li>重視結構不重視美觀：這時候不用在意美不美，重點是結構對不對！</li>
-<li>先畫電腦版：先把電腦版的頁面畫好，手機版可以之後再調整。</li>
-<li>標註互動行為：比如說點擊後會怎樣，這樣開發時就不會搞錯意思啦！</li>
-<li>考慮極端情況：想像一下如果內容超級多或超級少，頁面會變成什麼樣子。</li>
-</ol>
-<h2 id="意外收穫：鸚鵡食量計算公式"><a href="#意外收穫：鸚鵡食量計算公式" class="headerlink" title="意外收穫：鸚鵡食量計算公式"></a>意外收穫：鸚鵡食量計算公式</h2><p>在畫線稿圖的過程中，我遇到了一個有趣的小挑戰。身為一個沒養過鸚鵡的人，我突然發現我對鸚鵡的日常飲食需求一無所知！這可怎麼辦？<br>於是我開始了一段驚奇的網路衝浪之旅。在翻閱了無數鸚鵡飼養網站和論壇後，我終於找到了這個寶貴的公式：</p>
-<blockquote>
-<p>$BMR &#x3D; 70 * (體重) ^ 0.75 &#x3D; ＿＿ kcal&#x2F;日</p>
-</blockquote>
-<p>看到這個公式時，我真的鬆了一口氣！原來鸚鵡的食量計算也是有科學根據的呀！這次的小插曲不僅解決了我的設計難題，還讓我對鸚鵡的日常生活有了新的認識。<br>這次經歷讓我意識到，在設計過程中，我們有時候需要學習一些意料之外的知識。即使是看似不相關的資訊，也可能對我們的設計和規劃有意想不到的幫助呢！</p>
-<h2 id="我的線稿圖成果"><a href="#我的線稿圖成果" class="headerlink" title="我的線稿圖成果"></a>我的線稿圖成果</h2><p>經過一番努力，我終於完成了「鸚鸚食堂」的主要頁面線稿圖。雖然還沒有畫首頁（我打算等確定完整功能後再畫），但其他頁面已經有了大致的樣子。<br>至於我畫的長什麼樣子，獻醜了 qq</p>
-<p><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686cDVWto1UoY.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686cDVWto1UoY.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686iHE9vCuCwG.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686iHE9vCuCwG.png"><br><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686RuGaL3er4v.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686RuGaL3er4v.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686lHu1ZxYi47.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686lHu1ZxYi47.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686PvHoXz9mjg.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686PvHoXz9mjg.png"><img src="https://ithelp.ithome.com.tw/upload/images/20240914/20159686JQX6U5Odq3.png" alt="https://ithelp.ithome.com.tw/upload/images/20240914/20159686JQX6U5Odq3.png"></p>
-<h2 id="結語：從腦中的想法到具體的圖"><a href="#結語：從腦中的想法到具體的圖" class="headerlink" title="結語：從腦中的想法到具體的圖"></a>結語：從腦中的想法到具體的圖</h2><p>今天我們學習了線稿圖這個超級實用的工具。它幫助我們把腦中模糊的想法變成具體的圖形，為後續的設計和開發鋪平了道路。<br>通過繪製線稿圖，我不僅更清楚地看到了「鸚鸚食堂」的樣子，還意外學到了鸚鵡的食量計算方法！這再次證明，在開發過程中，我們總是能學到意想不到的新知識。<br>記住，線稿圖的重點不在於美觀，而在於清晰地表達你的想法。所以不要怕畫得不夠漂亮，重要的是把你的構想表達出來！<br>好啦，今天的分享就到這裡。如果你對線稿圖有什麼想法，或是有什麼不懂的地方，歡迎在下面留言跟我討論喔！我們明天見～掰掰！</p>
 <br />
 <hr />
 <br />

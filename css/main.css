@@ -25,8 +25,8 @@
     --card-bg-color: #555;
     --text-color: #ccc;
     --blockquote-color: #bbb;
-    --link-color: #92caea; /* #ccc */
-    --link-hover-color: #2e82b2;
+    --link-color: #ccc;
+    --link-hover-color: #eee;
     --brand-color: #ddd;
     --brand-hover-color: #ddd;
     --table-row-odd-bg-color: #282828;
@@ -249,17 +249,16 @@ p {
 }
 a,
 span.exturl {
-  border-bottom: 1px solid #92caea;
+  border-bottom: 1px solid #999;
   color: var(--link-color);
   outline: 0;
   text-decoration: none;
   overflow-wrap: break-word;
   word-wrap: break-word;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
 }
 /* a:hover,
-.exturl:hover {
+span.exturl:hover {
   border-bottom-color: var(--link-hover-color);
   color: var(--link-hover-color);
 } */
