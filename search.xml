@@ -1,99 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo 指令合集</title>
-    <url>/2024/05/17/hexo-instruction-collection/</url>
-    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
-<span id="more"></span>
-
-<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-
-<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
-
-<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
-
-<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
-
-<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-
-<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-
-<br />
-<hr />
-<br />
-
-<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>誤打誤撞的 Docker Desktop 災情記錄與解決方案</title>
-    <url>/2025/01/19/hexo-docker-desktop-troubleshoot-1/</url>
-    <content><![CDATA[<p>最近想要在 Mac 上安裝 MSSQL，看了朋友推薦的 YouTube 教學影片，第一步就是要安裝 Docker。由於之前已經安裝過，就想說直接用快捷鍵開啟，結果系統竟然告訴我 Docker 已經被丟進垃圾桶了！</p>
-<p>抱持著「沒關係，重新安裝就好」的心態，前往官網準備重新下載，沒想到這個決定卻開啟了無止盡的錯誤彈窗轟炸…</p>
-<span id="more"></span>
-
-<h2 id="🔹-問題調查"><a href="#🔹-問題調查" class="headerlink" title="🔹 問題調查"></a>🔹 問題調查</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F1.png?alt=media&token=6aa2f2c5-6c48-4edc-bc31-a976193ab0cf" alt="錯誤彈窗"></p>
-<p>在網路上依照錯誤訊息搜尋相關資料時，發現這個問題早在 1 月 9 日就已經開始出現。</p>
-<p>一開始找到的多是對岸的部落格文章，正當考慮要依照這些文章建議的方法嘗試時，<br>幸運的發現了國外論壇的相關討論。</p>
-<br />
-<hr />
-<br />
-
-<h2 id="🔹-解決方案"><a href="#🔹-解決方案" class="headerlink" title="🔹 解決方案"></a>🔹 解決方案</h2><p>解決方案來自於 <a href="https://github.com/docker/for-mac/issues/7527">Docker Github Issue</a></p>
-<h3 id="1-安裝官方修復版本"><a href="#1-安裝官方修復版本" class="headerlink" title="1. 安裝官方修復版本"></a>1. 安裝官方修復版本</h3><p>首先嘗試安裝官方推薦的修復版本 4.37.2</p>
-<blockquote>
-<p>直接從<a href="https://docs.docker.com/desktop/release-notes/#4372">官方網站</a>下載</p>
-</blockquote>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F2.png?alt=media&token=f63af7b9-df77-43f0-aefd-cde133d7ecb7" alt="安裝官方推薦的修復版本 4.37.2"></p>
-<br />
-<hr />
-<br />
-
-<h3 id="2-若仍然出現錯誤"><a href="#2-若仍然出現錯誤" class="headerlink" title="2. 若仍然出現錯誤"></a>2. 若仍然出現錯誤</h3><p>如果安裝後持續出現錯誤彈窗，請依照 <a href="https://docs.docker.com/desktop/cert-revoke-solution/">Docker 文件</a> 建議執行以下步驟：</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F3.png?alt=media&token=3310eab7-3de7-4f4d-b9a5-77252883fa1c" alt="Docker 文件"></p>
-<ol>
-<li><p>終止所有無法正常啟動的 Docker 程序</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl bootout system/com.docker.vmnetd 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"><span class="built_in">sudo</span> launchctl bootout system/com.docker.socket 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /Library/PrivilegedHelperTools/com.docker.vmnetd || <span class="literal">true</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /Library/PrivilegedHelperTools/com.docker.socket || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (下面這行我沒有使用到) 因為複製貼上到終端機後無法 Enter，我把這行刪掉後，才成功執行 </span></span><br><span class="line">ps aux | grep -i docker | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | <span class="built_in">sudo</span> xargs <span class="built_in">kill</span> -9 2&gt;/dev/null</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>確認並永久關閉惡意軟體的彈出視窗</p>
-</li>
-<li><p>(可選) 打開活動監視器，查看是否有 Docker 相關的程序在運行，有的話強制終止</p>
-<p> <img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F5.png?alt=media&token=5b1ed9ad-f367-42c0-9317-7548f4244457" alt="活動監視器"></p>
-</li>
-<li><p>重新下載並安裝版本 4.37.2 - <a href="https://docs.docker.com/desktop/release-notes/#4372">下載連結</a></p>
-</li>
-<li><p>嘗試啟動 Docker Desktop</p>
-<p> <img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F4.png?alt=media&token=ad65d9a4-0c38-4356-97a1-19838420538a" alt="嘗試啟動 Docker Desktop"></p>
-</li>
-</ol>
-<p>按照上述步驟操作後，成功解決了這個問題！</p>
-<br />
-<hr />
-<br />
-
-<h2 id="🔹-心得總結"><a href="#🔹-心得總結" class="headerlink" title="🔹 心得總結"></a>🔹 心得總結</h2><p>這次的經驗讓我學到，遇到軟體問題時：</p>
-<ol>
-<li>除了參考部落格文章外，也要多查看官方文件</li>
-<li>善用國外論壇資源，因為最新的解決方案可能就在那裡</li>
-<li>遇到問題時，保持冷靜並有系統地一步一步排除才是上策</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>github 自定義個人頁面 ✨</title>
     <url>/2024/05/18/github-personal-page/</url>
     <content><![CDATA[<p>快跟我一起來自訂義獨一無二的個人 github 頁面吧！</p>
@@ -227,6 +134,99 @@
       </tags>
   </entry>
   <entry>
+    <title>誤打誤撞的 Docker Desktop 災情記錄與解決方案</title>
+    <url>/2025/01/19/hexo-docker-desktop-troubleshoot-1/</url>
+    <content><![CDATA[<p>最近想要在 Mac 上安裝 MSSQL，看了朋友推薦的 YouTube 教學影片，第一步就是要安裝 Docker。由於之前已經安裝過，就想說直接用快捷鍵開啟，結果系統竟然告訴我 Docker 已經被丟進垃圾桶了！</p>
+<p>抱持著「沒關係，重新安裝就好」的心態，前往官網準備重新下載，沒想到這個決定卻開啟了無止盡的錯誤彈窗轟炸…</p>
+<span id="more"></span>
+
+<h2 id="🔹-問題調查"><a href="#🔹-問題調查" class="headerlink" title="🔹 問題調查"></a>🔹 問題調查</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F1.png?alt=media&token=6aa2f2c5-6c48-4edc-bc31-a976193ab0cf" alt="錯誤彈窗"></p>
+<p>在網路上依照錯誤訊息 『未打開「com.docker.vmnetd」，因為它包含惡意軟體。此動作不會損害你的Mac。』 搜尋相關資料時，<br>發現這個問題早在 1 月 9 日就已經開始出現。</p>
+<p>一開始找到的多是對岸的部落格文章，正當考慮要依照這些文章建議的方法嘗試時，<br>幸運的發現了國外論壇的相關討論。</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-解決方案"><a href="#🔹-解決方案" class="headerlink" title="🔹 解決方案"></a>🔹 解決方案</h2><p>解決方案來自於 <a href="https://github.com/docker/for-mac/issues/7527">Docker Github Issue</a></p>
+<h3 id="1-安裝官方修復版本"><a href="#1-安裝官方修復版本" class="headerlink" title="1. 安裝官方修復版本"></a>1. 安裝官方修復版本</h3><p>首先嘗試安裝官方推薦的修復版本 4.37.2</p>
+<blockquote>
+<p>直接從<a href="https://docs.docker.com/desktop/release-notes/#4372">官方網站</a>下載</p>
+</blockquote>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F2.png?alt=media&token=f63af7b9-df77-43f0-aefd-cde133d7ecb7" alt="安裝官方推薦的修復版本 4.37.2"></p>
+<br />
+<hr />
+<br />
+
+<h3 id="2-若仍然出現錯誤"><a href="#2-若仍然出現錯誤" class="headerlink" title="2. 若仍然出現錯誤"></a>2. 若仍然出現錯誤</h3><p>如果安裝後持續出現錯誤彈窗，請依照 <a href="https://docs.docker.com/desktop/cert-revoke-solution/">Docker 文件</a> 建議執行以下步驟：</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F3.png?alt=media&token=3310eab7-3de7-4f4d-b9a5-77252883fa1c" alt="Docker 文件"></p>
+<ol>
+<li><p>終止所有無法正常啟動的 Docker 程序</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl bootout system/com.docker.vmnetd 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"><span class="built_in">sudo</span> launchctl bootout system/com.docker.socket 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /Library/PrivilegedHelperTools/com.docker.vmnetd || <span class="literal">true</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /Library/PrivilegedHelperTools/com.docker.socket || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (下面這行我沒有使用到) 因為複製貼上到終端機後無法 Enter，我把這行刪掉後，才成功執行 </span></span><br><span class="line">ps aux | grep -i docker | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | <span class="built_in">sudo</span> xargs <span class="built_in">kill</span> -9 2&gt;/dev/null</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>確認並永久關閉惡意軟體的彈出視窗</p>
+</li>
+<li><p>(可選) 打開活動監視器，查看是否有 Docker 相關的程序在運行，有的話強制終止</p>
+<p> <img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F5.png?alt=media&token=5b1ed9ad-f367-42c0-9317-7548f4244457" alt="活動監視器"></p>
+</li>
+<li><p>重新下載並安裝版本 4.37.2 - <a href="https://docs.docker.com/desktop/release-notes/#4372">下載連結</a></p>
+</li>
+<li><p>嘗試啟動 Docker Desktop</p>
+<p> <img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/hexo-docker-desktop-troubleshoot-1%2F4.png?alt=media&token=ad65d9a4-0c38-4356-97a1-19838420538a" alt="嘗試啟動 Docker Desktop"></p>
+</li>
+</ol>
+<p>按照上述步驟操作後，成功解決了這個問題！</p>
+<br />
+<hr />
+<br />
+
+<h2 id="🔹-心得總結"><a href="#🔹-心得總結" class="headerlink" title="🔹 心得總結"></a>🔹 心得總結</h2><p>這次的經驗讓我學到，遇到軟體問題時：</p>
+<ol>
+<li>除了參考部落格文章外，也要多查看官方文件</li>
+<li>善用國外論壇資源，因為最新的解決方案可能就在那裡</li>
+<li>遇到問題時，保持冷靜並有系統地一步一步排除才是上策</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 指令合集</title>
+    <url>/2024/05/17/hexo-instruction-collection/</url>
+    <content><![CDATA[<p>這裡集合了 hexo 常用的指令</p>
+<span id="more"></span>
+
+<h3 id="安裝-Hexo-全域"><a href="#安裝-Hexo-全域" class="headerlink" title="安裝 Hexo (全域)"></a>安裝 Hexo (全域)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="檢查版本-若有顯示版本號代表安裝成功"><a href="#檢查版本-若有顯示版本號代表安裝成功" class="headerlink" title="檢查版本 (若有顯示版本號代表安裝成功)"></a>檢查版本 (若有顯示版本號代表安裝成功)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速建立新專案"><a href="#快速建立新專案" class="headerlink" title="快速建立新專案"></a>快速建立新專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init &lt;web name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 2fish-blog 的專案</span></span><br><span class="line">hexo init 2fish-blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增文章"><a href="#新增文章" class="headerlink" title="新增文章"></a>新增文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;post name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 firstPost 的文章</span></span><br><span class="line">hexo new firstPost</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page &lt;page name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 範例：建立一個叫做 about 的文章</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<h3 id="打包生成靜態文件"><a href="#打包生成靜態文件" class="headerlink" title="打包生成靜態文件"></a>打包生成靜態文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取"><a href="#清除快取-有時候修改內容後沒有顯示，可以使用此指令清除快取" class="headerlink" title="清除快取 ( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )"></a>清除快取 <small>( 有時候修改內容後沒有顯示，可以使用此指令清除快取 )</small></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<br />
+<hr />
+<br />
+
+<h2 id="當你今天忘記指令-🤦🏻‍♀️"><a href="#當你今天忘記指令-🤦🏻‍♀️" class="headerlink" title="當你今天忘記指令 🤦🏻‍♀️"></a>當你今天忘記指令 🤦🏻‍♀️</h2><p><em>可以到專案目錄下的 <code>package.json</code> 查看指令</em></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;hexo generate&quot;</span>,</span><br><span class="line">  <span class="string">&quot;clean&quot;</span>: <span class="string">&quot;hexo clean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;hexo deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;hexo server&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡面的指令是預設包裝好的，舉例我們剛剛使用的 <code>hexo clean</code>，<br>你也可以輸入 <code>npm run clean</code> 會執行同樣的操作哦！</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 進階 - part 1</title>
     <url>/2024/05/17/hexo-replenish-1/</url>
     <content><![CDATA[<p>這裡包含更換網站圖示、改完的樣式被吃掉怎麼辦、文章摘要下方顯示”查看更多”按鈕</p>
@@ -260,96 +260,6 @@
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以開啟 f12 查看按鈕屬於哪個 class 控制 */</span></span><br><span class="line"><span class="comment">/* 按鈕預設樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1em</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#999</span>;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 按鈕預設 hover 樣式 */</span></span><br><span class="line"><span class="selector-class">.article-more-link</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#258fb8</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">text-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">#1e7293</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在 Nuxt.js 導入 phosphor-icons</title>
-    <url>/2024/06/07/nuxt-icon-phosphor/</url>
-    <content><![CDATA[<p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
-<span id="more"></span>
-
-<h4 id="1-連結"><a href="#1-連結" class="headerlink" title="1. 連結"></a>1. 連結</h4><ul>
-<li><a href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a></li>
-<li><a href="https://github.com/phosphor-icons/vue">phosphor-icons&#x2F;vue: A flexible icon family for Vue (github.com)</a></li>
-</ul>
-<h4 id="2-安裝"><a href="#2-安裝" class="headerlink" title="2. 安裝"></a>2. 安裝</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install @phosphor-icons/vue</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-找喜歡的-Icon"><a href="#3-找喜歡的-Icon" class="headerlink" title="3. 找喜歡的 Icon"></a>3. 找喜歡的 Icon</h4><ul>
-<li><a href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a><br>也可以在網頁的測試欄進行調整，可以馬上看到效果哦<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/nuxt-icon-phosphor%2F1.png?alt=media&token=a8c519d7-f75d-457f-8e6e-c6df2b2207b2" alt="找 icon 示意圖"></li>
-</ul>
-<h4 id="4-在專案內使用"><a href="#4-在專案內使用" class="headerlink" title="4. 在專案內使用"></a>4. 在專案內使用</h4><p>導入和使用 Phosphor Icons</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 需要的 icon 再引入即可</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhUserCircle</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhHouse</span></span></span><br><span class="line"><span class="language-javascript">&#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 引入後就可以在頁面上直接使用囉 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhUserCircle</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhHouse</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="可調整的屬性"><a href="#可調整的屬性" class="headerlink" title="可調整的屬性"></a>可調整的屬性</h5><ul>
-<li><p><code>color(string) 圖標顏色</code><br>  可以接受任何 CSS 顏色字符串，包括hex、rgb、rgba、hsl、hsla、命名顏色，或者特殊的 currentColor 變量；<br>  若無設定則使用預設值 currentColor。<br>  使用 currentColor，則圖標的填充顏色將與其父元素的文字顏色相同。</p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;#FF0000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;hotpink&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-  <br />
-</li>
-<li><p><code>size(string) 圖標高度和寬度</code><br>  可以是一個數字或者一個帶有單位的字符串，單位可以是 px、%、em、rem、pt、cm、mm、in 等；<br>  若無設定則使用預設值 1em。</p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;2em&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-  <br />
-</li>
-<li><p><code>weight(string) 圖標的粗細/風格</code><br>  這個屬性可以是 thin、light、regular、bold、fill 或 duotone 。</p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;regular&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>  在上述代碼中，第一行將 PhStar 圖標的風格設定為 regular，這將產生一個空心的星形圖標。<br>  第二行將 PhStar 圖標的風格設定為 fill，這將產生一個實心的星形圖標。</p>
-  <br />
-</li>
-<li><p><code>mirrored(boolean) 水平翻轉圖標</code><br>  如果設定為 true，則圖標將被水平翻轉。在正常圖示方向不合適的 RTL 語言中非常有用。</p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-  <br />
-</li>
-<li><p><code>一次是可以使用多個屬性的哦！</code><br>  我這邊對 <code>PhBooks</code> 設定大小 24px、填滿、水平翻轉、藍色。</p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<br />
-<hr />
-<br />
-
-<details>
-<summary>等等！ 為什麼有的要 : 有的不用 : 呢 ?</summary>
-
-<h4>基本原理</h4>
-<p>在 Vue.js 中，當你使用 v-bind 指令（縮寫為 :）時，你告訴 Vue 這個屬性值是動態的，並且應該被解析為 JavaScript 表達式。如果屬性值是固定的字符串，則不需要使用 :。</p>
-
-<h4>字符串常量 vs. JavaScript 表達式</h4>
-- 字符串常量：直接使用固定的字符串值，不需要 `:`。
-- JavaScript 表達式：使用變量或計算表達式，需要使用 `:`。
-
-<h4>具體說明</h4>
-<h5>字符串常量</h5>
-
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>weight=&quot;fill&quot;</code> 和 <code>color=&quot;blue&quot;</code> 是固定的字符串常量，不需要 <code>:</code>。</p>
-<h5>JavaScript 表達式</h5>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-`:size="24"` 和 `:mirrored="true"` 是 JavaScript 表達式，需要使用 `:`。
-    
-<h4>結合示例</h4>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;iconSize&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;isMirrored&quot;</span> <span class="attr">:weight</span>=<span class="string">&quot;iconWeight&quot;</span> <span class="attr">:color</span>=<span class="string">&quot;iconColor&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; <span class="title class_">PhBooks</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconSize = <span class="title function_">ref</span>(<span class="number">24</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> isMirrored = <span class="title function_">ref</span>(<span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconWeight = <span class="title function_">ref</span>(<span class="string">&#x27;fill&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconColor = <span class="title function_">ref</span>(<span class="string">&#x27;blue&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4>總結</h4>
-
-<ul>
-<li><p>靜態值 -&gt; 不需要 <code>:</code></p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>動態值 -&gt; 需要 <code>:</code></p>
-  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>希望這樣能幫助你更清楚地理解為什麼某些屬性需要使用 <code>:</code> 而其他屬性則不需要！</p>
-</details>
-
-<br />
-<hr />
-
-<blockquote>
-<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>Nuxt.js</tag>
-        <tag>Icons</tag>
-        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -619,6 +529,96 @@
       <tags>
         <tag>SQL</tag>
         <tag>六角學院 2024 後端工程師資料庫體驗營</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 Nuxt.js 導入 phosphor-icons</title>
+    <url>/2024/06/07/nuxt-icon-phosphor/</url>
+    <content><![CDATA[<p>在 Nuxt.js 中導入和使用 @phosphor-icons&#x2F;vue 的範例</p>
+<span id="more"></span>
+
+<h4 id="1-連結"><a href="#1-連結" class="headerlink" title="1. 連結"></a>1. 連結</h4><ul>
+<li><a href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a></li>
+<li><a href="https://github.com/phosphor-icons/vue">phosphor-icons&#x2F;vue: A flexible icon family for Vue (github.com)</a></li>
+</ul>
+<h4 id="2-安裝"><a href="#2-安裝" class="headerlink" title="2. 安裝"></a>2. 安裝</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install @phosphor-icons/vue</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-找喜歡的-Icon"><a href="#3-找喜歡的-Icon" class="headerlink" title="3. 找喜歡的 Icon"></a>3. 找喜歡的 Icon</h4><ul>
+<li><a href="https://phosphoricons.com/?size=24&q=%22%22">Phosphor Icons</a><br>也可以在網頁的測試欄進行調整，可以馬上看到效果哦<br><img src="https://firebasestorage.googleapis.com/v0/b/blog-image-2024.appspot.com/o/nuxt-icon-phosphor%2F1.png?alt=media&token=a8c519d7-f75d-457f-8e6e-c6df2b2207b2" alt="找 icon 示意圖"></li>
+</ul>
+<h4 id="4-在專案內使用"><a href="#4-在專案內使用" class="headerlink" title="4. 在專案內使用"></a>4. 在專案內使用</h4><p>導入和使用 Phosphor Icons</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 需要的 icon 再引入即可</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhUserCircle</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">PhHouse</span></span></span><br><span class="line"><span class="language-javascript">&#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 引入後就可以在頁面上直接使用囉 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhUserCircle</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PhHouse</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="可調整的屬性"><a href="#可調整的屬性" class="headerlink" title="可調整的屬性"></a>可調整的屬性</h5><ul>
+<li><p><code>color(string) 圖標顏色</code><br>  可以接受任何 CSS 顏色字符串，包括hex、rgb、rgba、hsl、hsla、命名顏色，或者特殊的 currentColor 變量；<br>  若無設定則使用預設值 currentColor。<br>  使用 currentColor，則圖標的填充顏色將與其父元素的文字顏色相同。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;#FF0000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">color</span>=<span class="string">&quot;hotpink&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>size(string) 圖標高度和寬度</code><br>  可以是一個數字或者一個帶有單位的字符串，單位可以是 px、%、em、rem、pt、cm、mm、in 等；<br>  若無設定則使用預設值 1em。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;2em&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>weight(string) 圖標的粗細/風格</code><br>  這個屬性可以是 thin、light、regular、bold、fill 或 duotone 。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;regular&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PhStar</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  在上述代碼中，第一行將 PhStar 圖標的風格設定為 regular，這將產生一個空心的星形圖標。<br>  第二行將 PhStar 圖標的風格設定為 fill，這將產生一個實心的星形圖標。</p>
+  <br />
+</li>
+<li><p><code>mirrored(boolean) 水平翻轉圖標</code><br>  如果設定為 true，則圖標將被水平翻轉。在正常圖示方向不合適的 RTL 語言中非常有用。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+  <br />
+</li>
+<li><p><code>一次是可以使用多個屬性的哦！</code><br>  我這邊對 <code>PhBooks</code> 設定大小 24px、填滿、水平翻轉、藍色。</p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<br />
+<hr />
+<br />
+
+<details>
+<summary>等等！ 為什麼有的要 : 有的不用 : 呢 ?</summary>
+
+<h4>基本原理</h4>
+<p>在 Vue.js 中，當你使用 v-bind 指令（縮寫為 :）時，你告訴 Vue 這個屬性值是動態的，並且應該被解析為 JavaScript 表達式。如果屬性值是固定的字符串，則不需要使用 :。</p>
+
+<h4>字符串常量 vs. JavaScript 表達式</h4>
+- 字符串常量：直接使用固定的字符串值，不需要 `:`。
+- JavaScript 表達式：使用變量或計算表達式，需要使用 `:`。
+
+<h4>具體說明</h4>
+<h5>字符串常量</h5>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>weight=&quot;fill&quot;</code> 和 <code>color=&quot;blue&quot;</code> 是固定的字符串常量，不需要 <code>:</code>。</p>
+<h5>JavaScript 表達式</h5>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+`:size="24"` 和 `:mirrored="true"` 是 JavaScript 表達式，需要使用 `:`。
+    
+<h4>結合示例</h4>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;iconSize&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;isMirrored&quot;</span> <span class="attr">:weight</span>=<span class="string">&quot;iconWeight&quot;</span> <span class="attr">:color</span>=<span class="string">&quot;iconColor&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; <span class="title class_">PhBooks</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@phosphor-icons/vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconSize = <span class="title function_">ref</span>(<span class="number">24</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> isMirrored = <span class="title function_">ref</span>(<span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconWeight = <span class="title function_">ref</span>(<span class="string">&#x27;fill&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> iconColor = <span class="title function_">ref</span>(<span class="string">&#x27;blue&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4>總結</h4>
+
+<ul>
+<li><p>靜態值 -&gt; 不需要 <code>:</code></p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">weight</span>=<span class="string">&quot;fill&quot;</span> <span class="attr">color</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>動態值 -&gt; 需要 <code>:</code></p>
+  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PhBooks</span> <span class="attr">:size</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:mirrored</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>希望這樣能幫助你更清楚地理解為什麼某些屬性需要使用 <code>:</code> 而其他屬性則不需要！</p>
+</details>
+
+<br />
+<hr />
+
+<blockquote>
+<p>希望這篇文章有幫助到你，謝謝你的觀看，若有想看的系列也歡迎告訴我 😉</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Nuxt.js</tag>
+        <tag>Icons</tag>
+        <tag>Vue</tag>
       </tags>
   </entry>
 </search>
